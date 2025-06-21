@@ -5,6 +5,7 @@
   "scripts": {
     "migrate": "prisma migrate dev --schema=libs/prisma/src/prisma/schema.prisma",
     "generate": "prisma generate --schema=libs/prisma/src/prisma/schema.prisma",
+    "seed-db": "ts-node libs/prisma/src/prisma/seed.ts"
   },
   "private": true,
   "dependencies": {
