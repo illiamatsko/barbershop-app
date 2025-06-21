@@ -1,6 +1,6 @@
 import { PrismaService } from '@barbershop-app/prisma';
 import { Prisma } from '@prisma/client'
-import { Injectable } from '@angular/core';
+import { Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
 
 @Injectable()
