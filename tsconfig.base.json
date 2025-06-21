@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@barbershop-app/models": ["libs/shared/models/src/index.ts"],
-      "@barbershop-app/prisma": ["libs/prisma/src/index.ts"]
+      "@barbershop-app/prisma": ["libs/prisma/src/index.ts"],
+      "@barbershop-app/user": ["libs/data-access/user/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
