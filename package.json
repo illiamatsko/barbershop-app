@@ -2,7 +2,10 @@
   "name": "@barbershop-app/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "migrate": "prisma migrate dev --schema=libs/prisma/src/prisma/schema.prisma",
+    "generate": "prisma generate --schema=libs/prisma/src/prisma/schema.prisma",
+  },
   "private": true,
   "dependencies": {
     "@angular/common": "~20.0.0",
