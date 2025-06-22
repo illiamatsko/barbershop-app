@@ -3,7 +3,8 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { UserModule } from '@barbershop-app/user';
 import { JwtModule } from '@nestjs/jwt';
-import { LocalStrategy } from '../strategies/local.strategy';
+import { LocalStrategy } from './strategies/local.strategy';
+import { JwtStrategy } from './strategies/jwt.strategy'
 
 @Module({
   imports: [
@@ -14,6 +15,6 @@ import { LocalStrategy } from '../strategies/local.strategy';
     UserModule
   ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy]
+  providers: [AuthService, LocalStrategy, JwtStrategy]
 })
 export class AuthModule {}
