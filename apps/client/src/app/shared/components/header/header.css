@@ -1,0 +1,16 @@
+.header {
+  @apply flex items-center justify-between px-6 py-2 bg-black text-white shadow-md;
+}
+
+.header-logo {
+  @apply text-2xl font-bold tracking-wide;
+}
+
+.header-nav {
+  @apply space-x-6 text-sm uppercase font-medium;
+}
+
+.header-link {
+  @apply hover:text-gray-300 transition;
+  text-decoration: none;
+}
