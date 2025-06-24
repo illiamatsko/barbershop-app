@@ -13,14 +13,14 @@
         "outputPath": "dist/apps/client",
         "browser": "apps/client/src/main.ts",
         "tsConfig": "apps/client/tsconfig.app.json",
-        "inlineStyleLanguage": "scss",
+        "inlineStyleLanguage": "css",
         "assets": [
           {
             "glob": "**/*",
             "input": "apps/client/public"
           }
         ],
-        "styles": ["apps/client/src/styles.scss"]
+        "styles": ["apps/client/src/styles.css"]
       },
       "configurations": {
         "production": {
