@@ -2,6 +2,6 @@
   @apply min-h-screen flex flex-col;
 }
 
-.layout__content {
+.layout-content {
   @apply flex-1;
 }

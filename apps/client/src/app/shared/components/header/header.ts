@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -8,4 +9,10 @@ import { CommonModule } from '@angular/common';
   styleUrl: './header.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Header {}
+export class Header {
+  private router = inject(Router);
+
+  navigateToSignIn() {
+    this.router.navigate(['auth/sign-in']).then();
+  }
+}
