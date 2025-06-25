@@ -1,0 +1,20 @@
+.footer {
+  @apply bg-black text-white py-6 mt-auto;
+}
+
+.footer-content {
+  @apply max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4;
+}
+
+.footer-nav {
+  @apply flex gap-4 text-sm;
+}
+
+.footer-link {
+  @apply hover:text-gray-400 transition;
+  text-decoration: none;
+}
+
+.footer-copyright {
+  @apply text-xs text-gray-400;
+}
