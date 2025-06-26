@@ -1,1 +1,2 @@
-export * from './lib/models';
+export * from './lib/auth-result.interface'
+export * from './lib/jwt-payload.interface'

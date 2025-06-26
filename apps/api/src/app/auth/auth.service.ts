@@ -1,11 +1,11 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { UserRepository } from '@barbershop-app/user';
 import { JwtService } from '@nestjs/jwt';
-import { JwtPayload } from '../interfaces/jwt-payload.interface';
 import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { promisify } from 'util';
 import { Prisma } from '@prisma/client';
-import { AuthResult } from '../interfaces/auth-result.interface';
+import { AuthResult } from '@barbershop-app/models';
+import { JwtPayload } from '@barbershop-app/models';
 
 const scrypt = promisify(_scrypt);
 

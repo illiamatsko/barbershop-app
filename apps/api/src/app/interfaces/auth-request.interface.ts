@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { JwtPayload } from './jwt-payload.interface';
+import { JwtPayload } from '@barbershop-app/models';
 
 export interface AuthRequest extends Request {
   user: JwtPayload
