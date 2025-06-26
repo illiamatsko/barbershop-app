@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../../auth.service';
 
 
 @Component({
@@ -11,6 +12,8 @@ import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validator
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignIn {
+  private authService = inject(AuthService);
+
   showError = signal<boolean>(false);
   errorMessage = signal<string>('');
 
@@ -19,7 +22,7 @@ export class SignIn {
       email: new FormControl<string>('', {
         validators: [Validators.required, Validators.email],
       }),
-      password: new FormControl('', {
+      password: new FormControl<string>('', {
         validators: [Validators.required, Validators.minLength(6)],
       }),
     },
@@ -34,12 +37,11 @@ export class SignIn {
   }
 
   onSubmit() {
-    if (this.signInForm.invalid) {
-      return;
-    }
+    if (this.signInForm.invalid) return;
 
     const { email, password } = this.signInForm.getRawValue();
+    if(!email || !password) return;
 
-    console.log(email, password);
+    this.authService.signIn(email, password);
   }
 }
