@@ -50,3 +50,5 @@ typings/
 
 # --- Optional Nx-specific files (if unused) ---
 nx.json.backup
+
+.angular

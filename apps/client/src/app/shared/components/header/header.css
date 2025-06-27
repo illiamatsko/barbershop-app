@@ -7,7 +7,7 @@
 }
 
 .header-nav {
-  @apply space-x-6 text-sm uppercase font-medium;
+  @apply flex items-center space-x-6 text-sm uppercase font-medium;
 }
 
 .header-link {
