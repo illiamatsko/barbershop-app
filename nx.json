@@ -59,6 +59,10 @@
       "style": "css",
       "skipTests": true,
       "changeDetection": "OnPush"
+    },
+    "@nx/angular:library": {
+      "linter": "eslint",
+      "unitTestRunner": "none"
     }
   },
   "plugins": [
