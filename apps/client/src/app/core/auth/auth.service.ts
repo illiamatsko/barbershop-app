@@ -12,7 +12,10 @@ export class AuthService {
 
   signIn(email: string, password: string) {
     this.httpClient.post<userSlice>(`${this.apiUrl}/auth/sign-in`, { email, password }).subscribe({
-      next: res => this.userStore.setUser(res)
+      next: res => {
+        localStorage.setItem('token', res.token);
+        this.userStore.setUser(res);
+      }
     })
   }
 }
