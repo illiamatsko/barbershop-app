@@ -8,14 +8,19 @@ import { userSlice } from '../../features/state/user/user.slice';
 export class AuthService {
   private userStore = inject(UserStore);
   private httpClient = inject(HttpClient);
-  private apiUrl = environment.apiUrl;
+  private API_URL = environment.apiUrl;
 
   signIn(email: string, password: string) {
-    this.httpClient.post<userSlice>(`${this.apiUrl}/auth/sign-in`, { email, password }).subscribe({
+    this.httpClient.post<userSlice>(`${this.API_URL}/auth/sign-in`, { email, password }).subscribe({
       next: res => {
         localStorage.setItem('token', res.token);
         this.userStore.setUser(res);
       }
     })
+  }
+
+  signOut() {
+    localStorage.removeItem('token');
+    this.userStore.unsetUser();
   }
 }
