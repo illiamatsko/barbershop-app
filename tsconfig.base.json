@@ -18,7 +18,8 @@
       "@barbershop-app/models": ["libs/shared/models/src/index.ts"],
       "@barbershop-app/prisma": ["libs/prisma/src/index.ts"],
       "@barbershop-app/ui": ["libs/shared/ui/src/index.ts"],
-      "@barbershop-app/user": ["libs/data-access/user/src/index.ts"]
+      "@barbershop-app/user": ["libs/data-access/user/src/index.ts"],
+      "@barbershop-app/utils": ["libs/shared/utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
