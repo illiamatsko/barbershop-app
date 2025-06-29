@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environment';
 import { UserStore } from '../../features/state/user/user.store';
 import { userSlice } from '../../features/state/user/user.slice';
+import { JwtPayload } from '@barbershop-app/models';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -22,5 +23,18 @@ export class AuthService {
   signOut() {
     localStorage.removeItem('token');
     this.userStore.unsetUser();
+  }
+
+  getUserFromToken() {
+    const token = localStorage.getItem('token')
+    if(!token) return;
+
+    const headers = { Authorization: `Bearer ${token}` };
+
+    this.httpClient.get<JwtPayload>(`${this.API_URL}/auth/me`, { headers }).subscribe({
+      next: (user) => {
+        this.userStore.setUser({ user, token });
+      },
+    });
   }
 }
