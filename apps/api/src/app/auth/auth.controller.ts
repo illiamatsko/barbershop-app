@@ -2,7 +2,7 @@ import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LocalGuard } from './guards/local.guard';
 import { AuthRequest } from '../interfaces/auth-request.interface';
-import { Prisma } from '@prisma/client';
+import { CreateUserDto } from '@barbershop-app/models';
 
 @Controller('auth')
 export class AuthController {
@@ -15,7 +15,7 @@ export class AuthController {
   }
 
   @Post('sign-up')
-  SignUp(@Body() createUserDto: Prisma.UserCreateInput) {
+  SignUp(@Body() createUserDto: CreateUserDto) {
     return this.authService.SignUp(createUserDto);
   }
 }

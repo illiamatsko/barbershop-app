@@ -3,8 +3,7 @@ import { UserRepository } from '@barbershop-app/user';
 import { JwtService } from '@nestjs/jwt';
 import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { promisify } from 'util';
-import { Prisma } from '@prisma/client';
-import { AuthResult } from '@barbershop-app/models';
+import { AuthResult, CreateUserDto } from '@barbershop-app/models';
 import { JwtPayload } from '@barbershop-app/models';
 
 const scrypt = promisify(_scrypt);
@@ -30,7 +29,7 @@ export class AuthService {
     return payload;
   }
 
-  async SignUp(createUserDto: Prisma.UserCreateInput): Promise<AuthResult> {
+  async SignUp(createUserDto: CreateUserDto): Promise<AuthResult> {
     if(await this.userRepo.findByEmail(createUserDto.email)) throw new BadRequestException('Email already exists')
 
     createUserDto.password = await this.hashPassword(createUserDto.password);
