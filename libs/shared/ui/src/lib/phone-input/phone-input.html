@@ -1,0 +1,12 @@
+<label for="phoneNumber" class="form-label">Phone number</label>
+<div class="phone-wrapper">
+  <div class="phone-prefix">+38</div>
+  <input
+    id="phoneNumber"
+    type="tel"
+    [formControl]="control()"
+    placeholder="(067) 123 4567"
+    mask="(000) 000 00 00"
+    class="phone-input"
+  />
+</div>

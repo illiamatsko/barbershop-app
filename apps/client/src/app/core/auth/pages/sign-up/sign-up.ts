@@ -3,12 +3,19 @@ import { CommonModule } from '@angular/common';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../auth.service';
 import { matchValidator } from '../../validators/match.validator';
-import { FormField } from '@barbershop-app/ui';
+import { FormField, PhoneInput } from '@barbershop-app/ui';
 import { RouterLink } from '@angular/router';
+import { phoneNumberValidator } from '../../validators/phone-number.validator';
 
 @Component({
   selector: 'app-sign-up',
-  imports: [CommonModule, ReactiveFormsModule, FormField, RouterLink],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormField,
+    RouterLink,
+    PhoneInput,
+  ],
   templateUrl: './sign-up.html',
   styleUrl: './sign-up.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,6 +28,15 @@ export class SignUp {
     {
       email: new FormControl<string>('', {
         validators: [Validators.required, Validators.email],
+      }),
+      firstName: new FormControl<string>('', {
+        validators: [Validators.required],
+      }),
+      lastName: new FormControl<string>('', {
+        validators: [Validators.required],
+      }),
+      phoneNumber: new FormControl<string>('', {
+        validators: [Validators.required, phoneNumberValidator],
       }),
       password: new FormControl<string>('', {
         validators: [Validators.required, Validators.minLength(6)],

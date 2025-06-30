@@ -10,6 +10,14 @@
   @apply w-full max-w-md mx-auto border-gray-300 border rounded-md p-4;
 }
 
+.form-row {
+  @apply flex gap-4;
+}
+
+.form-half {
+  @apply w-1/2;
+}
+
 .form-error {
   @apply text-sm text-red-600;
 }
