@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environment';
 import { UserStore } from '../../features/state/user/user.store';
@@ -11,12 +11,25 @@ export class AuthService {
   private httpClient = inject(HttpClient);
   private API_URL = environment.apiUrl;
 
+  error = signal<string>('');
+
   signIn(email: string, password: string) {
     this.httpClient.post<userSlice>(`${this.API_URL}/auth/sign-in`, { email, password }).subscribe({
       next: res => {
         localStorage.setItem('token', res.token);
         this.userStore.setUser(res);
       }
+    })
+  }
+
+  signUp(email: string, password: string) {
+    this.httpClient.post<userSlice>(`${this.API_URL}/auth/sign-up`, { email, password }).subscribe({
+      next: res => {
+        localStorage.setItem('token', res.token);
+        this.userStore.setUser(res);
+        this.error.set('')
+      },
+      error: (e) => this.error.set(e.error?.message || 'Unknown error. Please, try again later.')
     })
   }
 

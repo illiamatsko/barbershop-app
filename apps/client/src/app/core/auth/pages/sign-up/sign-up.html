@@ -1,1 +1,59 @@
-<p>sign-up works!</p>
+<div class="form-div">
+  <form (submit)="onSubmit()" [formGroup]="signInForm" class="sign-in-form">
+    <div class="form-group">
+      <label for="email" class="form-label">Email</label>
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        placeholder="johndoe@example.com"
+        class="form-input"
+      />
+      @if(getError('email', signInForm.controls.email)) {
+        <p class="form-error">Please enter a valid email address</p>
+      }
+      @if(getError('required', signInForm.controls.email)) {
+        <p class="form-error"><strong>Email</strong> is required</p>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="password" class="form-label">Password</label>
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        class="form-input"
+      />
+      @if(getError('minlength', signInForm.controls.password)) {
+        <p class="form-error">Password must be at least 6 characters long</p>
+      }
+      @if(getError('required', signInForm.controls.password)) {
+        <p class="form-error"><strong>Password</strong> is required</p>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="confirmPassword" class="form-label">Confirm password</label>
+      <input
+        id="confirmPassword"
+        type="password"
+        formControlName="confirmPassword"
+        class="form-input"
+      />
+      @if(confirmPasswordError) {
+        <p class="form-error">Passwords do not match</p>
+      }
+    </div>
+
+    @if(errorMessage()) {
+      <div class="form-message">
+        <p class="form-error-message">{{ errorMessage() }}</p>
+      </div>
+    }
+
+    <button type="submit" class="form-button">
+      Sign Up
+    </button>
+  </form>
+</div>

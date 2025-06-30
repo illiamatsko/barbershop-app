@@ -9,6 +9,7 @@
 
     @if(!isSignedIn()) {
       <button (click)="navigateToSignIn()" class="header-sign-in">Sign In</button>
+      <button (click)="navigateToSignUp()" class="header-sign-in">Sign Up</button>
     } @else {
       <lib-profile-icon/>
     }

@@ -20,4 +20,8 @@ export class Header {
   navigateToSignIn() {
     this.router.navigate(['auth/sign-in']).then();
   }
+
+  navigateToSignUp() {
+    this.router.navigate(['auth/sign-up']).then();
+  }
 }
