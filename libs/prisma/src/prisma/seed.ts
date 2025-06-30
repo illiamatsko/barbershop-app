@@ -18,6 +18,9 @@ async function main() {
     data: [
       {
         email: 'user@gmail.com',
+        firstName: 'Petro',
+        lastName: 'Test',
+        phoneNumber: '',
         password: hashedPassword
       },
     ],
