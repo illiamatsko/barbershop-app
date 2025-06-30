@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../auth.service';
 import { matchValidator } from '../../validators/match.validator';
-import { isEmailUnique } from '../../validators/isEmailUnique';
 
 @Component({
   selector: 'app-sign-up',
@@ -20,8 +19,7 @@ export class SignUp {
   signInForm = new FormGroup(
     {
       email: new FormControl<string>('', {
-        validators: [Validators.required, Validators.email],
-        asyncValidators: [isEmailUnique]
+        validators: [Validators.required, Validators.email]
       }),
       password: new FormControl<string>('', {
         validators: [Validators.required, Validators.minLength(6)]

@@ -1,8 +1,8 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environment';
-import { AuthStore } from '../../features/state/user/auth.store';
-import { authState } from '../../features/state/user/auth.state';
+import { AuthStore } from '../../features/state/auth/auth.store';
+import { authState } from '../../features/state/auth/auth.state';
 import { JwtPayload } from '@barbershop-app/models';
 
 @Injectable({ providedIn: 'root' })
@@ -18,7 +18,8 @@ export class AuthService {
       next: res => {
         localStorage.setItem('token', res.token);
         this.userStore.setUser(res);
-      }
+      },
+      error: (e) => this.error.set(e.error?.message || 'Unknown error. Please, try again later.')
     })
   }
 
@@ -47,7 +48,7 @@ export class AuthService {
     this.httpClient.get<JwtPayload>(`${this.API_URL}/auth/me`, { headers }).subscribe({
       next: (user) => {
         this.userStore.setUser({ user, token });
-      },
-    });
+      }
+    })
   }
 }
