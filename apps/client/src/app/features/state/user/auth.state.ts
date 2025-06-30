@@ -1,11 +1,11 @@
 import { JwtPayload } from '@barbershop-app/models';
 
-export interface userSlice {
+export interface authState {
   user: JwtPayload,
   token: string
 }
 
-export const userInitialSlice: userSlice = {
+export const initialAuthState: authState = {
   user: {
     id: -1,
     email: '',

@@ -1,20 +1,20 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environment';
-import { UserStore } from '../../features/state/user/user.store';
-import { userSlice } from '../../features/state/user/user.slice';
+import { AuthStore } from '../../features/state/user/auth.store';
+import { authState } from '../../features/state/user/auth.state';
 import { JwtPayload } from '@barbershop-app/models';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private userStore = inject(UserStore);
+  private userStore = inject(AuthStore);
   private httpClient = inject(HttpClient);
   private API_URL = environment.apiUrl;
 
   error = signal<string>('');
 
   signIn(email: string, password: string) {
-    this.httpClient.post<userSlice>(`${this.API_URL}/auth/sign-in`, { email, password }).subscribe({
+    this.httpClient.post<authState>(`${this.API_URL}/auth/sign-in`, { email, password }).subscribe({
       next: res => {
         localStorage.setItem('token', res.token);
         this.userStore.setUser(res);
@@ -23,7 +23,7 @@ export class AuthService {
   }
 
   signUp(email: string, password: string) {
-    this.httpClient.post<userSlice>(`${this.API_URL}/auth/sign-up`, { email, password }).subscribe({
+    this.httpClient.post<authState>(`${this.API_URL}/auth/sign-up`, { email, password }).subscribe({
       next: res => {
         localStorage.setItem('token', res.token);
         this.userStore.setUser(res);

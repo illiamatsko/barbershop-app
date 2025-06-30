@@ -1,13 +1,13 @@
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
-import { userInitialSlice, userSlice } from './user.slice';
-import {setUser, unsetUser} from './user.updaters';
+import { initialAuthState, authState } from './auth.state';
+import {setUser, unsetUser} from './auth.updaters';
 import { computed } from '@angular/core';
 
-export const UserStore = signalStore(
+export const AuthStore = signalStore(
   { providedIn: 'root' },
-  withState<userSlice>(userInitialSlice),
+  withState<authState>(initialAuthState),
   withMethods((store) => ({
-    setUser: (res: userSlice) => patchState(store, setUser(res)),
+    setUser: (res: authState) => patchState(store, setUser(res)),
     unsetUser: () => patchState(store, unsetUser())
   })),
   withComputed((store) => ({
