@@ -17,6 +17,9 @@ export const ErrorInterceptor: HttpInterceptorFn = (req, next) => {
             toastr.error(error.error?.message || 'Bad request');
             break;
 
+          case 401:
+            break;
+
           case 404:
             router.navigateByUrl('/not-found').then();
             break;

@@ -1,40 +1,40 @@
 <div class="form-div">
-<form (submit)="onSubmit()" [formGroup]="signInForm" class="sign-in-form">
-  <h2 class="form-title">Sign In</h2>
+  <form (submit)="onSubmit()" [formGroup]="signInForm" class="auth-form">
+    <h2 class="form-title">Sign In</h2>
 
-  <div class="form-group">
-    <lib-form-field id="email" type="email" label="E-mail" placeholder="johndoe@example.com" [control]="signInForm.controls.email"/>
-    @if(getError('email', signInForm.controls.email)) {
-      <p class="form-error">Please enter a valid email address</p>
-    }
-    @if(getError('required', signInForm.controls.email)) {
-      <p class="form-error"><strong>Email</strong> is required</p>
-    }
-  </div>
-
-  <div class="form-group">
-    <lib-form-field id="password" type="password" label="Password" [control]="signInForm.controls.password"/>
-    @if(getError('minlength', signInForm.controls.password)) {
-      <p class="form-error"><strong>Password</strong> must be at least 6 characters long</p>
-    }
-    @if(getError('required', signInForm.controls.password)) {
-      <p class="form-error"><strong>Password</strong> is required</p>
-    }
-  </div>
-
-  @if(errorMessage()) {
-    <div class="form-message">
-      <p class="form-error-message">{{ errorMessage() }}</p>
+    <div class="form-group">
+      <lib-form-field id="email" type="email" label="E-mail" placeholder="johndoe@example.com" [control]="signInForm.controls.email"/>
+      @if(getError('email', signInForm.controls.email)) {
+        <p class="form-error">Please enter a valid email address</p>
+      }
+      @if(getError('required', signInForm.controls.email)) {
+        <p class="form-error"><strong>Email</strong> is required</p>
+      }
     </div>
-  }
 
-  <button type="submit" class="form-button">
-    Sign In
-  </button>
+    <div class="form-group">
+      <lib-form-field id="password" type="password" label="Password" [control]="signInForm.controls.password"/>
+      @if(getError('minlength', signInForm.controls.password)) {
+        <p class="form-error"><strong>Password</strong> must be at least 6 characters long</p>
+      }
+      @if(getError('required', signInForm.controls.password)) {
+        <p class="form-error"><strong>Password</strong> is required</p>
+      }
+    </div>
 
-  <p class="form-footer">
-    Don't have an account?
-    <a routerLink="/auth/sign-up" class="form-footer-link">Sign Up</a>
-  </p>
-</form>
+    @if(errorMessage()) {
+      <div class="form-message">
+        <p class="form-error-message">{{ errorMessage() }}</p>
+      </div>
+    }
+
+    <button type="submit" class="form-button">
+      Sign In
+    </button>
+
+    <p class="form-footer">
+      Don't have an account?
+      <a routerLink="/auth/sign-up" class="form-footer-link">Sign Up</a>
+    </p>
+  </form>
 </div>
