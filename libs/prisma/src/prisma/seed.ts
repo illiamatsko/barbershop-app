@@ -37,7 +37,7 @@ async function main() {
       email: 'client@example.com',
       firstName: 'Client',
       lastName: 'Test',
-      phoneNumber: '+380987654321',
+      phoneNumber: '0987654321',
       password: userPassword,
       role: 'CLIENT',
     },
