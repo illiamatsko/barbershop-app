@@ -7,7 +7,7 @@ import { JwtPayload } from '@barbershop-app/models';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private userStore = inject(AuthStore);
+  private authStore = inject(AuthStore);
   private httpClient = inject(HttpClient);
   private API_URL = environment.apiUrl;
 
@@ -17,7 +17,7 @@ export class AuthService {
     this.httpClient.post<authState>(`${this.API_URL}/auth/sign-in`, { email, password }).subscribe({
       next: res => {
         localStorage.setItem('token', res.token);
-        this.userStore.setUser(res);
+        this.authStore.setUser(res);
       },
       error: (e) => this.error.set(e.error?.message || 'Unknown error. Please, try again later.')
     })
@@ -27,7 +27,7 @@ export class AuthService {
     this.httpClient.post<authState>(`${this.API_URL}/auth/sign-up`, { email, password }).subscribe({
       next: res => {
         localStorage.setItem('token', res.token);
-        this.userStore.setUser(res);
+        this.authStore.setUser(res);
         this.error.set('')
       },
       error: (e) => this.error.set(e.error?.message || 'Unknown error. Please, try again later.')
@@ -36,7 +36,7 @@ export class AuthService {
 
   signOut() {
     localStorage.removeItem('token');
-    this.userStore.unsetUser();
+    this.authStore.unsetUser();
   }
 
   getUserFromToken() {
@@ -47,7 +47,7 @@ export class AuthService {
 
     this.httpClient.get<JwtPayload>(`${this.API_URL}/auth/me`, { headers }).subscribe({
       next: (user) => {
-        this.userStore.setUser({ user, token });
+        this.authStore.setUser({ user, token });
       }
     })
   }

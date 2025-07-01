@@ -9,19 +9,107 @@ datasource db {
 }
 
 model User {
-  id          Int      @id @default(autoincrement())
-  email       String   @unique
-  firstName   String
-  lastName    String
-  phoneNumber String   @unique
-  password    String
-  createdAt   DateTime @default(now())
-  role        Role     @default(CLIENT)
+  id           Int           @id @default(autoincrement())
+  email        String        @unique
+  password     String
+  firstName    String
+  lastName     String
+  phoneNumber  String        @unique
+  role         Role          @default(CLIENT)
+  createdAt    DateTime      @default(now())
+  appointments Appointment[]
 }
 
 enum Role {
   CLIENT
   BARBER
+  MANAGER
   SUPER_ADMIN
-  MODERATOR
+}
+
+model Barbershop {
+  id          Int      @id @default(autoincrement())
+  name        String
+  address     String
+  phoneNumber String   @unique
+  barbers     Barber[]
+}
+
+model Barber {
+  id           Int           @id @default(autoincrement())
+  email        String        @unique
+  password     String
+  firstName    String
+  lastName     String
+  phoneNumber  String        @unique
+  status       BarberStatus  @default(BARBER)
+  role         Role          @default(BARBER)
+  createdAt    DateTime      @default(now())
+  barbershop   Barbershop    @relation(fields: [barbershopId], references: [id])
+  barbershopId Int
+  services     Service[]
+  appointments Appointment[]
+  TimeSlot     TimeSlot[]
+}
+
+enum BarberStatus {
+  BARBER
+  SENIOR_BARBER
+  GRAND_BARBER
+  GENERAL_BARBER
+  PRIME_BARBER
+  BOSS
+}
+
+model Service {
+  id           Int            @id @default(autoincrement())
+  name         String
+  duration     Int
+  Barber       Barber         @relation(fields: [barberId], references: [id])
+  barberId     Int
+  Appointment  Appointment[]
+  ServicePrice ServicePrice[]
+}
+
+model ServicePrice {
+  service      Service      @relation(fields: [serviceId], references: [id])
+  serviceId    Int
+  barberStatus BarberStatus
+  price        Int
+
+  @@id([serviceId, barberStatus])
+}
+
+model TimeSlot {
+  id            Int          @id @default(autoincrement())
+  startTime     DateTime
+  barber        Barber       @relation(fields: [barberId], references: [id])
+  barberId      Int
+  appointment   Appointment? @relation(fields: [appointmentId], references: [id])
+  status        SlotStatus   @default(AVAILABLE)
+  appointmentId Int?
+}
+
+enum SlotStatus {
+  AVAILABLE
+  BOOKED
+  BLOCKED
+}
+
+model Appointment {
+  id        Int               @id @default(autoincrement())
+  time      DateTime
+  status    AppointmentStatus @default(CONFIRMED)
+  User      User              @relation(fields: [userId], references: [id])
+  userId    Int
+  Barber    Barber            @relation(fields: [barberId], references: [id])
+  barberId  Int
+  service   Service           @relation(fields: [serviceId], references: [id])
+  serviceId Int
+  TimeSlot  TimeSlot[]
+}
+
+enum AppointmentStatus {
+  CONFIRMED
+  CANCELED
 }
