@@ -19,14 +19,14 @@ export class AuthService {
     return { payload: user, token: this.signToken(user) }
   }
 
-  getPayloadFromUser(user: User) {
+  getPayloadFromUser(user: User): JwtPayload {
     return {
       id: user.id,
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
       phoneNumber: user.phoneNumber,
-      role: user.role,
+      role: user.role.toString(),
       createdAt: user.createdAt.toString()
     }
   }

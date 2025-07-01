@@ -1,6 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { promisify } from 'util';
+import * as fs from 'fs/promises';
+import * as path from 'path';
 
 const prisma = new PrismaClient();
 const scrypt = promisify(_scrypt);
@@ -29,6 +31,34 @@ function getTomorrowSlots(): Date[] {
 }
 
 async function main() {
+  const filePath = path.join(__dirname, 'seed-data.json');
+  const fileData = await fs.readFile(filePath, 'utf-8');
+  const seedData = JSON.parse(fileData);
+
+  // 1. Create BarberStatuses
+  const barberStatuses = await Promise.all(
+    seedData.barberStatuses.map((status: { name: string; description: string }) =>
+      prisma.barberStatus.create({
+        data: {
+          description: status.description,
+        },
+      })
+    )
+  );
+
+  // 2. Create Services
+  const services = await Promise.all(
+    seedData.services.map((service: { name: string; duration: number }) =>
+      prisma.service.create({
+        data: {
+          name: service.name,
+          duration: service.duration,
+        },
+      })
+    )
+  );
+
+  // 3. Create Users
   const userPassword = await hashPassword('client@example.com');
   const barberPassword = await hashPassword('barber@example.com');
 
@@ -51,6 +81,8 @@ async function main() {
     },
   });
 
+  const status = barberStatuses.find((s) => s.description.includes('SENIOR_BARBER')) || barberStatuses[0];
+
   const barber = await prisma.barber.create({
     data: {
       email: 'barber@example.com',
@@ -59,55 +91,56 @@ async function main() {
       phoneNumber: '+380931112233',
       password: barberPassword,
       role: 'BARBER',
-      status: 'SENIOR_BARBER',
       barbershopId: barbershop.id,
+      statusId: status.id,
     },
   });
 
-  const service = await prisma.service.create({
-    data: {
-      name: 'Individual Haircut',
-      duration: 60,
-      barberId: barber.id,
-    },
-  });
+  // 4. Connect Barber to Services
+  for (const service of services) {
+    await prisma.barberService.create({
+      data: {
+        barberId: barber.id,
+        serviceId: service.id,
+      },
+    });
+  }
 
+  // 5. Add Service Prices
   await prisma.servicePrice.createMany({
-    data: [
-      {
-        serviceId: service.id,
-        barberStatus: 'BARBER',
-        price: 550,
-      },
-      {
-        serviceId: service.id,
-        barberStatus: 'SENIOR_BARBER',
-        price: 650,
-      },
-    ],
+    data: seedData.servicesPrices.map(
+      (sp: { serviceId: number; barberStatusId: number; price: number }) => ({
+        serviceId: sp.serviceId,
+        barberStatusId: sp.barberStatusId,
+        price: sp.price,
+      })
+    ),
   });
 
-  const slotTimes = getTomorrowSlots();
-  const slotDuration = 30;
-  const slotsRequired = service.duration / slotDuration;
-  const appointmentSlots = slotTimes.slice(0, slotsRequired);
-
+  // 6. Create Appointment for the first service
+  const selectedService = services[0];
   const appointment = await prisma.appointment.create({
     data: {
       status: 'CONFIRMED',
       userEmail: user.email,
       barberId: barber.id,
-      serviceId: service.id,
+      serviceId: selectedService.id,
     },
   });
 
+  // 7. Create TimeSlots
+  const slotTimes = getTomorrowSlots();
+  const slotDuration = 30;
+  const slotsRequired = selectedService.duration / slotDuration;
+  const appointmentSlots = slotTimes.slice(0, slotsRequired);
+
   await Promise.all(
-    slotTimes.map(async (time) => {
+    slotTimes.map((time) => {
       const isBooked = appointmentSlots.some(
         (appointmentTime) => appointmentTime.getTime() === time.getTime()
       );
 
-      await prisma.timeSlot.create({
+      return prisma.timeSlot.create({
         data: {
           startTime: time,
           barberId: barber.id,
