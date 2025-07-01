@@ -9,7 +9,11 @@ export const initialAuthState: authState = {
   user: {
     id: -1,
     email: '',
-    role: ''
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    role: '',
+    createdAt: ''
   },
   token: ''
 }

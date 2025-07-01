@@ -3,8 +3,8 @@ import { UserRepository } from '@barbershop-app/user';
 import { JwtService } from '@nestjs/jwt';
 import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { promisify } from 'util';
-import { AuthResult, CreateUserDto } from '@barbershop-app/models';
-import { JwtPayload } from '@barbershop-app/models';
+import { AuthResult, CreateUserDto, JwtPayload } from '@barbershop-app/models';
+import { User } from '@prisma/client';
 
 const scrypt = promisify(_scrypt);
 
@@ -19,14 +19,24 @@ export class AuthService {
     return { payload: user, token: this.signToken(user) }
   }
 
+  getPayloadFromUser(user: User) {
+    return {
+      id: user.id,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      phoneNumber: user.phoneNumber,
+      role: user.role,
+      createdAt: user.createdAt.toString()
+    }
+  }
+
   async validateUser(email: string, entered_password: string): Promise<JwtPayload | null> {
-    const user = await this.userRepo.findByEmail(email);
+    const user: User = await this.userRepo.findByEmail(email);
 
-    if (!user || !await this.IsPasswordCorrect(entered_password, user.password))
-      return null;
+    if (!user || !await this.IsPasswordCorrect(entered_password, user.password)) return null;
 
-    const { password: _, ...payload } = user;
-    return payload;
+    return this.getPayloadFromUser(user);
   }
 
   async SignUp(createUserDto: CreateUserDto): Promise<AuthResult> {
@@ -35,7 +45,7 @@ export class AuthService {
     createUserDto.password = await this.hashPassword(createUserDto.password);
     const user = await this.userRepo.create(createUserDto);
 
-    const { password: _, ...payload } = user;
+    const payload = this.getPayloadFromUser(user);
     return { payload, token: this.signToken(payload) };
   }
 
