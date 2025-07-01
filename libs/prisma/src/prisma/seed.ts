@@ -87,21 +87,25 @@ async function main() {
     ],
   });
 
+  const slotTimes = getTomorrowSlots();
+  const slotDuration = 30;
+  const slotsRequired = service.duration / slotDuration;
+  const appointmentSlots = slotTimes.slice(0, slotsRequired);
+
   const appointment = await prisma.appointment.create({
     data: {
-      time: new Date(),
       status: 'CONFIRMED',
-      userId: user.id,
+      userEmail: user.email,
       barberId: barber.id,
       serviceId: service.id,
     },
   });
 
-  const slotTimes = getTomorrowSlots();
-
   await Promise.all(
-    slotTimes.map(async (time, index) => {
-      const isBooked = index % 5 === 0; // Кожен 5-й слот буде заброньований
+    slotTimes.map(async (time) => {
+      const isBooked = appointmentSlots.some(
+        (appointmentTime) => appointmentTime.getTime() === time.getTime()
+      );
 
       await prisma.timeSlot.create({
         data: {
