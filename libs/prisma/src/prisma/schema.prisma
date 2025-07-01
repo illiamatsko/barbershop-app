@@ -36,48 +36,56 @@ model Barbershop {
 }
 
 model Barber {
-  id           Int           @id @default(autoincrement())
-  email        String        @unique
+  id           Int             @id @default(autoincrement())
+  email        String          @unique
   password     String
   firstName    String
   lastName     String
-  phoneNumber  String        @unique
-  status       BarberStatus  @default(BARBER)
-  role         Role          @default(BARBER)
-  createdAt    DateTime      @default(now())
-  barbershop   Barbershop    @relation(fields: [barbershopId], references: [id])
+  phoneNumber  String          @unique
+  role         Role            @default(BARBER)
+  createdAt    DateTime        @default(now())
+  barbershop   Barbershop      @relation(fields: [barbershopId], references: [id])
   barbershopId Int
-  services     Service[]
+  services     BarberService[]
+  status       BarberStatus    @relation(fields: [statusId], references: [id])
+  statusId     Int
   appointments Appointment[]
   TimeSlot     TimeSlot[]
 }
 
-enum BarberStatus {
-  BARBER
-  SENIOR_BARBER
-  GRAND_BARBER
-  GENERAL_BARBER
-  PRIME_BARBER
-  BOSS
-}
-
-model Service {
+model BarberStatus {
   id           Int            @id @default(autoincrement())
-  name         String         @unique
-  duration     Int
-  Barber       Barber         @relation(fields: [barberId], references: [id])
-  barberId     Int
-  Appointment  Appointment[]
+  description  String
+  barbers      Barber[]
   ServicePrice ServicePrice[]
 }
 
-model ServicePrice {
-  service      Service      @relation(fields: [serviceId], references: [id])
-  serviceId    Int
-  barberStatus BarberStatus
-  price        Int
+model BarberService {
+  barber    Barber  @relation(fields: [barberId], references: [id])
+  barberId  Int
+  service   Service @relation(fields: [serviceId], references: [id])
+  serviceId Int
 
-  @@id([serviceId, barberStatus])
+  @@id([barberId, serviceId])
+}
+
+model Service {
+  id           Int             @id @default(autoincrement())
+  name         String          @unique
+  duration     Int
+  appointments Appointment[]
+  servicePrice ServicePrice[]
+  barbers      BarberService[]
+}
+
+model ServicePrice {
+  service        Service      @relation(fields: [serviceId], references: [id])
+  serviceId      Int
+  barberStatus   BarberStatus @relation(fields: [barberStatusId], references: [id])
+  barberStatusId Int
+  price          Int
+
+  @@id([serviceId, barberStatusId])
 }
 
 model TimeSlot {
