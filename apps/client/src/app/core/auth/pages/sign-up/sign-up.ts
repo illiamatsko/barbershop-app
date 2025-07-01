@@ -6,6 +6,7 @@ import { matchValidator } from '../../validators/match.validator';
 import { FormField, PhoneInput } from '@barbershop-app/ui';
 import { RouterLink } from '@angular/router';
 import { phoneNumberValidator } from '../../validators/phone-number.validator';
+import { CreateUserDto } from '@barbershop-app/models';
 
 @Component({
   selector: 'app-sign-up',
@@ -66,9 +67,8 @@ export class SignUp {
   onSubmit() {
     if (this.signUpForm.invalid) return;
 
-    const { email, password } = this.signUpForm.getRawValue();
-    if (!email || !password) return;
+    const { confirmPassword: _, ...user } = this.signUpForm.getRawValue();
 
-    this.authService.signUp(email, password);
+    this.authService.signUp(user as CreateUserDto);
   }
 }

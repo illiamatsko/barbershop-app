@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environment';
 import { AuthStore } from '../../features/state/auth/auth.store';
 import { authState } from '../../features/state/auth/auth.state';
-import { JwtPayload } from '@barbershop-app/models';
+import { CreateUserDto, JwtPayload } from '@barbershop-app/models';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -18,17 +18,18 @@ export class AuthService {
       next: res => {
         localStorage.setItem('token', res.token);
         this.authStore.setUser(res);
+        this.error.set('');
       },
       error: (e) => this.error.set(e.error?.message || 'Unknown error. Please, try again later.')
     })
   }
 
-  signUp(email: string, password: string) {
-    this.httpClient.post<authState>(`${this.API_URL}/auth/sign-up`, { email, password }).subscribe({
+  signUp(user: CreateUserDto) {
+    this.httpClient.post<authState>(`${this.API_URL}/auth/sign-up`, user).subscribe({
       next: res => {
         localStorage.setItem('token', res.token);
         this.authStore.setUser(res);
-        this.error.set('')
+        this.error.set('');
       },
       error: (e) => this.error.set(e.error?.message || 'Unknown error. Please, try again later.')
     })
