@@ -1,23 +1,24 @@
 import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { LocalGuard } from './guards/local.guard';
-import { AuthRequest } from '../interfaces/auth-request.interface';
-import { CreateUserDto, JwtPayload } from '@barbershop-app/models';
-import { JwtGuard } from './guards/jwt.guard';
+import { AuthRequest, CreateUserDto, JwtPayload } from '@barbershop-app/types';
+import { SignInUseCase, SignUpUseCase } from '@barbershop-app/auth/application';
+import { JwtGuard, LocalGuard } from '@barbershop-app/auth/infrastructure';
 
-@Controller('auth')
+@Controller()
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private signInUseCase: SignInUseCase,
+    private signUpUseCase: SignUpUseCase,
+    ) {}
 
   @UseGuards(LocalGuard)
   @Post('sign-in')
   SignIn(@Req() req: AuthRequest) {
-    return this.authService.SignIn(req.user);
+    return this.signInUseCase.execute(req.user);
   }
 
   @Post('sign-up')
   SignUp(@Body() createUserDto: CreateUserDto) {
-    return this.authService.SignUp(createUserDto);
+    return this.signUpUseCase.execute(createUserDto);
   }
 
   @UseGuards(JwtGuard)

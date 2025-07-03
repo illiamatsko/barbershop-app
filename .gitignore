@@ -52,3 +52,4 @@ typings/
 nx.json.backup
 
 .angular
+.dev

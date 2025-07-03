@@ -75,6 +75,7 @@
         "buildDepsTargetName": "build-deps",
         "watchDepsTargetName": "watch-deps"
       }
-    }
+    },
+    "./tools/plugins/implicit-libs.ts"
   ]
 }
