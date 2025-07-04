@@ -1,4 +1,4 @@
-import { JwtPayload } from '@barbershop-app/models';
+import { JwtPayload } from '@barbershop-app/shared/types';
 
 export interface authState {
   user: JwtPayload,

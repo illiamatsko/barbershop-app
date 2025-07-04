@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Service } from '@prisma/client';
 import { BarberRepository, ServiceRepository } from '@barbershop-app/core/domain';
+import { ServiceEntity } from '@barbershop-app/core/domain';
 
 @Injectable()
 export class GetBarberServicesUseCase {
@@ -9,12 +9,12 @@ export class GetBarberServicesUseCase {
     private readonly serviceRepo: ServiceRepository
   ) {}
 
-  async execute(barberId: number): Promise<Service[]> {
+  async execute(barberId: number): Promise<ServiceEntity[]> {
     const barberServices = await this.barberRepo.getServicesByBarberId(barberId);
 
-    const services = [];
-    for (const obj of barberServices) {
-      const service = await this.serviceRepo.getById(obj.serviceId);
+    const services: ServiceEntity[] = [];
+    for (const { serviceId } of barberServices) {
+      const service = await this.serviceRepo.getById(serviceId);
       if (service) services.push(service);
     }
 

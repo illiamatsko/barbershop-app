@@ -3,7 +3,7 @@ import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from '../user/user.module';
 import { JwtStrategy, LocalStrategy } from '@barbershop-app/auth/infrastructure';
-import { SignInUseCase, SignUpUseCase, ValidateUserUseCase } from '@barbershop-app/auth/application';
+import { SignInUseCase, SignUpUseCase } from '@barbershop-app/auth/application';
 import { AuthTokenGenerator, PasswordHelper, PasswordRepository, UserRepository } from '@barbershop-app/core/domain';
 import {
   JwtAuthTokenGenerator,
@@ -30,7 +30,6 @@ import { BcryptPasswordHelper } from '@barbershop-app/utils/infrastructure';
       JwtStrategy,
       SignInUseCase,
       SignUpUseCase,
-      ValidateUserUseCase,
       {
         provide: UserRepository,
         useClass: PrismaUserRepository

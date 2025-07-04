@@ -25,7 +25,7 @@
 
       "@barbershop-app/service/application": ["libs/api/service/application/index.ts"],
 
-      "@barbershop-app/types": ["libs/shared/types/index.ts"],
+      "@barbershop-app/shared/types": ["libs/shared/types/index.ts"],
       "@barbershop-app/ui": ["libs/client/ui/index.ts"],
 
       "@barbershop-app/utils/infrastructure": ["libs/shared/utils/infrastructure/index.ts"]

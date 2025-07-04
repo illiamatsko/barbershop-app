@@ -1,5 +1,5 @@
-import { JwtPayload } from '@barbershop-app/types';
+import { UserDto } from '@barbershop-app/shared/types';
 
 export abstract class AuthTokenGenerator {
-  abstract sign(payload: JwtPayload): Promise<string>;
+  abstract sign(payload: UserDto): string;
 }

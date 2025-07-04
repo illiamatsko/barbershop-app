@@ -1,8 +1,8 @@
 import { Prisma } from '@prisma/client';
-import { JwtPayload } from '@barbershop-app/types';
+import { UserEntity } from '../entities/user.entity';
 
 export abstract class UserRepository {
-  abstract create(createUserDto: Prisma.UserCreateInput): Promise<JwtPayload>
+  abstract create(createUserDto: Prisma.UserCreateInput): Promise<UserEntity>
 
-  abstract findByEmail(email: string): Promise<JwtPayload | null>
+  abstract findByEmail(email: string): Promise<UserEntity | null>
 }

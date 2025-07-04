@@ -1,7 +1,7 @@
-import { Service } from '@prisma/client';
+import { ServiceEntity } from '../entities/service.entity';
 
 export abstract class ServiceRepository {
-  abstract getAll(): Promise<Service[]>
+  abstract getAll(): Promise<ServiceEntity[]>
 
-  abstract getById(id: number): Promise<Service | null>
+  abstract getById(id: number): Promise<ServiceEntity | null>
 }

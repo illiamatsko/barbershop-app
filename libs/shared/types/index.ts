@@ -1,5 +1,8 @@
-export * from './interfaces/auth-result.interface';
-export * from './interfaces/auth-request.interface';
 export * from './interfaces/jwt-payload.interface';
-export * from './dtos/create-user.dto';
-export * from './interfaces/base-user.interface';
+
+export * from './dtos/sign-up-user.dto';
+export * from './dtos/sign-in-user.dto';
+export * from './dtos/barber.dto';
+export * from './dtos/service.dto';
+export * from './dtos/time-slot.dto';
+export * from './dtos/user.dto';

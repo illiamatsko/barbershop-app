@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environment';
 import { AuthStore } from '../../features/state/auth/auth.store';
 import { authState } from '../../features/state/auth/auth.state';
-import { CreateUserDto, JwtPayload } from '@barbershop-app/models';
+import { SignUpUserDto, JwtPayload } from '@barbershop-app/shared/types';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -24,7 +24,7 @@ export class AuthService {
     })
   }
 
-  signUp(user: CreateUserDto) {
+  signUp(user: SignUpUserDto) {
     this.httpClient.post<authState>(`${this.API_URL}/auth/sign-up`, user).subscribe({
       next: res => {
         localStorage.setItem('token', res.token);

@@ -1,6 +1,6 @@
 import { Request } from 'express';
-import { JwtPayload } from './jwt-payload.interface';
+import { UserDto } from '@barbershop-app/shared/types';
 
 export interface AuthRequest extends Request {
-  user: JwtPayload
+  user: UserDto
 }

@@ -1,7 +1,9 @@
-import { BaseUser } from './base-user.interface';
-
-export interface JwtPayload extends BaseUser {
+export interface JwtPayload {
   id: number;
-  role: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  role: '';
   createdAt: string;
 }

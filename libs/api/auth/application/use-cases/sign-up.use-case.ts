@@ -1,6 +1,8 @@
-import { AuthResult, CreateUserDto, JwtPayload } from '@barbershop-app/types';
+import { SignUpUserDto } from '@barbershop-app/shared/types';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { AuthTokenGenerator, PasswordHelper, UserRepository } from '@barbershop-app/core/domain';
+import { AuthResult } from '../interfaces/auth-result.interface';
+import { UserEntityToDto } from '@barbershop-app/core/domain';
 
 
 @Injectable()
@@ -11,12 +13,13 @@ export class SignUpUseCase {
     private passwordHelper: PasswordHelper
     ) {}
 
-  async execute(createUserDto: CreateUserDto): Promise<AuthResult> {
+  async execute(createUserDto: SignUpUserDto): Promise<AuthResult> {
     if(await this.userRepo.findByEmail(createUserDto.email)) throw new BadRequestException('Email already exists')
 
     createUserDto.password = await this.passwordHelper.hashPassword(createUserDto.password);
-    const user: JwtPayload = await this.userRepo.create(createUserDto);
+    const userEntity = await this.userRepo.create(createUserDto);
+    const userDto = UserEntityToDto(userEntity);
 
-    return { payload: user, token: await this.tokenGenerator.sign(user) };
+    return { payload: userDto, token: this.tokenGenerator.sign(userDto) };
   }
 }

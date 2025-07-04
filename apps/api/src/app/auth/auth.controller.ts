@@ -1,7 +1,9 @@
 import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
-import { AuthRequest, CreateUserDto, JwtPayload } from '@barbershop-app/types';
+import { SignUpUserDto, UserDto } from '@barbershop-app/shared/types';
 import { SignInUseCase, SignUpUseCase } from '@barbershop-app/auth/application';
 import { JwtGuard, LocalGuard } from '@barbershop-app/auth/infrastructure';
+import { AuthResult, AuthRequest } from '@barbershop-app/auth/application';
+
 
 @Controller()
 export class AuthController {
@@ -12,18 +14,18 @@ export class AuthController {
 
   @UseGuards(LocalGuard)
   @Post('sign-in')
-  SignIn(@Req() req: AuthRequest) {
+  SignIn(@Req() req: AuthRequest): Promise<AuthResult> {
     return this.signInUseCase.execute(req.user);
   }
 
   @Post('sign-up')
-  SignUp(@Body() createUserDto: CreateUserDto) {
-    return this.signUpUseCase.execute(createUserDto);
+  SignUp(@Body() signUpUserDto: SignUpUserDto): Promise<AuthResult> {
+    return this.signUpUseCase.execute(signUpUserDto);
   }
 
   @UseGuards(JwtGuard)
   @Get('me')
-  GetUserFromToken(@Req() req: AuthRequest): JwtPayload {
+  GetUserFromToken(@Req() req: AuthRequest): UserDto {
     return req.user;
   }
 }

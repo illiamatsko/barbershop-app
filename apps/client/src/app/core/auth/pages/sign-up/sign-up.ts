@@ -3,18 +3,18 @@ import { CommonModule } from '@angular/common';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../auth.service';
 import { matchValidator } from '../../validators/match.validator';
-import { FormField, PhoneInput } from '@barbershop-app/ui';
 import { RouterLink } from '@angular/router';
 import { phoneNumberValidator } from '../../validators/phone-number.validator';
-import { CreateUserDto } from '@barbershop-app/models';
+import { SignUpUserDto } from '@barbershop-app/shared/types';
+import { FormField, PhoneInput } from '@barbershop-app/ui';
 
 @Component({
   selector: 'app-sign-up',
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormField,
     RouterLink,
+    FormField,
     PhoneInput,
   ],
   templateUrl: './sign-up.html',
@@ -69,6 +69,6 @@ export class SignUp {
 
     const { confirmPassword: _, ...user } = this.signUpForm.getRawValue();
 
-    this.authService.signUp(user as CreateUserDto);
+    this.authService.signUp(user as SignUpUserDto);
   }
 }

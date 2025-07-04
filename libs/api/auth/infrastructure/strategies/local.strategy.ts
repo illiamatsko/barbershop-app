@@ -1,19 +1,27 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
-import { ValidateUserUseCase } from '@barbershop-app/auth/application';
+import { PasswordHelper, PasswordRepository, UserEntityToDto, UserRepository } from '@barbershop-app/core/domain';
+
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
-  constructor(private validateUserUseCase: ValidateUserUseCase) {
+  constructor(
+    private passwordRepo: PasswordRepository,
+    private userRepo: UserRepository,
+    private passwordHelper: PasswordHelper
+    ) {
     super({ usernameField: 'email' });
   }
 
   async validate(email: string, password: string) {
-    const res = await this.validateUserUseCase.execute(email, password);
+    const bd_password = await this.passwordRepo.getHashedPasswordByUserEmail(email);
 
-    if(!res) throw new UnauthorizedException('Incorrect email or password')
+    if (!bd_password || !await this.passwordHelper.checkPassword(password, bd_password)) return null;
 
-    return res;
+    const userEntity = await this.userRepo.findByEmail(email);
+    if(!userEntity) throw new UnauthorizedException('Incorrect email or password')
+
+    return UserEntityToDto(userEntity);
   }
 }

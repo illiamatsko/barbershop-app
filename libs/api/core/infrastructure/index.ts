@@ -6,3 +6,8 @@ export * from './persistence/repositories/prisma-user.repository'
 export * from './persistence/repositories/prisma-password.repository'
 
 export * from './services/jwt-token-generator'
+
+export * from './persistence/repositories/mappers/barber.mapper'
+export * from './persistence/repositories/mappers/user.mapper'
+export * from './persistence/repositories/mappers/service.mapper'
+export * from './persistence/repositories/mappers/time-slot.mapper'
