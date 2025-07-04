@@ -3,7 +3,7 @@ import { authRoutes } from './core/auth/auth.routes';
 
 export const appRoutes: Route[] = [
   {
-    path: 'auth-dir',
+    path: 'auth',
     children: authRoutes
   }
 ];

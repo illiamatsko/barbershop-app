@@ -4,7 +4,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
-  selector: 'infrastructure-phone-input',
+  selector: 'lib-phone-input',
   imports: [CommonModule, ReactiveFormsModule, NgxMaskDirective],
   templateUrl: './phone-input.html',
   styleUrl: './phone-input.css',

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'infrastructure-form-field',
+  selector: 'lib-form-field',
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './form-field.html',
   styleUrl: './form-field.css',
