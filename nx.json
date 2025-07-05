@@ -76,6 +76,12 @@
         "watchDepsTargetName": "watch-deps"
       }
     },
-    "./tools/plugins/implicit-libs.ts"
+    "./tools/plugins/implicit-libs.ts",
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "eslint:lint"
+      }
+    }
   ]
 }

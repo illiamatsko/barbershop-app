@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { ServiceRepository } from '@barbershop-app/core/domain';
-import { ServiceEntity } from '@barbershop-app/core/domain';
+import { ServiceRepository } from '@barbershop-app/api/core/domain';
+import { ServiceEntity } from '@barbershop-app/api/core/domain';
 import { ServiceToDomainEntity } from './mappers/service.mapper';
 
 

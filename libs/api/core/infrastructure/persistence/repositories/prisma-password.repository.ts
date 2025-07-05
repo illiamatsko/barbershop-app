@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { PasswordRepository } from '@barbershop-app/core/domain';
+import { PasswordRepository } from '@barbershop-app/api/core/domain';
 
 
 @Injectable()

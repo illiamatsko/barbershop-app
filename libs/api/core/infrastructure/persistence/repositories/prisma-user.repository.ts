@@ -1,8 +1,8 @@
 import { Prisma } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { UserRepository } from '@barbershop-app/core/domain';
-import { UserEntity } from '@barbershop-app/core/domain';
+import { UserRepository } from '@barbershop-app/api/core/domain';
+import { UserEntity } from '@barbershop-app/api/core/domain';
 import { UserToDomainEntity } from './mappers/user.mapper';
 
 

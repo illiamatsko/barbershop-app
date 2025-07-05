@@ -1,8 +1,7 @@
 import { SignUpUserDto } from '@barbershop-app/shared/types';
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { AuthTokenGenerator, PasswordHelper, UserRepository } from '@barbershop-app/core/domain';
+import { AuthTokenGenerator, PasswordHelper, UserRepository, UserMapper } from '@barbershop-app/api/core/domain';
 import { AuthResult } from '../interfaces/auth-result.interface';
-import { UserEntityToDto } from '@barbershop-app/core/domain';
 
 
 @Injectable()
@@ -18,8 +17,9 @@ export class SignUpUseCase {
 
     createUserDto.password = await this.passwordHelper.hashPassword(createUserDto.password);
     const userEntity = await this.userRepo.create(createUserDto);
-    const userDto = UserEntityToDto(userEntity);
+    const userDto = UserMapper.toDto(userEntity);
+    const jwtPayload = UserMapper.toJwtPayload(userEntity);
 
-    return { payload: userDto, token: this.tokenGenerator.sign(userDto) };
+    return { payload: userDto, token: this.tokenGenerator.sign(jwtPayload) };
   }
 }

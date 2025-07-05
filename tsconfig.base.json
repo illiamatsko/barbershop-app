@@ -15,20 +15,31 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@barbershop-app/core/domain": ["libs/api/core/domain/index.ts"],
-      "@barbershop-app/core/infrastructure": ["libs/api/core/infrastructure/index.ts"],
+      "@barbershop-app/api/core/domain": ["libs/api/core/domain/index.ts"],
+      "@barbershop-app/api/core/infrastructure": ["libs/api/core/infrastructure/index.ts"],
 
-      "@barbershop-app/auth/application": ["libs/api/auth/application/index.ts"],
-      "@barbershop-app/auth/infrastructure": ["libs/api/auth/infrastructure/index.ts"],
+      "@barbershop-app/api/auth/application": ["libs/api/auth/application/index.ts"],
+      "@barbershop-app/api/auth/infrastructure": ["libs/api/auth/infrastructure/index.ts"],
 
-      "@barbershop-app/barber/application": ["libs/api/barber/application/index.ts"],
+      "@barbershop-app/api/barber/application": ["libs/api/barber/application/index.ts"],
 
-      "@barbershop-app/service/application": ["libs/api/service/application/index.ts"],
+      "@barbershop-app/api/service/application": ["libs/api/service/application/index.ts"],
 
+      "@barbershop-app/client/core/application": ["libs/client/core/application/index.ts"],
+      "@barbershop-app/client/core/infrastructure": ["libs/client/core/infrastructure/index.ts"],
+      "@barbershop-app/client/core/domain": ["libs/client/core/domain/index.ts"],
+
+      "@barbershop-app/client/auth/presentation": ["libs/client/auth/presentation/index.ts"],
+      "@barbershop-app/client/auth/application": ["libs/client/auth/application/index.ts"],
+      "@barbershop-app/client/auth/domain": ["libs/client/auth/domain/index.ts"],
+      "@barbershop-app/client/auth/infrastructure": ["libs/client/auth/infrastructure/index.ts"],
+
+      "@barbershop-app/client/layout/presentation": ["libs/client/layout/presentation/index.ts"],
+
+      "@barbershop-app/shared/ui": ["libs/shared/ui/index.ts"],
+      "@barbershop-app/shared/env": ["libs/shared/env/index.ts"],
       "@barbershop-app/shared/types": ["libs/shared/types/index.ts"],
-      "@barbershop-app/ui": ["libs/client/ui/index.ts"],
-
-      "@barbershop-app/utils/infrastructure": ["libs/shared/utils/infrastructure/index.ts"]
+      "@barbershop-app/shared/utils/infrastructure": ["libs/shared/utils/infrastructure/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

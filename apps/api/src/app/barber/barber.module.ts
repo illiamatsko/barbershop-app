@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { GetAllBarbersUseCase, GetBarberServicesUseCase } from '@barbershop-app/barber/application';
-import { PrismaBarberRepository, PrismaModule, PrismaServiceRepository } from '@barbershop-app/core/infrastructure';
+import { GetAllBarbersUseCase, GetBarberServicesUseCase } from '@barbershop-app/api/barber/application';
+import { PrismaBarberRepository, PrismaModule, PrismaServiceRepository } from '@barbershop-app/api/core/infrastructure';
 import { ServiceModule } from '../service/service.module';
-import { BarberRepository, ServiceRepository } from '@barbershop-app/core/domain';
+import { BarberRepository, ServiceRepository } from '@barbershop-app/api/core/domain';
 
 
 @Module({

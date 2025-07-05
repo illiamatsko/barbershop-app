@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { BarberRepository } from '@barbershop-app/core/domain';
+import { BarberRepository } from '@barbershop-app/api/core/domain';
 import { PrismaService } from '../prisma/prisma.service';
-import { BarberEntity, TimeSlotEntity } from '@barbershop-app/core/domain';
+import { BarberEntity, TimeSlotEntity } from '@barbershop-app/api/core/domain';
 import { BarberToDomainEntity } from './mappers/barber.mapper';
 import { TimeSlotToDomainEntity } from './mappers/time-slot.mapper';
 

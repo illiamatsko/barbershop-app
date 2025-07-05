@@ -1,4 +1,4 @@
-import { RolesEnum } from '@barbershop-app/core/domain';
+import { RolesEnum } from '@barbershop-app/api/core/domain';
 import { Role as PrismaRole } from '@prisma/client';
 
 export const RoleMap: Record<PrismaRole, RolesEnum> = {

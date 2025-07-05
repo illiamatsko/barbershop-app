@@ -4,5 +4,6 @@ export interface UserDto {
   firstName: string,
   lastName: string,
   phoneNumber: string,
+  role: string,
   createdAt: string,
 }

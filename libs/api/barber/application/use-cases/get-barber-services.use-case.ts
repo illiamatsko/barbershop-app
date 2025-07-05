@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { BarberRepository, ServiceRepository } from '@barbershop-app/core/domain';
-import { ServiceEntity } from '@barbershop-app/core/domain';
+import { BarberRepository, ServiceRepository } from '@barbershop-app/api/core/domain';
+import { ServiceEntity } from '@barbershop-app/api/core/domain';
 
 @Injectable()
 export class GetBarberServicesUseCase {

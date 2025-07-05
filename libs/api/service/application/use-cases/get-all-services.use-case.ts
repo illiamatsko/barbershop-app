@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ServiceRepository, ServiceEntity } from '@barbershop-app/core/domain';
+import { ServiceRepository, ServiceEntity } from '@barbershop-app/api/core/domain';
 
 
 @Injectable()

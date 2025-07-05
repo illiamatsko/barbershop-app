@@ -1,9 +1,8 @@
 import { UserDto } from '@barbershop-app/shared/types';
-import { AuthTokenGenerator } from '@barbershop-app/core/domain';
-import { Injectable } from '@nestjs/common';
+import { AuthTokenGenerator, UserMapper } from '@barbershop-app/api/core/domain';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthResult } from '../interfaces/auth-result.interface';
-import { UserRepository } from '@barbershop-app/core/domain';
-import { UserEntityToDto } from '@barbershop-app/core/domain';
+import { UserRepository } from '@barbershop-app/api/core/domain';
 
 
 @Injectable()
@@ -14,8 +13,10 @@ export class SignInUseCase {
 
   async execute(signInDto: UserDto): Promise<AuthResult> {
     const userEntity = await this.userRepo.findByEmail(signInDto.email)
-    const userDto = UserEntityToDto(userEntity)
+    if(!userEntity) throw new UnauthorizedException();
 
-    return { payload: userDto, token: this.tokenGenerator.sign(userDto) }
+    const userDto = UserMapper.toDto(userEntity);
+    const jwtPayload = UserMapper.toJwtPayload(userEntity);
+    return { payload: userDto, token: this.tokenGenerator.sign(jwtPayload) }
   }
 }

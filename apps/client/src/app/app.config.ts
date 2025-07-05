@@ -6,10 +6,12 @@ import {
 import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { provideToastr } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideEnvironmentNgxMask } from 'ngx-mask'
+import { ErrorInterceptor } from '@barbershop-app/client/core/infrastructure';
+import { AuthGateway } from '@barbershop-app/client/auth/domain';
+import { ApiAuthGateway } from '@barbershop-app/client/auth/infrastructure';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -21,6 +23,10 @@ export const appConfig: ApplicationConfig = {
     provideToastr({
       positionClass: 'toast-bottom-right'
     }),
-    provideEnvironmentNgxMask()
+    provideEnvironmentNgxMask(),
+    {
+      provide: AuthGateway,
+      useClass: ApiAuthGateway
+    }
   ],
 };

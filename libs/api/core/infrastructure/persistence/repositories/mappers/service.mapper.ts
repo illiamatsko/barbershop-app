@@ -1,5 +1,5 @@
 import { Service } from '@prisma/client';
-import { ServiceEntity } from '@barbershop-app/core/domain';
+import { ServiceEntity } from '@barbershop-app/api/core/domain';
 
 export function ServiceToDomainEntity(service: Service): ServiceEntity {
   return {

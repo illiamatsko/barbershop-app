@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { SignUpUserDto, UserDto } from '@barbershop-app/shared/types';
-import { SignInUseCase, SignUpUseCase } from '@barbershop-app/auth/application';
-import { JwtGuard, LocalGuard } from '@barbershop-app/auth/infrastructure';
-import { AuthResult, AuthRequest } from '@barbershop-app/auth/application';
+import { SignInUseCase, SignUpUseCase } from '@barbershop-app/api/auth/application';
+import { JwtGuard, LocalGuard } from '@barbershop-app/api/auth/infrastructure';
+import { AuthResult, AuthRequest } from '@barbershop-app/api/auth/application';
 
 
 @Controller()

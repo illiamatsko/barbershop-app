@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { PrismaModule, PrismaUserRepository } from '@barbershop-app/core/infrastructure';
-import { UserRepository } from '@barbershop-app/core/domain';
+import { PrismaModule, PrismaUserRepository } from '@barbershop-app/api/core/infrastructure';
+import { UserRepository } from '@barbershop-app/api/core/domain';
 
 @Module({
   providers: [

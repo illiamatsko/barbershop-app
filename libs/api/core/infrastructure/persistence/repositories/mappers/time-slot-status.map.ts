@@ -1,4 +1,4 @@
-import { TimeSlotStatusesEnum } from '@barbershop-app/core/domain';
+import { TimeSlotStatusesEnum } from '@barbershop-app/api/core/domain';
 import { SlotStatus } from '@prisma/client';
 
 export const TimeSlotStatusMap: Record<SlotStatus, TimeSlotStatusesEnum> = {

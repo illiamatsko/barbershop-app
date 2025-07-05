@@ -1,7 +1,7 @@
 import { promisify } from 'util';
 import { randomBytes, scrypt as _scrypt } from 'crypto';
 import { Injectable } from '@nestjs/common';
-import { PasswordHelper } from '@barbershop-app/core/domain';
+import { PasswordHelper } from '@barbershop-app/api/core/domain';
 
 const scrypt = promisify(_scrypt);
 

@@ -1,6 +1,6 @@
 import { User } from '@prisma/client';
 import { RoleMap } from './roles.map';
-import { UserEntity } from '@barbershop-app/core/domain';
+import { UserEntity } from '@barbershop-app/api/core/domain';
 
 export function UserToDomainEntity(user: User): UserEntity {
   return {

@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Header } from './shared/components/header/header';
-import {Footer} from "./shared/components/footer/footer";
-import { AuthService } from './core/auth/auth.service';
+import { GetUserFromTokenUseCase } from '@barbershop-app/client/auth/application';
+import { Header, Footer } from '@barbershop-app/client/layout/presentation';
 
 @Component({
   imports: [RouterModule, Header, Footer],
@@ -12,9 +11,9 @@ import { AuthService } from './core/auth/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App implements OnInit{
-  private authService = inject(AuthService);
+  private getUserFromTokenUseCase = inject(GetUserFromTokenUseCase);
 
   ngOnInit() {
-    this.authService.getUserFromToken()
+    this.getUserFromTokenUseCase.execute();
   }
 }

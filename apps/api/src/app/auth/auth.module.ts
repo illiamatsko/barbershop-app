@@ -2,16 +2,16 @@ import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from '../user/user.module';
-import { JwtStrategy, LocalStrategy } from '@barbershop-app/auth/infrastructure';
-import { SignInUseCase, SignUpUseCase } from '@barbershop-app/auth/application';
-import { AuthTokenGenerator, PasswordHelper, PasswordRepository, UserRepository } from '@barbershop-app/core/domain';
+import { JwtStrategy, LocalStrategy } from '@barbershop-app/api/auth/infrastructure';
+import { SignInUseCase, SignUpUseCase } from '@barbershop-app/api/auth/application';
+import { AuthTokenGenerator, PasswordHelper, PasswordRepository, UserRepository } from '@barbershop-app/api/core/domain';
 import {
   JwtAuthTokenGenerator,
   PrismaModule,
   PrismaPasswordRepository,
   PrismaUserRepository
-} from '@barbershop-app/core/infrastructure';
-import { BcryptPasswordHelper } from '@barbershop-app/utils/infrastructure';
+} from '@barbershop-app/api/core/infrastructure';
+import { BcryptPasswordHelper } from '@barbershop-app/shared/utils/infrastructure';
 
 
 @Module({
