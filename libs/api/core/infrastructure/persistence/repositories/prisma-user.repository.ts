@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { UserRepository } from '@barbershop-app/api/core/domain';
 import { UserEntity } from '@barbershop-app/api/core/domain';
-import { UserToDomainEntity } from './mappers/user.mapper';
+import { UserMapper } from './mappers/user.mapper';
 
 
 @Injectable()
@@ -11,7 +11,7 @@ export class PrismaUserRepository implements UserRepository {
   constructor(private prisma: PrismaService) {}
 
   async create(createUserDto: Prisma.UserCreateInput): Promise<UserEntity> {
-    return UserToDomainEntity(await this.prisma.user.create({ data: createUserDto }));
+    return UserMapper.toDomain(await this.prisma.user.create({ data: createUserDto }));
   }
 
   async findByEmail(email: string): Promise<UserEntity | null> {
@@ -20,6 +20,6 @@ export class PrismaUserRepository implements UserRepository {
     });
     if(!user) return null;
 
-    return UserToDomainEntity(user);
+    return UserMapper.toDomain(user);
   }
 }

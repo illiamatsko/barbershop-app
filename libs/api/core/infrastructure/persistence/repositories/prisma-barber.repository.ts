@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { BarberRepository } from '@barbershop-app/api/core/domain';
 import { PrismaService } from '../prisma/prisma.service';
 import { BarberEntity, TimeSlotEntity } from '@barbershop-app/api/core/domain';
-import { BarberToDomainEntity } from './mappers/barber.mapper';
-import { TimeSlotToDomainEntity } from './mappers/time-slot.mapper';
+import { BarberMapper } from './mappers/barber.mapper';
+import { TimeSlotMapper } from './mappers/time-slot.mapper';
 
 
 @Injectable()
@@ -17,7 +17,7 @@ export class PrismaBarberRepository implements BarberRepository {
 
     const barberEntities = [];
     for(const barber of barbers) {
-      barberEntities.push(BarberToDomainEntity(barber));
+      barberEntities.push(BarberMapper.toDomain(barber));
     }
 
     return barberEntities;
@@ -30,7 +30,7 @@ export class PrismaBarberRepository implements BarberRepository {
 
     const timeSlotEntities = [];
     for(const timeSlot of timeSlots) {
-      timeSlotEntities.push(TimeSlotToDomainEntity(timeSlot));
+      timeSlotEntities.push(TimeSlotMapper.toDomain(timeSlot));
     }
 
     return timeSlotEntities;

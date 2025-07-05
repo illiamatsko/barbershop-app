@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { ServiceRepository } from '@barbershop-app/api/core/domain';
 import { ServiceEntity } from '@barbershop-app/api/core/domain';
-import { ServiceToDomainEntity } from './mappers/service.mapper';
+import { ServiceMapper } from './mappers/service.mapper';
 
 
 @Injectable()
@@ -14,18 +14,19 @@ export class PrismaServiceRepository implements ServiceRepository{
 
     const serviceEntities = [];
     for(const service of services) {
-      serviceEntities.push(ServiceToDomainEntity(service));
+      serviceEntities.push(ServiceMapper.toDomain(service));
     }
 
     return serviceEntities;
   }
 
   async getById(id: number): Promise<ServiceEntity | null> {
-    return ServiceToDomainEntity(
-      await this.prisma.service.findUnique({
+    const service = await this.prisma.service.findUnique({
       where: {
         id,
       },
-    }));
+    });
+
+    return service ? ServiceMapper.toDomain(service) : null;
   }
 }
