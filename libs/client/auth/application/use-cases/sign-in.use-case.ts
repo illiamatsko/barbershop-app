@@ -1,6 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { SignInUserDto } from '@barbershop-app/shared/types';
-import { AuthGateway } from '@barbershop-app/client/auth/domain';
+import { AuthGateway, SignInDto } from '@barbershop-app/client/auth/domain';
 import { AuthStore, ErrorStore } from '@barbershop-app/client/core/application';
 
 
@@ -10,8 +9,8 @@ export class SignInUseCase {
   private authStore = inject(AuthStore);
   private errorStore = inject(ErrorStore);
 
-  execute(signInUserDto: SignInUserDto) {
-    this.authGateway.SignIn(signInUserDto).subscribe({
+  execute(signInDto: SignInDto) {
+    this.authGateway.SignIn(signInDto).subscribe({
       next: res => {
         localStorage.setItem('token', res.token);
         this.authStore.setUser(res);

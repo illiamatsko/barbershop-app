@@ -1,9 +1,9 @@
-import { SignInUserDto, SignUpUserDto, UserDto } from '@barbershop-app/shared/types';
+import { UserDto } from '@barbershop-app/shared/types';
 import { inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@barbershop-app/shared/env';
-import { AuthGateway } from '@barbershop-app/client/auth/domain';
-import { authState } from '@barbershop-app/client/core/application';
+import { AuthGateway, SignInDto, SignUpDto } from '@barbershop-app/client/auth/domain';
+import { AuthState } from '@barbershop-app/client/core/application';
 
 
 export class ApiAuthGateway implements AuthGateway {
@@ -12,12 +12,12 @@ export class ApiAuthGateway implements AuthGateway {
 
   error = signal('');
 
-  SignIn(signInUserDto: SignInUserDto) {
-    return this.httpClient.post<authState>(`${this.API_URL}/auth/sign-in`, signInUserDto);
+  SignIn(signInDto: SignInDto) {
+    return this.httpClient.post<AuthState>(`${this.API_URL}/auth/sign-in`, signInDto);
   }
 
-  SignUp(user: SignUpUserDto) {
-    return this.httpClient.post<authState>(`${this.API_URL}/auth/sign-up`, user);
+  SignUp(user: SignUpDto) {
+    return this.httpClient.post<AuthState>(`${this.API_URL}/auth/sign-up`, user);
   }
 
   GetUserFromToken(token: string, headers: { Authorization: string }) {

@@ -1,11 +1,11 @@
 import { UserDto } from '@barbershop-app/shared/types';
 
-export interface authState {
+export interface AuthState {
   user: UserDto;
   token: string;
 }
 
-export const initialAuthState: authState = {
+export const initialAuthState: AuthState = {
   user: {
     id: -1,
     email: '',

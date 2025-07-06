@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { matchValidator, phoneNumberValidator } from '@barbershop-app/client/auth/infrastructure';
 import { RouterLink } from '@angular/router';
-import { SignUpUserDto } from '@barbershop-app/shared/types';
 import { FormField, PhoneInput } from '@barbershop-app/shared/ui';
 import { SignUpUseCase } from '@barbershop-app/client/auth/application';
 import { ErrorStore } from '@barbershop-app/client/core/application';
+import { SignUpDto } from '@barbershop-app/client/auth/domain';
 
 
 @Component({
@@ -71,6 +71,6 @@ export class SignUp {
 
     const { confirmPassword: _, ...user } = this.signUpForm.getRawValue();
 
-    this.signUpUseCase.execute(user as SignUpUserDto);
+    this.signUpUseCase.execute(user as SignUpDto);
   }
 }
