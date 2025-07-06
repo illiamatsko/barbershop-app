@@ -4,7 +4,7 @@ import {
   UserRepository,
 } from '@barbershop-app/api/core/domain';
 import { UnauthorizedException } from '@nestjs/common';
-import { AuthResult } from '../interfaces/auth-result.interface';
+import { AuthResult } from '../types/auth-result.interface';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { SignInCommand } from '../commands/sign-in.command';
 

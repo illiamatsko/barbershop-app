@@ -22,4 +22,18 @@ export class PrismaUserRepository implements UserRepository {
 
     return UserMapper.toDomain(user);
   }
+
+  async findByEmailOrPhone(email: string, phoneNumber: string): Promise<UserEntity | null> {
+    const user = await this.prisma.user.findFirst({
+      where: {
+        OR: [
+          { email },
+          { phoneNumber }
+        ],
+      },
+    });
+    if(!user) return null;
+
+    return UserMapper.toDomain(user);
+  }
 }
