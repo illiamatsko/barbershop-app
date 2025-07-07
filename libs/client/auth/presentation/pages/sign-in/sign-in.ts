@@ -12,7 +12,7 @@ import { AuthForm } from '../auth-form/auth-form';
   selector: 'app-sign-in',
   imports: [CommonModule, ReactiveFormsModule, FormField, RouterLink, AuthForm],
   templateUrl: './sign-in.html',
-  styleUrl: './sign-in.css',
+  styleUrls: ['./sign-in.css', '../form-styles.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignIn {

@@ -21,7 +21,7 @@ import { AuthForm } from '../auth-form/auth-form';
     AuthForm,
   ],
   templateUrl: './sign-up.html',
-  styleUrl: './sign-up.css',
+  styleUrls: ['./sign-up.css', '../form-styles.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignUp {

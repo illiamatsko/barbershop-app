@@ -1,11 +1,11 @@
 import { Route } from '@angular/router';
 import { authRoutes } from '@barbershop-app/client/auth/presentation';
-import { HeroSection } from '@barbershop-app/client/layout/presentation';
+import { Landing } from '@barbershop-app/client/layout/presentation';
 
 export const appRoutes: Route[] = [
   {
     path: '',
-    component: HeroSection
+    component: Landing
   },
   {
     path: 'auth',
