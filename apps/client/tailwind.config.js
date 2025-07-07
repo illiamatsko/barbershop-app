@@ -8,7 +8,11 @@ module.exports = {
     ...createGlobPatternsForDependencies(__dirname),
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        rounded: ['"Baloo 2"', 'cursive'],
+      },
+    },
   },
   plugins: [],
 };
