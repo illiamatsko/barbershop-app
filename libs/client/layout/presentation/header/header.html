@@ -1,17 +1,27 @@
 <header class="header">
-  <div routerLink="" class="header-logo">Barbershop</div>
+  <div class="left">
+    <lib-logo-icon class="logo" />
 
-  <nav class="header-nav">
-    <a routerLink="" class="header-link">Main</a>
-    <a routerLink="" class="header-link">Services</a>
-    <a routerLink="" class="header-link">Masters</a>
-    <a routerLink="" class="header-link">Contacts</a>
+    <div class="brand">
+      <div class="title">STRIX</div>
+      <div class="subtitle">Barber Shop</div>
+    </div>
+  </div>
 
-    @if(!isSignedIn()) {
-      <button (click)="navigateToSignIn()" class="header-sign-in">Sign In</button>
-      <button (click)="navigateToSignUp()" class="header-sign-in">Sign Up</button>
-    } @else {
-      <lib-profile-icon/>
-    }
+  <nav class="nav">
+    <a href="#" class="link">Home</a>
+    <a href="#" class="link">About</a>
+    <a href="#" class="link">Services</a>
   </nav>
+
+  <div class="user-controls">
+    @if (!isSignedIn()) {
+      <div class="auth">
+        <button (click)="navigateToSignIn()" class="sign-in">Sign In</button>
+        <button (click)="navigateToSignUp()" routerLink="auth/sign-up" class="sign-up">Sign Up</button>
+      </div>
+    } @else {
+      <lib-profile-icon class="profile-icon" />
+    }
+  </div>
 </header>

@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import { ProfileIcon } from '@barbershop-app/shared/ui';
+import { LogoIcon, ProfileIcon } from '@barbershop-app/shared/ui';
 import { AuthStore } from '@barbershop-app/client/core/application';
 
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, RouterLink, ProfileIcon],
+  imports: [CommonModule, RouterLink, ProfileIcon, LogoIcon],
   templateUrl: './header.html',
   styleUrl: './header.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

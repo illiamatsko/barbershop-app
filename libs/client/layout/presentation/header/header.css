@@ -1,20 +1,51 @@
 .header {
-  @apply flex items-center justify-between px-6 py-2 bg-black text-white shadow-md;
+  @apply absolute top-0 left-0 w-full z-20 px-12 py-6 flex items-center justify-between;
 }
 
-.header-logo {
-  @apply text-2xl font-bold tracking-wide;
+.left {
+  @apply flex items-center gap-4;
 }
 
-.header-nav {
-  @apply flex items-center space-x-6 text-sm uppercase font-medium;
+.logo {
+  @apply w-14 h-14 text-yellow-500 fill-current;
 }
 
-.header-link {
-  @apply hover:text-gray-300 transition;
-  text-decoration: none;
+.brand {
+  @apply leading-tight;
 }
 
-.header-sign-in {
-  @apply bg-white text-black text-sm font-semibold px-4 py-2 rounded hover:bg-gray-200 transition;
+.title {
+  @apply text-3xl font-extrabold text-white;
+}
+
+.subtitle {
+  @apply text-xs tracking-widest text-yellow-500 uppercase;
+}
+
+.nav {
+  @apply hidden md:flex gap-8 items-center text-xl font-bold uppercase flex-1 justify-center;
+}
+
+.link {
+  @apply text-white transition-colors duration-200 hover:text-yellow-500;
+}
+
+.user-controls {
+  @apply hidden md:flex items-center justify-end min-w-[180px];
+}
+
+.auth {
+  @apply flex items-center gap-4 font-medium;
+}
+
+.sign-in {
+  @apply text-white hover:text-yellow-500 transition;
+}
+
+.sign-up {
+  @apply px-5 py-2 border border-yellow-500 text-yellow-500 rounded hover:bg-yellow-500 hover:text-black transition;
+}
+
+.profile-icon {
+  @apply text-yellow-500 fill-current cursor-pointer mb-1;
 }
