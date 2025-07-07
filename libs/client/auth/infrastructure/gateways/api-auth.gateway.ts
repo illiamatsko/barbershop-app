@@ -1,5 +1,5 @@
 import { UserDto } from '@barbershop-app/shared/types';
-import { inject, signal } from '@angular/core';
+import { inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@barbershop-app/shared/env';
 import { AuthGateway, SignInDto, SignUpDto } from '@barbershop-app/client/auth/domain';
@@ -9,8 +9,6 @@ import { AuthState } from '@barbershop-app/client/core/application';
 export class ApiAuthGateway implements AuthGateway {
   private httpClient = inject(HttpClient);
   private API_URL = environment.apiUrl;
-
-  error = signal('');
 
   SignIn(signInDto: SignInDto) {
     return this.httpClient.post<AuthState>(`${this.API_URL}/auth/sign-in`, signInDto);
