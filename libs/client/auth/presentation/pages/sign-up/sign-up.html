@@ -1,74 +1,110 @@
-<div class="form-div">
-  <form (submit)="onSubmit()" [formGroup]="signUpForm" class="auth-form">
-    <h2 class="form-title">Sign Up</h2>
+<app-auth-form>
+  <form (submit)="onSubmit()" [formGroup]="signUpForm">
+    <div class="auth-heading">
+      <div class="auth-subtitle">
+        <div class="w-10 h-px bg-yellow-500"></div>
+        <span>Create account</span>
+        <div class="w-10 h-px bg-yellow-500"></div>
+      </div>
+      <h2 class="auth-title">Sign Up</h2>
+    </div>
 
     <div>
-      <lib-form-field id="email" type="email" label="E-mail" placeholder="johndoe@example.com" [control]="signUpForm.controls.email"></lib-form-field>
-      @if(getError('email', signUpForm.controls.email)) {
-        <p class="form-error"><strong>Email</strong> is invalid</p>
+      <lib-form-field
+        id="email"
+        type="email"
+        label="Email Address"
+        placeholder="your@email.com"
+        [control]="signUpForm.controls.email"
+      ></lib-form-field>
+      @if (getError('email', signUpForm.controls.email)) {
+        <p class="auth-error">Email is invalid</p>
       }
-      @if(getError('required', signUpForm.controls.email)) {
-        <p class="form-error"><strong>Email</strong> is required</p>
+      @if (getError('required', signUpForm.controls.email)) {
+        <p class="auth-error">Email is required</p>
       }
     </div>
 
-    <div class="form-row">
-      <div class="form-half">
-        <lib-form-field id="firstName" type="text" label="First name" placeholder="John" [control]="signUpForm.controls.firstName"></lib-form-field>
-        @if(getError('required', signUpForm.controls.firstName)) {
-          <p class="form-error"><strong>First name</strong> is required</p>
+    <div class="auth-2col">
+      <div>
+        <lib-form-field
+          id="firstName"
+          type="text"
+          label="First name"
+          placeholder="John"
+          [control]="signUpForm.controls.firstName"
+        ></lib-form-field>
+        @if (getError('required', signUpForm.controls.firstName)) {
+          <p class="auth-error">First name is required</p>
         }
       </div>
 
-      <div class="form-half">
-        <lib-form-field id="lastName" type="text" label="Last name" placeholder="Doe" [control]="signUpForm.controls.lastName"></lib-form-field>
-        @if(getError('required', signUpForm.controls.lastName)) {
-          <p class="form-error"><strong>Last name</strong> is required</p>
+      <div>
+        <lib-form-field
+          id="lastName"
+          type="text"
+          label="Last name"
+          placeholder="Doe"
+          [control]="signUpForm.controls.lastName"
+        ></lib-form-field>
+        @if (getError('required', signUpForm.controls.lastName)) {
+          <p class="auth-error">Last name is required</p>
         }
       </div>
     </div>
 
     <div>
       <lib-phone-input [control]="signUpForm.controls.phoneNumber"></lib-phone-input>
-      @if(getError('required', signUpForm.controls.phoneNumber)) {
-        <p class="form-error"><strong>Phone number</strong> is required</p>
+      @if (getError('required', signUpForm.controls.phoneNumber)) {
+        <p class="auth-error">Phone number is required</p>
       }
-      @if(getError('invalidPhone', signUpForm.controls.phoneNumber)) {
-        <p class="form-error"><strong>Phone number</strong> is invalid</p>
-      }
-    </div>
-
-
-    <div>
-      <lib-form-field id="password" type="password" label="Password" [control]="signUpForm.controls.password"></lib-form-field>
-      @if(getError('minlength', signUpForm.controls.password)) {
-        <p class="form-error"><strong>Password</strong> must be at least 6 characters long</p>
-      }
-      @if(getError('required', signUpForm.controls.password)) {
-        <p class="form-error"><strong>Password</strong> is required</p>
+      @if (getError('invalidPhone', signUpForm.controls.phoneNumber)) {
+        <p class="auth-error">Phone number is invalid</p>
       }
     </div>
 
     <div>
-      <lib-form-field id="confirmPassword" type="password" label="Confirm password" [control]="signUpForm.controls.confirmPassword"></lib-form-field>
-      @if(confirmPasswordError) {
-        <p class="form-error"><strong>Passwords</strong> do not match</p>
+      <lib-form-field
+        id="password"
+        type="password"
+        label="Password"
+        placeholder="Enter your password"
+        [control]="signUpForm.controls.password"
+      ></lib-form-field>
+      @if (getError('minlength', signUpForm.controls.password)) {
+        <p class="auth-error">Password must be at least 6 characters</p>
+      }
+      @if (getError('required', signUpForm.controls.password)) {
+        <p class="auth-error">Password is required</p>
       }
     </div>
 
-    @if(error()) {
-      <div class="form-message">
-        <p class="form-error-message">{{ error() }}</p>
+    <div>
+      <lib-form-field
+        id="confirmPassword"
+        type="password"
+        label="Confirm password"
+        placeholder="Repeat password"
+        [control]="signUpForm.controls.confirmPassword"
+      ></lib-form-field>
+      @if (confirmPasswordError) {
+        <p class="auth-error">Passwords do not match</p>
+      }
+    </div>
+
+    @if (error()) {
+      <div class="text-center">
+        <p class="auth-error">{{ error() }}</p>
       </div>
     }
 
-    <button type="submit" class="form-button">
+    <button type="submit" class="auth-button">
       Sign Up
     </button>
 
-    <p class="form-footer">
+    <p class="auth-footer">
       Already have an account?
-      <a routerLink="/auth/sign-in" class="form-footer-link">Sign In</a>
+      <a routerLink="/auth/sign-in" class="auth-footer-link">Sign in here</a>
     </p>
   </form>
-</div>
+</app-auth-form>

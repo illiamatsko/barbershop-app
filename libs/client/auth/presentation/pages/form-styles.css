@@ -1,0 +1,27 @@
+.auth-heading {
+  @apply text-center mb-4;
+}
+
+.auth-subtitle {
+  @apply flex items-center justify-center gap-3 text-yellow-500 uppercase text-sm font-medium;
+}
+
+.auth-title {
+  @apply text-white text-3xl font-bold mt-3;
+}
+
+.auth-error {
+  @apply text-sm text-red-500 mt-1;
+}
+
+.auth-button {
+  @apply mt-10 w-full bg-yellow-500 text-black py-3 rounded-md font-medium hover:bg-yellow-600 transition;
+}
+
+.auth-footer {
+  @apply mt-6 text-center text-sm text-gray-400;
+}
+
+.auth-footer-link {
+  @apply text-yellow-500 hover:underline font-medium;
+}

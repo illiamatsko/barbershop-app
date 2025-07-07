@@ -1,0 +1,11 @@
+.auth-wrapper {
+  @apply relative min-h-screen flex items-center justify-center bg-cover bg-center;
+}
+
+.auth-overlay {
+  @apply absolute inset-0 bg-black/90 z-0;
+}
+
+.auth-box {
+  @apply relative z-10 w-full max-w-md p-8 rounded-2xl bg-neutral-900 shadow-lg;
+}

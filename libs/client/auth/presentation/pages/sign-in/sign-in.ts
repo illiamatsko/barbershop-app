@@ -5,11 +5,12 @@ import { FormField } from '@barbershop-app/shared/ui';
 import { RouterLink } from '@angular/router';
 import { SignInUseCase } from '@barbershop-app/client/auth/application';
 import { ErrorStore } from '@barbershop-app/client/core/application';
+import { AuthForm } from '../auth-form/auth-form';
 
 
 @Component({
   selector: 'app-sign-in',
-  imports: [CommonModule, ReactiveFormsModule, FormField, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, FormField, RouterLink, AuthForm],
   templateUrl: './sign-in.html',
   styleUrl: './sign-in.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -19,16 +20,14 @@ export class SignIn {
   private errorStore = inject(ErrorStore);
   error = this.errorStore.formError;
 
-  signInForm = new FormGroup(
-    {
-      email: new FormControl<string>('', {
-        validators: [Validators.required, Validators.email],
-      }),
-      password: new FormControl<string>('', {
-        validators: [Validators.required, Validators.minLength(6)],
-      }),
-    }
-  );
+  signInForm = new FormGroup({
+    email: new FormControl<string>('', {
+      validators: [Validators.required, Validators.email],
+    }),
+    password: new FormControl<string>('', {
+      validators: [Validators.required, Validators.minLength(6)],
+    }),
+  });
 
   getError(errorCode: string, control: AbstractControl) {
     if (!control) return false;

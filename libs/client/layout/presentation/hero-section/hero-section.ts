@@ -1,16 +1,22 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { Header } from '../header/header';
+import { NgStyle } from '@angular/common';
 
 
 @Component({
   selector: 'app-hero-section',
-  imports: [Header],
+  imports: [Header, NgStyle],
   templateUrl: './hero-section.html',
   styleUrl: './hero-section.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroSection implements AfterViewInit, OnDestroy {
-  backgroundUrl = 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80';
+  backgroundImg =
+    'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80';
+
+  get backgroundStyle() {
+    return { 'background-image': `url(${this.backgroundImg})` };
+  }
 
   ngAfterViewInit() {
     window.addEventListener('scroll', this.onScroll);

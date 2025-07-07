@@ -7,6 +7,7 @@ import { FormField, PhoneInput } from '@barbershop-app/shared/ui';
 import { SignUpUseCase } from '@barbershop-app/client/auth/application';
 import { ErrorStore } from '@barbershop-app/client/core/application';
 import { SignUpDto } from '@barbershop-app/client/auth/domain';
+import { AuthForm } from '../auth-form/auth-form';
 
 
 @Component({
@@ -17,6 +18,7 @@ import { SignUpDto } from '@barbershop-app/client/auth/domain';
     RouterLink,
     FormField,
     PhoneInput,
+    AuthForm,
   ],
   templateUrl: './sign-up.html',
   styleUrl: './sign-up.css',
