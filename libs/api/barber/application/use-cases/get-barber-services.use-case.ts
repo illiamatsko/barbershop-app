@@ -1,23 +1,27 @@
-import { Injectable } from '@nestjs/common';
-import { BarberRepository, ServiceRepository } from '@barbershop-app/api/core/domain';
-import { ServiceEntity } from '@barbershop-app/api/core/domain';
+import { BarberRepository, ServiceMapper, ServiceRepository } from '@barbershop-app/api/core/domain';
+import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+import { GetBarberServicesQuery } from '../queries/get-barber-services.query';
+import { ServiceDto } from '@barbershop-app/shared/types';
 
-@Injectable()
-export class GetBarberServicesUseCase {
+@QueryHandler(GetBarberServicesQuery)
+export class GetBarberServicesUseCase implements IQueryHandler<GetBarberServicesQuery> {
   constructor(
     private readonly barberRepo: BarberRepository,
     private readonly serviceRepo: ServiceRepository
   ) {}
 
-  async execute(barberId: number): Promise<ServiceEntity[]> {
-    const barberServices = await this.barberRepo.getServicesByBarberId(barberId);
+  async execute(query: GetBarberServicesQuery): Promise<ServiceDto[]> {
+    const barberServices = await this.barberRepo.getServicesByBarberId(query.barberId);
 
-    const services: ServiceEntity[] = [];
+    const servicesDtos: ServiceDto[] = [];
     for (const { serviceId } of barberServices) {
-      const service = await this.serviceRepo.getById(serviceId);
-      if (service) services.push(service);
+      const serviceEntity = await this.serviceRepo.getById(serviceId);
+      if (serviceEntity) {
+        const serviceDto = ServiceMapper.toDto(serviceEntity)
+        servicesDtos.push(serviceDto);
+      }
     }
 
-    return services;
+    return servicesDtos;
   }
 }

@@ -3,11 +3,12 @@ import { GetAllBarbersUseCase, GetBarberServicesUseCase } from '@barbershop-app/
 import { PrismaBarberRepository, PrismaModule, PrismaServiceRepository } from '@barbershop-app/api/core/infrastructure';
 import { ServiceModule } from '../service/service.module';
 import { BarberRepository, ServiceRepository } from '@barbershop-app/api/core/domain';
+import { BarberController } from './barber.controller';
 
 
 @Module({
   imports: [ServiceModule, PrismaModule],
-  controllers: [],
+  controllers: [BarberController],
   providers:
     [
       GetAllBarbersUseCase,
