@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CustomerRepository } from '@barbershop-app/api/core/domain';
 import { CustomerEntity } from '@barbershop-app/api/core/domain';
-import { CustomerMapper } from './mappers/customerMapper';
+import { CustomerMapper } from './mappers/customer.mapper';
 
 
 @Injectable()

@@ -1,15 +1,14 @@
 import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { CustomerRepository } from '@barbershop-app/api/core/domain';
+import { UserRepository } from '@barbershop-app/api/core/domain';
 import { UserDto } from '@barbershop-app/shared/types';
 import { UserMapper } from '@barbershop-app/api/core/domain';
 
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(
-    private userRepo: CustomerRepository) {
+  constructor(private userRepo: UserRepository) {
     const secret = process.env['JWT_SECRET'];
     if (!secret) {
       throw new Error('JWT_SECRET is not defined in environment variables');

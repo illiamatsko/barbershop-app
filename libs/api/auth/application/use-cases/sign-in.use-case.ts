@@ -1,7 +1,7 @@
 import {
   AuthTokenGenerator,
   UserMapper,
-  CustomerRepository,
+  UserRepository
 } from '@barbershop-app/api/core/domain';
 import { UnauthorizedException } from '@nestjs/common';
 import { AuthResult } from '../types/auth-result.interface';
@@ -11,7 +11,7 @@ import { SignInCommand } from '../commands/sign-in.command';
 @CommandHandler(SignInCommand)
 export class SignInUseCase implements ICommandHandler<SignInCommand> {
   constructor(
-    private userRepo: CustomerRepository,
+    private userRepo: UserRepository,
     private tokenGenerator: AuthTokenGenerator
   ) {}
 
