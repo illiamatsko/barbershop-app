@@ -20,7 +20,7 @@ export class PrismaUserRepository implements UserRepository {
 
     if(!user) return null;
 
-    if (user.role === 'CLIENT') {
+    if (user.role === 'CUSTOMER') {
       if (!user.customer) return null;
 
       return CustomerMapper.toDomain(user.customer, user);

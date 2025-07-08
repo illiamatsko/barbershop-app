@@ -11,10 +11,14 @@ export class PrismaCustomerRepository implements CustomerRepository {
   constructor(private prisma: PrismaService) {}
 
   async create(createCustomerDto: Prisma.UserCreateInput): Promise<CustomerEntity> {
-    const user = await this.prisma.user.create({ data: createCustomerDto })
-    const customer = await this.prisma.customer.create({ data: { userId: user.id } });
+    const result = await this.prisma.$transaction(async (tx) => {
+      const user = await tx.user.create({ data: createCustomerDto });
+      const customer = await tx.customer.create({ data: { userId: user.id } });
 
-    return CustomerMapper.toDomain(customer, user);
+      return { user, customer };
+    });
+
+    return CustomerMapper.toDomain(result.customer, result.user);
   }
 
   async findByEmail(email: string): Promise<CustomerEntity | null> {

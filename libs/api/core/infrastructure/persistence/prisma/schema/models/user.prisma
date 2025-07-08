@@ -5,7 +5,7 @@ model User {
   firstName   String
   lastName    String
   phoneNumber String   @unique
-  role        Role     @default(CLIENT)
+  role        Role     @default(CUSTOMER)
   createdAt   DateTime @default(now())
 
   barber   Barber?
@@ -13,7 +13,7 @@ model User {
 }
 
 enum Role {
-  CLIENT
+  CUSTOMER
   BARBER
   MANAGER
   SUPER_ADMIN

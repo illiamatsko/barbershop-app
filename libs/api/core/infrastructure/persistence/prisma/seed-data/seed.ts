@@ -71,7 +71,7 @@ async function main() {
       firstName: 'Customer',
       lastName: 'Smith',
       phoneNumber: '1122334455',
-      role: 'CLIENT',
+      role: 'CUSTOMER',
     },
   });
 
