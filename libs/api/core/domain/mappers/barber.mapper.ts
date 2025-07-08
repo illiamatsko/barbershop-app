@@ -9,6 +9,8 @@ export class BarberMapper {
       firstName: barber.firstName,
       lastName: barber.lastName,
       phoneNumber: barber.phoneNumber,
+      experience: barber.experience,
+      status: barber.status,
       createdAt: barber.createdAt.toISOString(),
     };
   }

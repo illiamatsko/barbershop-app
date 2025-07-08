@@ -1,14 +1,14 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
-import { PasswordHelper, PasswordRepository, UserMapper, UserRepository } from '@barbershop-app/api/core/domain';
+import { PasswordHelper, PasswordRepository, UserMapper, CustomerRepository } from '@barbershop-app/api/core/domain';
 
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(
     private passwordRepo: PasswordRepository,
-    private userRepo: UserRepository,
+    private userRepo: CustomerRepository,
     private passwordHelper: PasswordHelper
     ) {
     super({ usernameField: 'email' });

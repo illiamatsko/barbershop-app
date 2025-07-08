@@ -4,5 +4,7 @@ export interface BarberDto {
   firstName: string,
   lastName: string,
   phoneNumber: string,
+  experience: number,
+  status: string,
   createdAt: string,
 }

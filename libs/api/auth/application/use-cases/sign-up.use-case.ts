@@ -1,5 +1,5 @@
 import { BadRequestException } from '@nestjs/common';
-import { AuthTokenGenerator, PasswordHelper, UserRepository, UserMapper } from '@barbershop-app/api/core/domain';
+import { AuthTokenGenerator, PasswordHelper, CustomerRepository, UserMapper } from '@barbershop-app/api/core/domain';
 import { AuthResult } from '../types/auth-result.interface';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { SignUpCommand } from '../commands/sign-up.command';
@@ -8,7 +8,7 @@ import { SignUpCommand } from '../commands/sign-up.command';
 @CommandHandler(SignUpCommand)
 export class SignUpUseCase implements ICommandHandler<SignUpCommand> {
   constructor(
-    private userRepo: UserRepository,
+    private userRepo: CustomerRepository,
     private tokenGenerator: AuthTokenGenerator,
     private passwordHelper: PasswordHelper
     ) {}

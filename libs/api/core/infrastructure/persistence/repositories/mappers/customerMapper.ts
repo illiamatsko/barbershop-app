@@ -1,11 +1,11 @@
-import { User } from '@prisma/client';
 import { RoleMap } from './roles.map';
-import { UserEntity } from '@barbershop-app/api/core/domain';
+import { CustomerEntity } from '@barbershop-app/api/core/domain';
+import { Customer, User } from '@prisma/client';
 
-export class UserMapper {
-  static toDomain(user: User): UserEntity {
+export class CustomerMapper {
+  static toDomain(customer: Customer, user: User): CustomerEntity {
     return {
-      id: user.id,
+      id: customer.id,
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
@@ -14,4 +14,5 @@ export class UserMapper {
       createdAt: user.createdAt,
     };
   }
+
 }

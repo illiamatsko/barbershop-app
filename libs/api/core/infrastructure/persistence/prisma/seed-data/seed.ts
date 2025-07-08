@@ -41,6 +41,7 @@ async function main() {
       (status: { name: string; description: string }) =>
         prisma.barberStatus.create({
           data: {
+            name: status.name,
             description: status.description,
           },
         })
@@ -88,9 +89,7 @@ async function main() {
     },
   });
 
-  const status =
-    barberStatuses.find((s) => s.description.includes('SENIOR_BARBER')) ||
-    barberStatuses[0];
+  const status = barberStatuses[3];
 
   const barberUser = await prisma.user.create({
     data: {
@@ -112,7 +111,7 @@ async function main() {
     },
   });
 
-  const review = await prisma.review.create({
+  await prisma.review.create({
     data: {
       content: 'Very professional and friendly!',
       starRating: 5,

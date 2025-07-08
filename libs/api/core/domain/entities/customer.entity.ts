@@ -1,6 +1,6 @@
 import { RolesEnum } from './enums/roles.enum';
 
-export interface UserEntity {
+export interface CustomerEntity {
   id: number;
   email: string;
   firstName: string;
