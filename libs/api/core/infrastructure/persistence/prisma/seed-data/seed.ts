@@ -60,17 +60,23 @@ async function main() {
   );
 
   // 3. Create Users
-  const userPassword = await hashPassword('client@example.com');
+  const customerPassword = await hashPassword('customer@example.com');
   const barberPassword = await hashPassword('barber-old@example.com');
 
-  const user = await prisma.user.create({
+  const customerUser = await prisma.user.create({
     data: {
-      email: 'client@example.com',
-      firstName: 'Client',
-      lastName: 'Test',
-      phoneNumber: '0987654321',
-      password: userPassword,
+      email: 'customer@example.com',
+      password: customerPassword,
+      firstName: 'Customer',
+      lastName: 'Smith',
+      phoneNumber: '1122334455',
       role: 'CLIENT',
+    },
+  });
+
+  const customer = await prisma.customer.create({
+    data: {
+      userId: customerUser.id,
     },
   });
 
@@ -86,16 +92,31 @@ async function main() {
     barberStatuses.find((s) => s.description.includes('SENIOR_BARBER')) ||
     barberStatuses[0];
 
+  const barberUser = await prisma.user.create({
+    data: {
+      email: 'barber@example.com',
+      password: barberPassword,
+      firstName: 'Barber',
+      lastName: 'Johnson',
+      phoneNumber: '1234567890',
+      role: 'BARBER',
+    },
+  });
+
   const barber = await prisma.barber.create({
     data: {
-      email: 'barber-old@example.com',
-      firstName: 'Barber',
-      lastName: 'Test',
-      phoneNumber: '+380931112233',
-      password: barberPassword,
-      role: 'BARBER',
+      userId: barberUser.id,
+      experience: 96,
       barbershopId: barbershop.id,
       statusId: status.id,
+    },
+  });
+
+  const review = await prisma.review.create({
+    data: {
+      content: 'Very professional and friendly!',
+      starRating: 5,
+      barberId: barber.id,
     },
   });
 
@@ -125,7 +146,7 @@ async function main() {
   const appointment = await prisma.appointment.create({
     data: {
       status: 'CONFIRMED',
-      userEmail: user.email,
+      customerId: customer.id,
       barberId: barber.id,
       serviceId: selectedService.id,
     },

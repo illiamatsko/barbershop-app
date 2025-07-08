@@ -1,0 +1,20 @@
+model User {
+  id          Int      @id @default(autoincrement())
+  email       String   @unique
+  password    String
+  firstName   String
+  lastName    String
+  phoneNumber String   @unique
+  role        Role     @default(CLIENT)
+  createdAt   DateTime @default(now())
+
+  barber   Barber?
+  customer Customer?
+}
+
+enum Role {
+  CLIENT
+  BARBER
+  MANAGER
+  SUPER_ADMIN
+}

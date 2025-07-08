@@ -1,0 +1,32 @@
+model Appointment {
+  id         Int               @id @default(autoincrement())
+  status     AppointmentStatus @default(CONFIRMED)
+  customer   Customer          @relation(fields: [customerId], references: [id])
+  customerId Int
+  barber     Barber            @relation(fields: [barberId], references: [id])
+  barberId   Int
+  service    Service           @relation(fields: [serviceId], references: [id])
+  serviceId  Int
+  timeSlot   TimeSlot[]
+}
+
+enum AppointmentStatus {
+  CONFIRMED
+  CANCELED
+}
+
+model TimeSlot {
+  id            Int          @id @default(autoincrement())
+  startTime     DateTime
+  barber        Barber       @relation(fields: [barberId], references: [id])
+  barberId      Int
+  appointment   Appointment? @relation(fields: [appointmentId], references: [id])
+  status        SlotStatus   @default(AVAILABLE)
+  appointmentId Int?
+}
+
+enum SlotStatus {
+  AVAILABLE
+  BOOKED
+  BLOCKED
+}

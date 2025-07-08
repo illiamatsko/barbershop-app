@@ -1,0 +1,7 @@
+model Review {
+  id         Int    @id @default(autoincrement())
+  content    String
+  starRating Int
+  barber     Barber @relation(fields: [barberId], references: [id])
+  barberId   Int
+}

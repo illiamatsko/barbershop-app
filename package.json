@@ -3,11 +3,11 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "migrate": "prisma migrate dev --schema=libs/api/core/prisma/src/lib/prisma/schema.prisma",
-    "prisma-generate": "prisma generate --schema=libs/api/core/prisma/src/lib/prisma/schema.prisma",
-    "db-reset": "prisma migrate reset --schema=libs/api/core/prisma/src/lib/prisma/schema.prisma",
-    "prisma-deploy": "prisma migrate deploy --schema=libs/api/core/prisma/src/lib/prisma/schema.prisma",
-    "seed-db": "ts-node libs/api/core/prisma/src/lib/prisma/seed-data/seed.ts"
+    "migrate": "prisma migrate dev",
+    "prisma-generate": "prisma generate",
+    "db-reset": "prisma migrate reset",
+    "prisma-deploy": "prisma migrate deploy",
+    "seed-db": "ts-node libs/api/core/infrastructure/persistence/prisma/seed-data/seed.ts"
   },
   "private": true,
   "dependencies": {
@@ -27,7 +27,7 @@
     "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-express": "^11.0.0",
     "@ngrx/signals": "^19.2.1",
-    "@prisma/client": "^6.10.1",
+    "@prisma/client": "^6.11.1",
     "bcrypt": "^6.0.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
@@ -38,7 +38,8 @@
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "~7.8.0"
+    "rxjs": "~7.8.0",
+    "swiper": "^11.2.10"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^20.0.5",
@@ -91,5 +92,8 @@
     "typescript": "~5.8.2",
     "typescript-eslint": "^8.29.0",
     "webpack-cli": "^5.1.4"
+  },
+  "prisma": {
+    "schema": "libs/api/core/infrastructure/persistence/prisma/schema/"
   }
 }

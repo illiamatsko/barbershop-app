@@ -1,0 +1,18 @@
+model Service {
+  id           Int             @id @default(autoincrement())
+  name         String          @unique
+  duration     Int
+  appointments Appointment[]
+  servicePrice ServicePrice[]
+  barbers      BarberService[]
+}
+
+model ServicePrice {
+  service        Service      @relation(fields: [serviceId], references: [id])
+  serviceId      Int
+  barberStatus   BarberStatus @relation(fields: [barberStatusId], references: [id])
+  barberStatusId Int
+  price          Int
+
+  @@id([serviceId, barberStatusId])
+}
