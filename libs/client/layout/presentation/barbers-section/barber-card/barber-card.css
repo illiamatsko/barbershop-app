@@ -1,0 +1,76 @@
+/* Barber Card Container */
+.barber-card {
+  @apply max-w-sm mx-auto rounded-3xl overflow-hidden border border-white/20 bg-neutral-800 shadow-2xl relative;
+}
+
+/* Image Container */
+.barber-card-image-container {
+  @apply relative h-[500px] overflow-hidden;
+}
+
+/* Image */
+.barber-card-image {
+  @apply w-full h-full object-cover object-center transition-transform duration-700 ease-out;
+}
+
+.barber-card:hover .barber-card-image {
+  @apply scale-110;
+}
+
+/* Gradient Overlay */
+.barber-card-gradient {
+  @apply absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent;
+}
+
+/* Info Block */
+.barber-card-info {
+  @apply absolute bottom-0 left-0 right-0 z-10 p-6 text-center text-white transition-all duration-500;
+}
+
+.barber-card:hover .barber-card-info {
+  @apply bottom-20;
+}
+
+/* Name */
+.barber-card-name {
+  @apply text-3xl font-bold mb-2;
+}
+
+/* Title */
+.barber-card-title {
+  @apply text-lg font-medium text-gray-300 mb-2;
+}
+
+/* Location Container */
+.barber-card-location {
+  @apply flex items-center justify-center text-gray-400 text-sm;
+}
+
+/* Location Icon */
+.barber-card-location-icon {
+  @apply mr-2 text-yellow-500;
+}
+
+/* Book Button Container */
+.barber-card-button-container {
+  @apply absolute left-0 right-0 z-20 px-6 opacity-0 transition-all duration-500;
+  bottom: -4rem;
+}
+
+.barber-card:hover .barber-card-button-container {
+  @apply bottom-6 opacity-100;
+}
+
+/* Book Button */
+.barber-card-button {
+  @apply w-full flex items-center justify-center gap-2 border-2 border-yellow-500 text-yellow-500 text-lg py-3 px-3 rounded-xl font-semibold transition-all duration-300;
+}
+
+.barber-card-button:hover {
+  @apply bg-yellow-500 text-black;
+}
+
+/* Button Icon */
+.barber-card-button-icon {
+  @apply w-6 h-6 fill-current;
+}

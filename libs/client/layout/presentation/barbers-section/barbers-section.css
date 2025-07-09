@@ -1,0 +1,89 @@
+/* Barbers Section */
+.barbers-section {
+  @apply relative py-28 bg-neutral-900 text-white overflow-hidden;
+}
+
+/* Container */
+.barbers-container {
+  @apply relative max-w-7xl mx-auto px-6 z-10;
+}
+
+/* Header */
+.barbers-header {
+  @apply text-center mb-16;
+}
+
+/* Header Divider Container */
+.barbers-header-divider {
+  @apply flex items-center justify-center mb-6;
+}
+
+/* Header Line */
+.barbers-header-line {
+  @apply w-16 h-px bg-yellow-500;
+}
+
+/* Header Text */
+.barbers-header-text {
+  @apply mx-4 text-yellow-500 text-sm tracking-widest uppercase font-medium;
+}
+
+/* Main Title */
+.barbers-title {
+  @apply text-4xl md:text-5xl font-bold mb-6 leading-tight;
+}
+
+/* Title Highlight */
+.barbers-title-highlight {
+  @apply text-yellow-500;
+}
+
+/* Subtitle */
+.barbers-subtitle {
+  @apply text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed;
+}
+
+/* Swiper Container */
+.barbers-swiper-container {
+  @apply relative;
+}
+
+/* Navigation Button Base */
+.barbers-nav-btn {
+  @apply absolute top-1/2 -translate-y-1/2 z-20 hover:scale-110 transition-transform duration-300;
+}
+
+/* Previous Button */
+.barbers-nav-prev {
+  @apply -left-24;
+}
+
+/* Next Button */
+.barbers-nav-next {
+  @apply -right-24;
+}
+
+/* Navigation Icon */
+.barbers-nav-icon {
+  @apply text-yellow-500 fill-current;
+}
+
+/* Stats Container */
+.barbers-stats {
+  @apply mt-16 grid grid-cols-2 md:grid-cols-3 gap-8 text-center;
+}
+
+/* Stat Item - використовуємо звичайний клас без group */
+.barbers-stat-item {
+  /* Якщо потрібні hover ефекти, додайте їх тут */
+}
+
+/* Stat Number */
+.barbers-stat-number {
+  @apply text-3xl font-bold text-yellow-500 mb-2;
+}
+
+/* Stat Label */
+.barbers-stat-label {
+  @apply text-gray-400 text-sm uppercase tracking-wider;
+}

@@ -1,41 +1,78 @@
-<section id="barbers" class="relative py-28 bg-neutral-900 text-white overflow-hidden">
-
-  <div class="max-w-7xl mx-auto px-6 relative z-10">
-    <div class="text-center mb-16">
-      <div class="flex items-center justify-center mb-6">
-        <div class="w-16 h-px bg-yellow-500"></div>
-        <div class="mx-4 text-yellow-500 text-sm tracking-widest uppercase font-medium">
+<section id="barbers" class="barbers-section">
+  <div class="barbers-container">
+    <div class="barbers-header">
+      <div class="barbers-header-divider">
+        <div class="barbers-header-line"></div>
+        <div class="barbers-header-text">
           Meet Our Team
         </div>
-        <div class="w-16 h-px bg-yellow-500"></div>
+        <div class="barbers-header-line"></div>
       </div>
-      <h2 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-        Master <span class="text-yellow-500">Craftsmen</span> Behind<br />
+      <h2 class="barbers-title">
+        Master <span class="barbers-title-highlight">Craftsmen</span> Behind<br />
         Your Perfect Style
       </h2>
-      <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+      <p class="barbers-subtitle">
         Each barber brings years of expertise, passion, and artistry to create your signature look
       </p>
     </div>
 
-    <!-- Swiper Carousel -->
+    <div class="barbers-swiper-container">
+      <button class="barbers-nav-btn barbers-nav-prev swiper-prev">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="96px"
+          height="96px"
+          viewBox="0 -960 960 960"
+          class="barbers-nav-icon"
+        >
+          <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
+        </svg>
+      </button>
 
-    <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-      <div class="group">
-        <div class="text-3xl font-bold text-yellow-500 mb-2 group-hover:scale-110 transition-transform duration-300">15+</div>
-        <div class="text-gray-400 text-sm uppercase tracking-wider">Years Combined</div>
+      <button class="barbers-nav-btn barbers-nav-next swiper-next">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="96px"
+          height="96px"
+          viewBox="0 -960 960 960"
+          class="barbers-nav-icon"
+        >
+          <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
+        </svg>
+      </button>
+
+      <!-- Swiper -->
+      <swiper-container
+        slides-per-view="3"
+        space-between="24"
+        navigation="true"
+        loop="true"
+        navigation-prev-el=".swiper-prev"
+        navigation-next-el=".swiper-next"
+        autoplay-delay="20000"
+        autoplay-disable-on-interaction="false"
+      >
+        @for (barber of barbers(); track $index) {
+          <swiper-slide>
+            <app-barber-card [barber]="barber"/>
+          </swiper-slide>
+        }
+      </swiper-container>
+    </div>
+
+    <div class="barbers-stats">
+      <div class="barbers-stat-item">
+        <div class="barbers-stat-number">15+</div>
+        <div class="barbers-stat-label">Years of Experience</div>
       </div>
-      <div class="group">
-        <div class="text-3xl font-bold text-yellow-500 mb-2 group-hover:scale-110 transition-transform duration-300">5000+</div>
-        <div class="text-gray-400 text-sm uppercase tracking-wider">Happy Clients</div>
+      <div class="barbers-stat-item">
+        <div class="barbers-stat-number">5000+</div>
+        <div class="barbers-stat-label">Happy Clients</div>
       </div>
-      <div class="group">
-        <div class="text-3xl font-bold text-yellow-500 mb-2 group-hover:scale-110 transition-transform duration-300">4.9</div>
-        <div class="text-gray-400 text-sm uppercase tracking-wider">Average Rating</div>
-      </div>
-      <div class="group">
-        <div class="text-3xl font-bold text-yellow-500 mb-2 group-hover:scale-110 transition-transform duration-300">24/7</div>
-        <div class="text-gray-400 text-sm uppercase tracking-wider">Online Booking</div>
+      <div class="barbers-stat-item">
+        <div class="barbers-stat-number">24/7</div>
+        <div class="barbers-stat-label">Online Booking</div>
       </div>
     </div>
   </div>
