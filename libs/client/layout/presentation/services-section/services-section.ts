@@ -1,14 +1,20 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ExpertiseLevelsBlock } from './expertise-levels-block/expertise-levels-block';
+import { MainServicesBlock } from './main-services-block/main-services-block';
+import { AdditionalServiceBlock } from './additional-service-block/additional-service-block';
 
 
 @Component({
   selector: 'app-services-section',
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    ExpertiseLevelsBlock,
+    MainServicesBlock,
+    AdditionalServiceBlock,
+  ],
   templateUrl: './services-section.html',
   styleUrl: './services-section.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ServicesSection {
-
-}
+export class ServicesSection {}

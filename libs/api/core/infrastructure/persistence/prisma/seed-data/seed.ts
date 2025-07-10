@@ -50,11 +50,12 @@ async function main() {
 
   // 2. Create Services
   const services = await Promise.all(
-    seedData.services.map((service: { name: string; duration: number }) =>
+    seedData.services.map((service: { name: string; duration: number; description: string }) =>
       prisma.service.create({
         data: {
           name: service.name,
           duration: service.duration,
+          description: service.description
         },
       })
     )
