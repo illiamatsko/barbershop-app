@@ -2,79 +2,97 @@
   "barberStatuses": [
     {
       "name": "BARBER",
-      "description": "A skilled barber with a good understanding of basic haircuts and beard trims."
+      "description": "Skilled professionals starting their journey with solid fundamentals and enthusiasm"
     },
     {
       "name": "SENIOR BARBER",
-      "description": "An experienced barber with advanced skills, capable of handling a wider variety of styles and techniques."
+      "description": "Experienced barbers with proven skills and consistent quality service delivery"
     },
     {
       "name": "GRAND BARBER",
-      "description": "An expert barber with exceptional skill, able to create intricate, personalized styles for clients."
+      "description": "Expert craftsmen with advanced techniques and specialized styling knowledge"
     },
     {
       "name": "PRIME BARBER",
-      "description": "A top-tier barber known for precision, creativity, and mastery in both classic and modern styles."
+      "description": "Top-tier professionals known for precision cuts and exceptional attention to detail"
     },
     {
       "name": "UNDERBOSS",
-      "description": "A senior barber with extensive experience, mentoring others while still delivering high-quality services."
+      "description": "Senior experts with mastery in complex styles and trend-setting capabilities"
     },
     {
       "name": "BOSS",
-      "description": "The highest level of barber expertise, leading by example with unmatched skill and overseeing the entire barbershop."
+      "description": "Master craftsmen with years of experience, setting industry standards and mentoring others"
     }
   ],
   "services": [
     {
       "name": "Individual Haircut",
-      "duration": 60
+      "duration": 60,
+      "description": "Personalized precision cutting with consultation and unique styling"
     },
-    { "name": "Extended Haircut", "duration": 90 },
+    { "name": "Extended Haircut",
+      "duration": 90,
+      "description": "Comprehensive service with detailed styling, finishing touches and premium care"
+    },
     {
       "name": "Beard Trim",
-      "duration": 30
+      "duration": 30,
+      "description": "Professional beard shaping and maintenance with hot towel treatment included"
     },
     {
       "name": "Haircut & Beard",
-      "duration": 90
+      "duration": 90,
+      "description": "Complete grooming package combining both services for the ultimate experience"
     },
-    { "name": "Kids’ Haircut", "duration": 60 },
+    { "name": "Kids’ Haircut",
+      "duration": 60,
+      "description": "Gentle and patient service specially designed for children with extra care"
+    },
     {
       "name": "Father & Son",
-      "duration": 120
+      "duration": 120,
+      "description": "Shared grooming session for father and son with a single barber in sequence"
     },
     {
       "name": "Haircut Touch-Up",
-      "duration": 30
+      "duration": 30,
+      "description": "Quick cleanup of edges and neckline"
     },
     {
       "name": "Beard Touch-Up",
-      "duration": 15
+      "duration": 15,
+      "description": "Defines cheek and neck lines for a sharp look"
     },
     {
       "name": "Gray Camouflage",
-      "duration": 30
+      "duration": 30,
+      "description": "Blends gray hair subtly with natural tones"
     },
     {
       "name": "Beard Camouflage",
-      "duration": 30
+      "duration": 30,
+      "description": "Conceals grays for a fuller, even-toned beard"
     },
     {
       "name": "Hair Styling",
-      "duration": 15
+      "duration": 15,
+      "description": "Professional styling using premium products"
     },
     {
       "name": "Hot Wax Depilation",
-      "duration": 15
+      "duration": 15,
+      "description": "Removes unwanted facial hair with precision"
     },
     {
       "name": "Under-Eye Patches",
-      "duration": 15
+      "duration": 15,
+      "description": "Hydrates and refreshes the under-eye area"
     },
     {
       "name": "Hot Wax Depilation + Under-Eye Patches",
-      "duration": 15
+      "duration": 15,
+      "description": "Combined treatment for smooth skin and fresh eyes"
     }
   ],
   "servicesPrices": [
