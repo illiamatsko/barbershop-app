@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ExpertiseLevelsBlock } from './expertise-levels-block/expertise-levels-block';
 import { MainServicesBlock } from './main-services-block/main-services-block';
 import { AdditionalServiceBlock } from './additional-service-block/additional-service-block';
+import { InViewDirective } from '@barbershop-app/shared/ui';
 
 
 @Component({
@@ -12,6 +13,7 @@ import { AdditionalServiceBlock } from './additional-service-block/additional-se
     ExpertiseLevelsBlock,
     MainServicesBlock,
     AdditionalServiceBlock,
+    InViewDirective
   ],
   templateUrl: './services-section.html',
   styleUrl: './services-section.css',
