@@ -27,11 +27,17 @@ export class ServicesSection implements OnInit {
   private barberGateway = inject(BarberGateway);
   private serviceGateway = inject(ServiceGateway);
 
-  services = signal<ServiceDto[]>([]);
+  mainServices = signal<ServiceDto[]>([]);
+  additionalServices = signal<ServiceDto[]>([]);
   barberStatuses = signal<BarberStatusDto[]>([]);
 
   async ngOnInit() {
-    this.services.set(await firstValueFrom(this.serviceGateway.getAllServices()));
+    this.serviceGateway.getAllServices().subscribe({
+      next: (res) => {
+        this.mainServices.set(res.filter(service => service.isMain));
+        this.additionalServices.set(res.filter(service => !service.isMain));
+      },
+    });
     this.barberStatuses.set(await firstValueFrom(this.barberGateway.getBarberStatuses()));
   }
 }

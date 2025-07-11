@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MainServiceCard } from './main-service-card/main-service-card';
+import { ServiceDto } from '@barbershop-app/shared/types';
 
 
 @Component({
@@ -10,4 +11,6 @@ import { MainServiceCard } from './main-service-card/main-service-card';
   styleUrl: './main-services-block.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MainServicesBlock {}
+export class MainServicesBlock {
+  services = input.required<ServiceDto[]>();
+}

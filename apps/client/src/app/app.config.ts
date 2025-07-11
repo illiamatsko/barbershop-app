@@ -1,5 +1,5 @@
 import {
-  ApplicationConfig,
+  ApplicationConfig, LOCALE_ID,
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection
 } from '@angular/core';
@@ -27,6 +27,7 @@ export const appConfig: ApplicationConfig = {
     provideToastr({
       positionClass: 'toast-bottom-right'
     }),
+    { provide: LOCALE_ID, useValue: 'uk' },
     provideEnvironmentNgxMask(),
     {
       provide: AuthGateway,

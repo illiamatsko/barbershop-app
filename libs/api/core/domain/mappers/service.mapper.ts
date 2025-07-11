@@ -7,7 +7,10 @@ export class ServiceMapper {
       id: service.id,
       name: service.name,
       description: service.description,
+      isMain: service.isMain,
       duration: service.duration,
+      minPrice: service.minPrice,
+      maxPrice: service.maxPrice
     };
   }
 }

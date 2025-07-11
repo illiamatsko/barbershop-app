@@ -2,5 +2,8 @@ export interface ServiceDto {
   id: number,
   name: string,
   description: string,
-  duration: number
+  isMain: boolean,
+  duration: number,
+  minPrice: number,
+  maxPrice : number
 }

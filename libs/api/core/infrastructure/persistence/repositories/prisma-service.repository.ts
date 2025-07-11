@@ -10,10 +10,21 @@ export class PrismaServiceRepository implements ServiceRepository{
   constructor(private prisma: PrismaService) {}
 
   async getAll(): Promise<ServiceEntity[]> {
-    const services = await this.prisma.service.findMany();
+    const services = await this.prisma.service.findMany({
+      include: { servicePrice: true }
+    });
+
+    const enrichedServices = services.map(service => {
+      const prices = service.servicePrice.map(p => p.price);
+      return {
+        ...service,
+        minPrice: Math.min(...prices),
+        maxPrice: Math.max(...prices),
+      };
+    });
 
     const serviceEntities = [];
-    for(const service of services) {
+    for(const service of enrichedServices) {
       serviceEntities.push(ServiceMapper.toDomain(service));
     }
 
@@ -22,11 +33,19 @@ export class PrismaServiceRepository implements ServiceRepository{
 
   async getById(id: number): Promise<ServiceEntity | null> {
     const service = await this.prisma.service.findUnique({
-      where: {
-        id,
-      },
+      include: { servicePrice: true },
+      where: { id },
     });
 
-    return service ? ServiceMapper.toDomain(service) : null;
+    if(!service) return null;
+
+    const prices = service.servicePrice.map(p => p.price);
+    const enrichedService = {
+      ...service,
+      minPrice: Math.min(...prices),
+      maxPrice: Math.max(...prices)
+    };
+
+    return ServiceMapper.toDomain(enrichedService);
   }
 }
