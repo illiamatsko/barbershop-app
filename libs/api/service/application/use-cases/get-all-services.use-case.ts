@@ -1,12 +1,20 @@
-import { Injectable } from '@nestjs/common';
-import { ServiceRepository, ServiceEntity } from '@barbershop-app/api/core/domain';
+import { ServiceRepository, ServiceEntity, ServiceMapper } from '@barbershop-app/api/core/domain';
+import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+import { GetAllServicesQuery } from '../queries/get-all-services.query';
 
 
-@Injectable()
-export class GetAllServicesUseCase {
+@QueryHandler(GetAllServicesQuery)
+export class GetAllServicesUseCase implements IQueryHandler<GetAllServicesQuery> {
   constructor(private readonly serviceRepo: ServiceRepository) {}
 
   async execute(): Promise<ServiceEntity[]> {
-    return this.serviceRepo.getAll();
+    const serviceEntities = await this.serviceRepo.getAll();
+
+    const serviceDtos = [];
+    for(const serviceEntity of serviceEntities) {
+      serviceDtos.push(ServiceMapper.toDto(serviceEntity));
+    }
+
+    return serviceDtos;
   }
 }
