@@ -38,6 +38,10 @@
       "@barbershop-app/client/barber/domain": ["libs/client/barber/domain/index.ts"],
       "@barbershop-app/client/barber/infrastructure": ["libs/client/barber/infrastructure/index.ts"],
 
+      "@barbershop-app/client/service/application": ["libs/client/service/application/index.ts"],
+      "@barbershop-app/client/service/domain": ["libs/client/service/domain/index.ts"],
+      "@barbershop-app/client/service/infrastructure": ["libs/client/service/infrastructure/index.ts"],
+
       "@barbershop-app/client/layout/presentation": ["libs/client/layout/presentation/index.ts"],
 
       "@barbershop-app/shared/ui": ["libs/shared/ui/index.ts"],

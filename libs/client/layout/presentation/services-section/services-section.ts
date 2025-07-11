@@ -1,9 +1,12 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExpertiseLevelsBlock } from './expertise-levels-block/expertise-levels-block';
 import { MainServicesBlock } from './main-services-block/main-services-block';
 import { AdditionalServiceBlock } from './additional-service-block/additional-service-block';
 import { InViewDirective } from '@barbershop-app/shared/ui';
+import { ServiceDto } from '@barbershop-app/shared/types';
+import { ServiceGateway } from '@barbershop-app/client/service/domain';
+import { firstValueFrom } from 'rxjs';
 
 
 @Component({
@@ -19,4 +22,12 @@ import { InViewDirective } from '@barbershop-app/shared/ui';
   styleUrl: './services-section.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ServicesSection {}
+export class ServicesSection implements OnInit {
+  private serviceGateway = inject(ServiceGateway);
+
+  services = signal<ServiceDto[]>([]);
+
+  async ngOnInit() {
+    this.services.set(await firstValueFrom(this.serviceGateway.getAllServices()));
+  }
+}

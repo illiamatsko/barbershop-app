@@ -6,6 +6,7 @@ export class ServiceMapper {
     return {
       id: service.id,
       name: service.name,
+      description: service.description,
       duration: service.duration,
     };
   }

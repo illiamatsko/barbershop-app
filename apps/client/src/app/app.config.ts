@@ -14,6 +14,8 @@ import { AuthGateway } from '@barbershop-app/client/auth/domain';
 import { ApiAuthGateway } from '@barbershop-app/client/auth/infrastructure';
 import { BarberGateway } from '@barbershop-app/client/barber/domain';
 import { ApiBarberGateway } from '@barbershop-app/client/barber/infrastructure';
+import { ServiceGateway } from '@barbershop-app/client/service/domain';
+import { ApiServiceGateway } from '@barbershop-app/client/service/infrastructure';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -33,6 +35,10 @@ export const appConfig: ApplicationConfig = {
     {
       provide: BarberGateway,
       useClass: ApiBarberGateway
+    },
+    {
+      provide: ServiceGateway,
+      useClass: ApiServiceGateway
     }
   ],
 };
