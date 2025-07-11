@@ -4,9 +4,10 @@ import { ExpertiseLevelsBlock } from './expertise-levels-block/expertise-levels-
 import { MainServicesBlock } from './main-services-block/main-services-block';
 import { AdditionalServiceBlock } from './additional-service-block/additional-service-block';
 import { InViewDirective } from '@barbershop-app/shared/ui';
-import { ServiceDto } from '@barbershop-app/shared/types';
+import { BarberStatusDto, ServiceDto } from '@barbershop-app/shared/types';
 import { ServiceGateway } from '@barbershop-app/client/service/domain';
 import { firstValueFrom } from 'rxjs';
+import { BarberGateway } from '@barbershop-app/client/barber/domain';
 
 
 @Component({
@@ -23,11 +24,14 @@ import { firstValueFrom } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ServicesSection implements OnInit {
+  private barberGateway = inject(BarberGateway);
   private serviceGateway = inject(ServiceGateway);
 
   services = signal<ServiceDto[]>([]);
+  barberStatuses = signal<BarberStatusDto[]>([]);
 
   async ngOnInit() {
     this.services.set(await firstValueFrom(this.serviceGateway.getAllServices()));
+    this.barberStatuses.set(await firstValueFrom(this.barberGateway.getBarberStatuses()));
   }
 }
