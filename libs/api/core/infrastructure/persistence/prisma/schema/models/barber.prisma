@@ -17,6 +17,7 @@ model Barber {
 model BarberStatus {
   id           Int            @id @default(autoincrement())
   name         String
+  alias        String
   description  String
   barbers      Barber[]
   ServicePrice ServicePrice[]

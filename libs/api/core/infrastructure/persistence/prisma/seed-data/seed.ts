@@ -38,10 +38,11 @@ async function main() {
   // 1. Create BarberStatuses
   const barberStatuses = await Promise.all(
     seedData.barberStatuses.map(
-      (status: { name: string; description: string }) =>
+      (status: { name: string; alias: string; description: string }) =>
         prisma.barberStatus.create({
           data: {
             name: status.name,
+            alias: status.alias,
             description: status.description,
           },
         })
@@ -50,12 +51,13 @@ async function main() {
 
   // 2. Create Services
   const services = await Promise.all(
-    seedData.services.map((service: { name: string; duration: number; description: string }) =>
+    seedData.services.map((service: { name: string; duration: number; description: string; isMain: boolean }) =>
       prisma.service.create({
         data: {
           name: service.name,
           duration: service.duration,
-          description: service.description
+          description: service.description,
+          isMain: service.isMain
         },
       })
     )

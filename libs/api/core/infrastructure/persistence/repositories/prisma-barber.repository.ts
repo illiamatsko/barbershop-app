@@ -4,6 +4,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { BarberEntity, TimeSlotEntity } from '@barbershop-app/api/core/domain';
 import { BarberMapper } from './mappers/barber.mapper';
 import { TimeSlotMapper } from './mappers/time-slot.mapper';
+import { BarberStatusMapper } from './mappers/barber-status.mapper';
 
 
 @Injectable()
@@ -30,6 +31,17 @@ export class PrismaBarberRepository implements BarberRepository {
     }
 
     return barberEntities;
+  }
+
+  async getBarberStatuses() {
+    const barberStatuses = await this.prisma.barberStatus.findMany();
+
+    const barberStatusEntities = [];
+    for(const barberStatus of barberStatuses) {
+      barberStatusEntities.push(BarberStatusMapper.toDomain(barberStatus));
+    }
+
+    return barberStatusEntities;
   }
 
   async getTimeSlotsByBarberId(id: number): Promise<TimeSlotEntity[]> {

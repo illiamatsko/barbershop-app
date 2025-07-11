@@ -2,26 +2,32 @@
   "barberStatuses": [
     {
       "name": "BARBER",
+      "alias": "Entry Level",
       "description": "Skilled professionals starting their journey with solid fundamentals and enthusiasm"
     },
     {
       "name": "SENIOR BARBER",
+      "alias": "Experienced",
       "description": "Experienced barbers with proven skills and consistent quality service delivery"
     },
     {
       "name": "GRAND BARBER",
+      "alias": "Expert",
       "description": "Expert craftsmen with advanced techniques and specialized styling knowledge"
     },
     {
       "name": "PRIME BARBER",
+      "alias": "Top-tier",
       "description": "Top-tier professionals known for precision cuts and exceptional attention to detail"
     },
     {
       "name": "UNDERBOSS",
+      "alias": "Senior Expert",
       "description": "Senior experts with mastery in complex styles and trend-setting capabilities"
     },
     {
       "name": "BOSS",
+      "alias": "Master Level",
       "description": "Master craftsmen with years of experience, setting industry standards and mentoring others"
     }
   ],
@@ -29,70 +35,84 @@
     {
       "name": "Individual Haircut",
       "duration": 60,
-      "description": "Personalized precision cutting with consultation and unique styling"
+      "description": "Personalized precision cutting with consultation and unique styling",
+      "isMain": true
     },
     { "name": "Extended Haircut",
       "duration": 90,
-      "description": "Comprehensive service with detailed styling, finishing touches and premium care"
+      "description": "Comprehensive service with detailed styling, finishing touches and premium care",
+      "isMain": true
     },
     {
       "name": "Beard Trim",
       "duration": 30,
-      "description": "Professional beard shaping and maintenance with hot towel treatment included"
+      "description": "Professional beard shaping and maintenance with hot towel treatment included",
+      "isMain": true
     },
     {
       "name": "Haircut & Beard",
       "duration": 90,
-      "description": "Complete grooming package combining both services for the ultimate experience"
+      "description": "Complete grooming package combining both services for the ultimate experience",
+      "isMain": true
     },
     { "name": "Kids’ Haircut",
       "duration": 60,
-      "description": "Gentle and patient service specially designed for children with extra care"
+      "description": "Gentle and patient service specially designed for children with extra care",
+      "isMain": true
     },
     {
       "name": "Father & Son",
       "duration": 120,
-      "description": "Shared grooming session for father and son with a single barber in sequence"
+      "description": "Shared grooming session for father and son with a single barber in sequence",
+      "isMain": true
     },
     {
       "name": "Haircut Touch-Up",
       "duration": 30,
-      "description": "Quick cleanup of edges and neckline"
+      "description": "Quick cleanup of edges and neckline",
+      "isMain": false
     },
     {
       "name": "Beard Touch-Up",
       "duration": 15,
-      "description": "Defines cheek and neck lines for a sharp look"
+      "description": "Defines cheek and neck lines for a sharp look",
+      "isMain": false
     },
     {
       "name": "Gray Camouflage",
       "duration": 30,
-      "description": "Blends gray hair subtly with natural tones"
+      "description": "Blends gray hair subtly with natural tones",
+      "isMain": false
     },
     {
       "name": "Beard Camouflage",
       "duration": 30,
-      "description": "Conceals grays for a fuller, even-toned beard"
+      "description": "Conceals grays for a fuller, even-toned beard",
+      "isMain": false
     },
     {
       "name": "Hair Styling",
       "duration": 15,
-      "description": "Professional styling using premium products"
+      "description": "Professional styling using premium products",
+      "isMain": false
     },
     {
       "name": "Hot Wax Depilation",
       "duration": 15,
-      "description": "Removes unwanted facial hair with precision"
+      "description": "Removes unwanted facial hair with precision",
+      "isMain": false
     },
     {
       "name": "Under-Eye Patches",
       "duration": 15,
-      "description": "Hydrates and refreshes the under-eye area"
+      "description": "Hydrates and refreshes the under-eye area",
+      "isMain": false
     },
     {
       "name": "Hot Wax Depilation + Under-Eye Patches",
       "duration": 15,
-      "description": "Combined treatment for smooth skin and fresh eyes"
+      "description": "Combined treatment for smooth skin and fresh eyes",
+      "isMain": false
     }
   ],
   "servicesPrices": [

@@ -3,6 +3,7 @@ model Service {
   name         String          @unique
   duration     Int
   description  String
+  isMain       Boolean
   appointments Appointment[]
   servicePrice ServicePrice[]
   barbers      BarberService[]
