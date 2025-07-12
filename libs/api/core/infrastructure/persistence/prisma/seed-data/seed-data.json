@@ -55,7 +55,8 @@
       "description": "Complete grooming package combining both services for the ultimate experience",
       "isMain": true
     },
-    { "name": "Kids’ Haircut",
+    {
+      "name": "Kids’ Haircut",
       "duration": 60,
       "description": "Gentle and patient service specially designed for children with extra care",
       "isMain": true

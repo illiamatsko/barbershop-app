@@ -36,32 +36,29 @@ async function main() {
   const seedData = JSON.parse(fileData);
 
   // 1. Create BarberStatuses
-  const barberStatuses = await Promise.all(
-    seedData.barberStatuses.map(
-      (status: { name: string; alias: string; description: string }) =>
-        prisma.barberStatus.create({
-          data: {
-            name: status.name,
-            alias: status.alias,
-            description: status.description,
-          },
-        })
-    )
-  );
+  const barberStatuses = [];
+  for (const status of seedData.barberStatuses) {
+    barberStatuses.push( await prisma.barberStatus.create({
+      data: {
+        name: status.name,
+        alias: status.alias,
+        description: status.description,
+      },
+    }));
+  }
 
   // 2. Create Services
-  const services = await Promise.all(
-    seedData.services.map((service: { name: string; duration: number; description: string; isMain: boolean }) =>
-      prisma.service.create({
-        data: {
-          name: service.name,
-          duration: service.duration,
-          description: service.description,
-          isMain: service.isMain
-        },
-      })
-    )
-  );
+  const services = [];
+  for (const service of seedData.services) {
+    services.push( await prisma.service.create({
+      data: {
+        name: service.name,
+        duration: service.duration,
+        description: service.description,
+        isMain: service.isMain,
+      },
+    }));
+  }
 
   // 3. Create Users
   const customerPassword = await hashPassword('customer@example.com');
