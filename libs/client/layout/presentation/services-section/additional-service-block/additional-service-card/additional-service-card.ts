@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ServiceDto } from '@barbershop-app/shared/types';
 
 
 @Component({
@@ -10,5 +11,5 @@ import { CommonModule } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdditionalServiceCard {
-
+  service = input.required<ServiceDto>();
 }

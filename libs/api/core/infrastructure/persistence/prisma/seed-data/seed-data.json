@@ -110,9 +110,16 @@
       "isMain": false
     },
     {
-      "name": "Hot Wax Depilation + Under-Eye Patches",
+      "name": "Facial refresh ritual",
       "duration": 15,
-      "description": "Combined treatment for smooth skin and fresh eyes",
+      "description": "Rejuvenating facial wipe & mist combo for an instant energizing boost",
+      "isMain": false
+    }
+  ,
+    {
+      "name": "Brow Sculpt & Cleanse",
+      "duration": 15,
+      "description": "Perfectly defined brows with gentle wax and calming gel finish",
       "isMain": false
     }
   ],
@@ -185,7 +192,12 @@
     {
       "serviceId": 14,
       "barberStatusId": 6,
-      "price": 300
+      "price": 150
+    },
+    {
+      "serviceId": 15,
+      "barberStatusId": 6,
+      "price": 150
     },
 
     {
@@ -256,7 +268,12 @@
     {
       "serviceId": 14,
       "barberStatusId": 5,
-      "price": 300
+      "price": 150
+    },
+    {
+      "serviceId": 15,
+      "barberStatusId": 5,
+      "price": 150
     },
 
     {
@@ -327,7 +344,12 @@
     {
       "serviceId": 14,
       "barberStatusId": 4,
-      "price": 300
+      "price": 150
+    },
+    {
+      "serviceId": 15,
+      "barberStatusId": 4,
+      "price": 150
     },
 
     {
@@ -398,7 +420,12 @@
     {
       "serviceId": 14,
       "barberStatusId": 3,
-      "price": 300
+      "price": 150
+    },
+    {
+      "serviceId": 15,
+      "barberStatusId": 3,
+      "price": 150
     },
 
     {
@@ -469,7 +496,12 @@
     {
       "serviceId": 14,
       "barberStatusId": 2,
-      "price": 300
+      "price": 150
+    },
+    {
+      "serviceId": 15,
+      "barberStatusId": 2,
+      "price": 150
     },
 
     {
@@ -510,7 +542,7 @@
     {
       "serviceId": 8,
       "barberStatusId": 1,
-      "price": 3500
+      "price": 350
     },
     {
       "serviceId": 9,
@@ -540,7 +572,12 @@
     {
       "serviceId": 14,
       "barberStatusId": 1,
-      "price": 300
+      "price": 150
+    },
+    {
+      "serviceId": 15,
+      "barberStatusId": 1,
+      "price": 150
     }
   ]
 }

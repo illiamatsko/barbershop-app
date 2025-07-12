@@ -1,39 +1,16 @@
-<div class="bg-neutral-800/55 backdrop-blur-sm border border-neutral-700/15 rounded-2xl p-8 mb-16 transition-all duration-400 hover:-translate-y-1 hover:border-yellow-500/20 hover:shadow-lg hover:shadow-black/20 relative overflow-hidden group opacity-0" appInView>
-  <div class="absolute inset-0 bg-gradient-to-br from-transparent via-yellow-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400"></div>
-  <h3 class="text-2xl font-medium text-white mb-8 text-center relative z-10">Additional Services</h3>
+<div
+  class="bg-neutral-800/55 backdrop-blur-sm border border-neutral-700/15 rounded-2xl p-8 mb-16 transition-all duration-400 hover:-translate-y-1 hover:border-yellow-500/20 hover:shadow-lg hover:shadow-black/20 relative opacity-0"
+  appInView
+>
+  <div class="absolute inset-0 bg-gradient-to-br from-transparent via-yellow-500/5 to-transparent opacity-0 transition-opacity duration-400"></div>
 
-  <div class="grid md:grid-cols-3 gap-20 relative z-10">
-    <div class="text-center">
-      <h4 class="text-lg font-medium text-yellow-500 mb-4">Quick Services</h4>
-      <div class="space-y-3 text-sm text-gray-400">
+  <h3 class="text-2xl font-medium text-white mb-8 text-center relative z-10">
+    Additional Services
+  </h3>
 
-        <app-additional-service-card/>
-        <app-additional-service-card/>
-        <app-additional-service-card/>
-
-      </div>
-    </div>
-
-    <div class="text-center">
-      <h4 class="text-lg font-medium text-yellow-500 mb-4">Specialized</h4>
-      <div class="space-y-3 text-sm text-gray-400">
-
-        <app-additional-service-card/>
-        <app-additional-service-card/>
-        <app-additional-service-card/>
-
-      </div>
-    </div>
-
-    <div class="text-center">
-      <h4 class="text-lg font-medium text-yellow-500 mb-4">Premium Add-ons</h4>
-      <div class="space-y-3 text-sm text-gray-400">
-
-        <app-additional-service-card/>
-        <app-additional-service-card/>
-        <app-additional-service-card/>
-
-      </div>
-    </div>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10 items-stretch [&>*]:h-full">
+    @for(service of services(); track service.id) {
+      <app-additional-service-card [service]="service" />
+    }
   </div>
 </div>
