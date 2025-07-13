@@ -2,30 +2,22 @@
   <div class="absolute inset-0 bg-gradient-to-br from-transparent via-yellow-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400"></div>
   <div class="text-center relative z-10">
     <div class="w-12 h-12 text-gray-400 mb-6 mx-auto transition-all duration-300 group-hover:scale-110 group-hover:text-yellow-500">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true">
-        <path d="M760-120 480-400l-94 94q8 15 11 32t3 34q0 66-47 113T240-80q-66 0-113-47T80-240q0-66 47-113t113-47q17 0 34 3t32 11l94-94-94-94q-15 8-32 11t-34 3q-66 0-113-47T80-720q0-66 47-113t113-47q66 0 113 47t47 113q0 17-3 34t-11 32l494 494v40H760ZM600-520l-80-80 240-240h120v40L600-520ZM240-640q33 0 56.5-23.5T320-720q0-33-23.5-56.5T240-800q-33 0-56.5 23.5T160-720q0 33 23.5 56.5T240-640Zm240 180q8 0 14-6t6-14q0-8-6-14t-14-6q-8 0-14 6t-6 14q0 8 6 14t14 6ZM240-160q33 0 56.5-23.5T320-240q0-33-23.5-56.5T240-320q-33 0-56.5 23.5T160-240q0 33 23.5 56.5T240-160Z"/>
-      </svg>
+      <lib-scissors-icon/>
     </div>
     <h3 class="text-2xl text-white font-semibold mb-4 tracking-tight">{{ service().name }}</h3>
     <p class="text-sm mb-6 leading-relaxed text-gray-400/90">
       {{ service().description }}
     </p>
     <div class="flex items-center justify-center gap-6 text-base text-gray-500 mb-6">
-  <span class="flex items-center">
-    <svg xmlns="http://www.w3.org/2000/svg"
-         viewBox="0 -960 960 960"
-         class="w-5 h-5 text-gray-400 mr-2"
-         fill="currentColor"
-         aria-hidden="true">
-      <path d="m612-292 56-56-148-148v-184h-80v216l172 172ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm0 320q133 0 226.5-93.5T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160Z"/>
-    </svg>
-    {{ service().duration }} min
-  </span>
+      <span class="flex items-center gap-2">
+        <lib-clock-icon [width]="5" [height]="5"/>
+        {{ service().duration }} min
+      </span>
     </div>
 
     <div class="text-2xl text-yellow-500 font-medium mb-6 font-mono tracking-wide">
-      {{ service().minPrice | currency:'UAH':'symbol':'1.0-0' }} -
-      {{ service().maxPrice | currency:'UAH':'symbol':'1.0-0' }}
+      <span class="text-xl">from</span> {{ service().minPrice | currency:'UAH':'symbol':'1.0-0' }}
+      <span class="text-xs text-gray-500 block mt-1">Varies by barber level</span>
     </div>
     <button class="w-full py-3 px-6 rounded-xl font-medium border border-yellow-500/40 text-yellow-500/90 bg-transparent hover:bg-yellow-500/10 hover:border-yellow-500/60 transition-all duration-300 hover:-translate-y-0.5">
       Book Now

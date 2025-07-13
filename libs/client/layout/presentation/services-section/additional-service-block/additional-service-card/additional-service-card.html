@@ -5,13 +5,20 @@
     <div class="flex items-center gap-4">
       <div>
         <h4 class="text-white font-medium">{{ service().name }}</h4>
-        <span class="text-xs text-gray-400 block mt-1">{{ service().duration }} min</span>
+
+        <!-- Іконка + тривалість в рядок -->
+        <div class="flex items-center gap-1 mt-1 text-xs text-gray-400">
+          <lib-clock-icon [width]="3" [height]="3" />
+          <span>{{ service().duration }} min</span>
+        </div>
       </div>
     </div>
 
+
     <!-- Right -->
     <div class="text-right text-yellow-500 font-semibold text-sm whitespace-nowrap">
-      {{ service().minPrice | currency:'UAH':'symbol':'1.0-0' }} – {{ service().maxPrice | currency:'UAH':'symbol':'1.0-0' }}
+      <span class="text-sm">from</span> {{ service().minPrice | currency:'UAH':'symbol':'1.0-0' }}
+      <span class="text-xs text-gray-500 block mt-1">Varies by barber level</span>
     </div>
   </div>
 
@@ -29,14 +36,13 @@
 
     <!-- Details -->
     <div class="flex items-center justify-between text-xs">
-      <div class="flex items-center gap-4">
-        <span class="text-gray-400">
-          <i class="fas fa-clock mr-1 text-yellow-500"></i>
-          {{ service().duration }} minutes
-        </span>
+      <div class="flex items-center gap-1 mt-1 text-xs text-gray-400">
+        <lib-clock-icon [width]="3" [height]="3" />
+        <span>{{ service().duration }} min</span>
       </div>
       <div class="text-yellow-500 font-semibold">
-        {{ service().minPrice | currency:'UAH':'symbol':'1.0-0' }} - {{ service().maxPrice | currency:'UAH':'symbol':'1.0-0' }}
+        <span class="text-xs">from</span>
+        {{ service().minPrice | currency:'UAH':'symbol':'1.0-0' }}
       </div>
     </div>
 

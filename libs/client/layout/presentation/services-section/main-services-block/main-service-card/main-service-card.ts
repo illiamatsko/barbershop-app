@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InViewDirective } from '@barbershop-app/shared/ui';
+import { ClockIcon, InViewDirective, ScissorsIcon } from '@barbershop-app/shared/ui';
 import { ServiceDto } from '@barbershop-app/shared/types';
 
 
 @Component({
   selector: 'app-main-service-card',
-  imports: [CommonModule, InViewDirective],
+  imports: [CommonModule, InViewDirective, ClockIcon, ScissorsIcon],
   templateUrl: './main-service-card.html',
   styleUrl: './main-service-card.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

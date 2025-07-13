@@ -1,5 +1,5 @@
 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
   @for(service of services(); track $index) {
-    <app-main-service-card [service]="service" [animationDuration]="$index * 0.2"/>
+    <app-main-service-card [service]="service" [animationDuration]="$index%3 * 0.2"/>
   }
 </div>
