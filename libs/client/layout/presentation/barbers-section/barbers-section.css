@@ -22,18 +22,6 @@
   @apply mx-4 text-yellow-500 text-sm tracking-widest uppercase font-medium;
 }
 
-.barbers-title {
-  @apply text-4xl md:text-5xl font-bold mb-6 leading-tight;
-}
-
-.barbers-title-highlight {
-  @apply text-yellow-500;
-}
-
-.barbers-subtitle {
-  @apply text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed;
-}
-
 .barbers-swiper-container {
   @apply relative;
 }

@@ -9,11 +9,12 @@ import {
 import { BarberDto } from '@barbershop-app/shared/types';
 import { GetAllBarbersUseCase } from '@barbershop-app/client/barber/application';
 import { BarberCard } from './barber-card/barber-card';
+import { InViewDirective } from '@barbershop-app/shared/ui';
 
 
 @Component({
   selector: 'app-barbers-section',
-  imports: [BarberCard],
+  imports: [BarberCard, InViewDirective],
   templateUrl: './barbers-section.html',
   styleUrl: './barbers-section.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -1,3 +1,6 @@
+import colors from 'tailwindcss/colors';
+
+
 const { createGlobPatternsForDependencies } = require('@nx/angular/tailwind');
 const { join } = require('path');
 
@@ -11,6 +14,9 @@ module.exports = {
     extend: {
       fontFamily: {
         rounded: ['"Baloo 2"', 'cursive'],
+      },
+      colors: {
+        primary: colors.yellow[500]
       },
       animation: {
         'fade-in-up': 'fadeInUp 0.6s ease-out forwards',

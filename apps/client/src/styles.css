@@ -3,3 +3,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.header-line {
+  @apply w-16 h-px bg-primary;
+}
+
+.header-text {
+  @apply mx-4 text-yellow-500 text-sm tracking-widest uppercase font-medium
+}
+
+.section-header-layout {
+  @apply inline-flex items-center gap-3 mb-8
+}
+
+.section-header-container {
+  @apply text-center mb-20
+}
+
+.section-title {
+  @apply text-4xl md:text-5xl text-white font-bold mb-6 leading-tight
+}
+
+.section-subtitle {
+  @apply text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed;
+}
