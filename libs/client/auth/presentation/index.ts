@@ -1,2 +1,2 @@
-export * from './pages/sign-in/sign-in'
+export * from './components/sign-in/sign-in'
 export * from './auth.routes'
