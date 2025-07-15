@@ -1,10 +1,10 @@
 <div class="block-container" appInView>
   <div class="block-header-container">
-    <h3 class="text-3xl text-white font-medium mb-3">Additional services</h3>
-    <p class="text-gray-400 text-md">Extra care, extra style — services that go the extra mile</p>
+    <h3 class="block-title">Additional services</h3>
+    <p class="block-subtitle">Extra care, extra style — services that go the extra mile</p>
   </div>
 
-  <div class="grid grid-cols-3 gap-6">
+  <div class="block-grid">
     @for(service of services(); track service.id) {
       <app-additional-service-card [service]="service" />
     }
