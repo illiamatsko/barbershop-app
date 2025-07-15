@@ -1,12 +1,11 @@
-<section id="services" class="bg-black relative py-24 overflow-hidden">
-
-  <div class="relative max-w-7xl mx-auto px-6 z-10">
+<section class="bg-black section-container">
+  <div class="section-content">
 
     <div class="section-header-container" appInView>
       <div class="section-header-layout">
-        <div class="header-line"></div>
-        <span class="header-text">Our Services</span>
-        <div class="header-line"></div>
+        <div class="section-header-line"></div>
+        <span class="section-header-text">Our Services</span>
+        <div class="section-header-line"></div>
       </div>
 
       <h2 class="section-title">
@@ -23,5 +22,6 @@
     <app-main-services-block [services]="mainServices()"/>
 
     <app-additional-service-block [services]="additionalServices()"/>
+
   </div>
 </section>

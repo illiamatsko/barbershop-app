@@ -1,10 +1,11 @@
-<section id="barbers" class="barbers-section">
-  <div class="barbers-container">
-    <div class="section-header-container" appInView>
+<section class="bg-neutral-900 section-container">
+  <div class="section-content" appInView>
+
+    <div class="section-header-container">
       <div class="section-header-layout">
-        <div class="header-line"></div>
-        <span class="header-text">Meet Our Team</span>
-        <div class="header-line"></div>
+        <div class="section-header-line"></div>
+        <span class="section-header-text">Meet Our Team</span>
+        <div class="section-header-line"></div>
       </div>
 
       <h2 class="section-title">
@@ -19,30 +20,13 @@
 
     <div class="barbers-swiper-container">
       <button class="barbers-nav-btn barbers-nav-prev swiper-prev">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="96px"
-          height="96px"
-          viewBox="0 -960 960 960"
-          class="barbers-nav-icon"
-        >
-          <path d="M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z" />
-        </svg>
+        <lib-left-arrow-icon class="barbers-nav-icon"/>
       </button>
 
       <button class="barbers-nav-btn barbers-nav-next swiper-next">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="96px"
-          height="96px"
-          viewBox="0 -960 960 960"
-          class="barbers-nav-icon"
-        >
-          <path d="M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z" />
-        </svg>
+        <lib-right-arrow-icon class="barbers-nav-icon"/>
       </button>
 
-      <!-- Swiper -->
       <swiper-container
         slides-per-view="3"
         space-between="24"
@@ -75,5 +59,6 @@
         <div class="barbers-stat-label">Online Booking</div>
       </div>
     </div>
+
   </div>
 </section>

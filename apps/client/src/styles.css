@@ -4,11 +4,19 @@
 @tailwind components;
 @tailwind utilities;
 
-.header-line {
+.section-container {
+  @apply relative py-20
+}
+
+.section-content {
+  @apply relative max-w-7xl mx-auto px-6 z-10
+}
+
+.section-header-line {
   @apply w-16 h-px bg-primary;
 }
 
-.header-text {
+.section-header-text {
   @apply mx-4 text-yellow-500 text-sm tracking-widest uppercase font-medium
 }
 

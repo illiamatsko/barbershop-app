@@ -9,7 +9,7 @@ import { ServiceDto } from '@barbershop-app/shared/types';
   selector: 'app-additional-service-block',
   imports: [CommonModule, AdditionalServiceCard, InViewDirective],
   templateUrl: './additional-service-block.html',
-  styleUrl: './additional-service-block.css',
+  styleUrls: ['./additional-service-block.css', '../services-section.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdditionalServiceBlock {

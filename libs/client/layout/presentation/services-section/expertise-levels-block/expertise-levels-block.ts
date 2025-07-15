@@ -9,7 +9,7 @@ import { BarberStatusDto } from '@barbershop-app/shared/types';
   selector: 'app-expertise-levels-block',
   imports: [CommonModule, BarberStatusCard, InViewDirective],
   templateUrl: './expertise-levels-block.html',
-  styleUrl: './expertise-levels-block.css',
+  styleUrls: ['./expertise-levels-block.css', '../services-section.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExpertiseLevelsBlock {

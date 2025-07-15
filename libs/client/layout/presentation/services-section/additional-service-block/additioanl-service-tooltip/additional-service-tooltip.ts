@@ -2,16 +2,15 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ServiceDto } from '@barbershop-app/shared/types';
 import { ClockIcon } from '@barbershop-app/shared/ui';
-import { AdditionalServiceTooltip } from '../additioanl-service-tooltip/additional-service-tooltip';
 
 
 @Component({
-  selector: 'app-additional-service-card',
-  imports: [CommonModule, ClockIcon, AdditionalServiceTooltip],
-  templateUrl: './additional-service-card.html',
-  styleUrl: './additional-service-card.css',
+  selector: 'app-additional-service-tooltip',
+  imports: [CommonModule, ClockIcon],
+  templateUrl: './additional-service-tooltip.html',
+  styleUrl: './additional-service-tooltip.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdditionalServiceCard {
+export class AdditionalServiceTooltip {
   service = input.required<ServiceDto>();
 }

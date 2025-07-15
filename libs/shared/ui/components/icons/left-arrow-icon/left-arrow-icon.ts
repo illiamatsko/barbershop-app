@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'lib-clock-icon',
+  selector: 'lib-left-arrow-icon',
   imports: [CommonModule],
-  templateUrl: './clock-icon.html',
-  styleUrl: './clock-icon.css',
+  templateUrl: './left-arrow-icon.html',
+  styleUrl: './left-arrow-icon.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ClockIcon {}
+export class LeftArrowIcon {}

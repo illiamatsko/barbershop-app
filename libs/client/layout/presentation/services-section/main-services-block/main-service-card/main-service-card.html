@@ -1,4 +1,4 @@
-<div class="bg-neutral-800/55 backdrop-blur-sm border border-neutral-700/15 rounded-2xl p-10 transition-all duration-400 hover:-translate-y-1 hover:border-yellow-500/20 hover:shadow-lg hover:shadow-black/20 relative overflow-hidden group opacity-0" [appInView]="(animationDuration()).toFixed(1) + 's'">
+<div class="bg-neutral-800/55 backdrop-blur-sm border border-neutral-700/15 rounded-2xl p-10 transition-all duration-400 hover:border-yellow-500/20 hover:shadow-lg hover:shadow-black/20 relative overflow-hidden group opacity-0" [appInView]="(animationDuration()).toFixed(1) + 's'">
   <div class="absolute inset-0 bg-gradient-to-br from-transparent via-yellow-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400"></div>
   <div class="text-center relative z-10">
     <div class="w-12 h-12 text-gray-400 mb-6 mx-auto transition-all duration-300 group-hover:scale-110 group-hover:text-yellow-500">
@@ -10,7 +10,7 @@
     </p>
     <div class="flex items-center justify-center gap-6 text-base text-gray-500 mb-6">
       <span class="flex items-center gap-2">
-        <lib-clock-icon [width]="5" [height]="5"/>
+        <lib-clock-icon class="w-5 h-5 text-gray-400"/>
         {{ service().duration }} min
       </span>
     </div>

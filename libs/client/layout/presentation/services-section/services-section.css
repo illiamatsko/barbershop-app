@@ -1,0 +1,7 @@
+.block-container {
+  @apply mb-16 opacity-0
+}
+
+.block-header-container {
+  @apply text-center mb-8
+}

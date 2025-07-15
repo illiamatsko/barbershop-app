@@ -1,7 +1,3 @@
-.about-section {
-  @apply relative min-h-[700px] px-6 py-28 bg-neutral-950 text-white;
-}
-
 .about-container {
   @apply max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center;
 }
@@ -11,7 +7,7 @@
 }
 
 .about-title {
-  @apply text-4xl md:text-5xl font-bold mb-8;
+  @apply text-4xl text-white font-bold mb-8;
 }
 
 .highlight {
