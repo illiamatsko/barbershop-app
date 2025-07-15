@@ -15,19 +15,20 @@ export class PrismaBarberRepository implements BarberRepository {
 
   async getAll(): Promise<BarberEntity[]> {
     const users = await this.prisma.user.findMany({
-      include: { barber: true }
+      include: {
+        barber: {
+          include: {
+            status: true,
+            barbershop: true
+          }
+        }, }
     });
 
     const barberEntities = [];
     for(const user of users) {
       if(!user || !user.barber) continue;
 
-      const status = await this.prisma.barberStatus.findUnique({
-        where: { id: user.barber.statusId }
-      });
-
-      if(!status) continue;
-      barberEntities.push(BarberMapper.toDomain(user.barber, user, status.name));
+      barberEntities.push(BarberMapper.toDomain(user.barber, user, user.barber.status.name, user.barber.barbershop.address));
     }
 
     return barberEntities;

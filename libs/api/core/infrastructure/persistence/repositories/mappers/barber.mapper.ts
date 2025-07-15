@@ -3,7 +3,7 @@ import { RoleMap } from './roles.map';
 import { BarberEntity } from '@barbershop-app/api/core/domain';
 
 export class BarberMapper {
-  static toDomain(barber: Barber, user: User, status: string): BarberEntity {
+  static toDomain(barber: Barber, user: User, status: string, location: string): BarberEntity {
     return {
       id: user.id,
       email: user.email,
@@ -12,6 +12,7 @@ export class BarberMapper {
       phoneNumber: user.phoneNumber,
       experience: barber.experience,
       status,
+      location,
       role: RoleMap[user.role],
       createdAt: user.createdAt,
     };

@@ -13,7 +13,12 @@ export class PrismaUserRepository implements UserRepository {
     const user = await this.prisma.user.findUnique({
       where: { email },
       include: {
-        barber: true,
+        barber: {
+          include: {
+            status: true,
+            barbershop: true
+          }
+        },
         customer: true
       }
     });
@@ -29,16 +34,9 @@ export class PrismaUserRepository implements UserRepository {
     if (user.role === 'BARBER') {
       if (!user.barber) return null;
 
-      const status = await this.prisma.barberStatus.findUnique({
-        where: { id: user.barber.statusId }
-      });
-
-      if (!status) return null;
-
-      return BarberMapper.toDomain(user.barber, user, status.name);
+      return BarberMapper.toDomain(user.barber, user, user.barber.status.name, user.barber.barbershop.address);
     }
 
     return null;
-
   }
 }

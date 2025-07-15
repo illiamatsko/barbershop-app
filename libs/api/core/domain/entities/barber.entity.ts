@@ -8,6 +8,7 @@ export interface BarberEntity {
   phoneNumber: string;
   experience: number;
   status: string,
+  location: string,
   role: RolesEnum;
   createdAt: Date;
 }

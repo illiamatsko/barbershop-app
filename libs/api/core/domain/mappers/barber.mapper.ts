@@ -11,6 +11,7 @@ export class BarberMapper {
       phoneNumber: barber.phoneNumber,
       experience: barber.experience,
       status: barber.status,
+      location: barber.location,
       createdAt: barber.createdAt.toISOString(),
     };
   }

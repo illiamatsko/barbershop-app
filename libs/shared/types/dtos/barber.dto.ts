@@ -6,5 +6,6 @@ export interface BarberDto {
   phoneNumber: string,
   experience: number,
   status: string,
+  location: string,
   createdAt: string,
 }
