@@ -1,1 +1,1 @@
-export * from './interfaces/barber.gateway'
+export * from './gateways/barber.gateway'
