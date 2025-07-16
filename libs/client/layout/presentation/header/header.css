@@ -7,7 +7,7 @@
 }
 
 .logo {
-  @apply w-14 h-14 text-yellow-500 fill-current;
+  @apply text-yellow-500;
 }
 
 .brand {
@@ -47,5 +47,5 @@
 }
 
 .profile-icon {
-  @apply text-yellow-500 fill-current cursor-pointer mb-1;
+  @apply text-yellow-500 cursor-pointer;
 }

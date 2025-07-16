@@ -1,6 +1,6 @@
 <header class="header">
   <div class="left">
-    <lib-logo-icon class="logo" />
+    <lib-logo-icon class="logo" [width]="53" [height]="53"/>
 
     <div class="brand">
       <div class="title">STRIX</div>
@@ -21,7 +21,7 @@
         <button (click)="navigateToSignUp()" routerLink="auth/sign-up" class="sign-up">Sign Up</button>
       </div>
     } @else {
-      <lib-profile-icon class="profile-icon" />
+      <lib-profile-icon class="profile-icon" [width]="37" [height]="37"/>
     }
   </div>
 </header>

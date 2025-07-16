@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -8,4 +8,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './logo-icon.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LogoIcon {}
+export class LogoIcon {
+  width = input.required<number>();
+  height = input.required<number>();
+}

@@ -3,7 +3,7 @@
 
   <div class="service-card-content">
     <div class="service-card-icon duration-300 group-hover:scale-110 group-hover:text-yellow-500">
-      <lib-scissors-icon />
+      <lib-scissors-icon [width]="22" [height]="22"/>
     </div>
 
     <h3 class="service-card-title">{{ service().name }}</h3>
@@ -14,7 +14,7 @@
 
     <div class="service-card-meta">
       <span class="flex items-center gap-2">
-        <lib-clock-icon class="w-5 h-5 text-gray-400" />
+        <lib-clock-icon class="text-gray-400" [width]="22" [height]="22"/>
         {{ service().duration }} min
       </span>
     </div>
