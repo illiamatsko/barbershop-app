@@ -1,5 +1,6 @@
 model Appointment {
   id         Int               @id @default(autoincrement())
+  comment    String
   status     AppointmentStatus @default(CONFIRMED)
   customer   Customer          @relation(fields: [customerId], references: [id])
   customerId Int

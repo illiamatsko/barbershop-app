@@ -116,6 +116,7 @@ async function main() {
       content: 'Very professional and friendly!',
       starRating: 5,
       barberId: barber.id,
+      customerId: customer.id
     },
   });
 
@@ -145,6 +146,7 @@ async function main() {
   const appointment = await prisma.appointment.create({
     data: {
       status: 'CONFIRMED',
+      comment: '',
       customerId: customer.id,
       barberId: barber.id,
       serviceId: selectedService.id,

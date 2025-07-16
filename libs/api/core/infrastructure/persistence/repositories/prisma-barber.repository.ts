@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { BarberRepository } from '@barbershop-app/api/core/domain';
+import { BarberRepository, BarberStatusEntity } from '@barbershop-app/api/core/domain';
 import { PrismaService } from '../prisma/prisma.service';
 import { BarberEntity, TimeSlotEntity } from '@barbershop-app/api/core/domain';
 import { BarberMapper } from './mappers/barber.mapper';
@@ -34,7 +34,7 @@ export class PrismaBarberRepository implements BarberRepository {
     return barberEntities;
   }
 
-  async getBarberStatuses() {
+  async getBarberStatuses(): Promise<BarberStatusEntity[]> {
     const barberStatuses = await this.prisma.barberStatus.findMany();
 
     const barberStatusEntities = [];
