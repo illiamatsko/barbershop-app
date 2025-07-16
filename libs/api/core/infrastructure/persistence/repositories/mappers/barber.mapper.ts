@@ -1,5 +1,5 @@
 import { Barber, User } from '@prisma/client';
-import { RoleMap } from './roles.map';
+import { RoleMap } from './maps/roles.map';
 import { BarberEntity } from '@barbershop-app/api/core/domain';
 
 export class BarberMapper {

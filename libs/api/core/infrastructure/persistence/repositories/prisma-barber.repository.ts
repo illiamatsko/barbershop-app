@@ -27,8 +27,11 @@ export class PrismaBarberRepository implements BarberRepository {
     const barberEntities = [];
     for(const user of users) {
       if(!user || !user.barber) continue;
+      const barber = user.barber;
+      const status = barber.status.name;
+      const address = barber.barbershop.address;
 
-      barberEntities.push(BarberMapper.toDomain(user.barber, user, user.barber.status.name, user.barber.barbershop.address));
+      barberEntities.push(BarberMapper.toDomain(barber, user, status, address));
     }
 
     return barberEntities;

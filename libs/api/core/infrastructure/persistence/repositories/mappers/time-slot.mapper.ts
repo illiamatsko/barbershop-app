@@ -1,6 +1,6 @@
 import { TimeSlot } from '@prisma/client';
 import { TimeSlotEntity } from '@barbershop-app/api/core/domain';
-import { TimeSlotStatusMap } from './time-slot-status.map';
+import { TimeSlotStatusMap } from './maps/time-slot-status.map';
 
 export class TimeSlotMapper {
   static toDomain(timeSlot: TimeSlot): TimeSlotEntity {

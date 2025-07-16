@@ -5,6 +5,7 @@ export * from './persistence/repositories/prisma-barber.repository'
 export * from './persistence/repositories/prisma-service.repository'
 export * from './persistence/repositories/prisma-customer.repository'
 export * from './persistence/repositories/prisma-password.repository'
+export * from './persistence/repositories/prisma-review.repository'
 
 export * from './services/jwt-token-generator'
 

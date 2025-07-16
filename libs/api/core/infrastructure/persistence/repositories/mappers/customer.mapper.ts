@@ -1,4 +1,4 @@
-import { RoleMap } from './roles.map';
+import { RoleMap } from './maps/roles.map';
 import { CustomerEntity } from '@barbershop-app/api/core/domain';
 import { Customer, User } from '@prisma/client';
 
