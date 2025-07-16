@@ -18,10 +18,10 @@ enum AppointmentStatus {
 model TimeSlot {
   id            Int          @id @default(autoincrement())
   startTime     DateTime
+  status        SlotStatus   @default(AVAILABLE)
   barber        Barber       @relation(fields: [barberId], references: [id])
   barberId      Int
   appointment   Appointment? @relation(fields: [appointmentId], references: [id])
-  status        SlotStatus   @default(AVAILABLE)
   appointmentId Int?
 }
 

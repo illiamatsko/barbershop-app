@@ -1,0 +1,19 @@
+.left {
+  @apply flex items-center gap-4;
+}
+
+.logo {
+  @apply text-yellow-500;
+}
+
+.brand {
+  @apply leading-tight;
+}
+
+.title {
+  @apply text-3xl font-extrabold text-white;
+}
+
+.subtitle {
+  @apply text-xs tracking-widest text-yellow-500 uppercase;
+}
