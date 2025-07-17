@@ -1,4 +1,5 @@
-export * from './entities/barber.entity'
+export * from './entities/barber-full.entity'
+export * from './entities/barber-summary.entity'
 export * from './entities/barber-status.entity'
 export * from './entities/customer.entity'
 export * from './entities/service.entity'

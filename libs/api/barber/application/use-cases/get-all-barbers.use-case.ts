@@ -12,7 +12,7 @@ export class GetAllBarbersUseCase implements IQueryHandler<GetAllBarbersQuery> {
 
     const barberDtos = [];
     for(const barberEntity of barberEntities) {
-      barberDtos.push(BarberMapper.toDto(barberEntity));
+      barberDtos.push(BarberMapper.toFullDto(barberEntity));
     }
 
     return barberDtos;

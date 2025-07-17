@@ -1,9 +1,9 @@
 import { Barber, User } from '@prisma/client';
 import { RoleMap } from './maps/roles.map';
-import { BarberEntity } from '@barbershop-app/api/core/domain';
+import { BarberFullEntity, BarberSummaryEntity } from '@barbershop-app/api/core/domain';
 
 export class BarberMapper {
-  static toDomain(barber: Barber, user: User, status: string, location: string): BarberEntity {
+  static toFullEntity(barber: Barber, user: User, status: string, location: string): BarberFullEntity {
     return {
       id: user.id,
       email: user.email,
@@ -15,6 +15,18 @@ export class BarberMapper {
       location,
       role: RoleMap[user.role],
       createdAt: user.createdAt,
+    };
+  }
+
+  static toSummaryEntity(barber: Barber, user: User, status: string, location: string): BarberSummaryEntity {
+    return {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      experience: barber.experience,
+      status,
+      location,
+      role: RoleMap[user.role],
     };
   }
 }

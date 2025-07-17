@@ -1,6 +1,6 @@
 import { RolesEnum } from './enums/roles.enum';
 
-export interface BarberEntity {
+export interface BarberFullEntity {
   id: number;
   email: string;
   firstName: string;

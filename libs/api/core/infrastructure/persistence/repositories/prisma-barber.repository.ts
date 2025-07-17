@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { BarberRepository, BarberStatusEntity } from '@barbershop-app/api/core/domain';
+import { BarberRepository, BarberStatusEntity, BarberSummaryEntity } from '@barbershop-app/api/core/domain';
 import { PrismaService } from '../prisma/prisma.service';
-import { BarberEntity, TimeSlotEntity } from '@barbershop-app/api/core/domain';
+import { TimeSlotEntity } from '@barbershop-app/api/core/domain';
 import { BarberMapper } from './mappers/barber.mapper';
 import { TimeSlotMapper } from './mappers/time-slot.mapper';
 import { BarberStatusMapper } from './mappers/barber-status.mapper';
@@ -13,7 +13,7 @@ export class PrismaBarberRepository implements BarberRepository {
     private prisma: PrismaService,
   ) {}
 
-  async getAll(): Promise<BarberEntity[]> {
+  async getAll(): Promise<BarberSummaryEntity[]> {
     const users = await this.prisma.user.findMany({
       include: {
         barber: {
@@ -31,7 +31,7 @@ export class PrismaBarberRepository implements BarberRepository {
       const status = barber.status.name;
       const address = barber.barbershop.address;
 
-      barberEntities.push(BarberMapper.toDomain(barber, user, status, address));
+      barberEntities.push(BarberMapper.toSummaryEntity(barber, user, status, address));
     }
 
     return barberEntities;
