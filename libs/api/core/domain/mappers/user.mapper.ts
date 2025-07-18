@@ -1,8 +1,8 @@
-import { CustomerEntity } from '../entities/customer.entity';
 import { JwtPayload, UserDto } from '@barbershop-app/shared/types';
+import { UserEntity } from '../entities/user.entity';
 
 export class UserMapper {
-  static toDto(user: CustomerEntity): UserDto {
+  static toDto(user: UserEntity): UserDto {
     return {
       id: user.id,
       email: user.email,
@@ -14,7 +14,7 @@ export class UserMapper {
     };
   }
 
-  static toJwtPayload(user: CustomerEntity): JwtPayload {
+  static toJwtPayload(user: UserEntity): JwtPayload {
     return {
       id: user.id,
       email: user.email,

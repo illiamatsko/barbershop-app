@@ -1,12 +1,17 @@
 import { inject, Injectable } from '@angular/core';
 import { BarberGateway } from '@barbershop-app/client/barber/domain';
 import { firstValueFrom } from 'rxjs';
+import { BarberStore } from '@barbershop-app/client/core/application';
 
 @Injectable({ providedIn: 'root' })
 export class GetAllBarbersUseCase {
   private barberGateway = inject(BarberGateway);
+  private barberStore = inject(BarberStore);
 
-  execute() {
-    return firstValueFrom(this.barberGateway.getAllBarbers())
+  async execute() {
+    this.barberStore.setBarbers(
+      {
+        barbers: await firstValueFrom(this.barberGateway.getAllBarbers())
+      });
   }
 }
