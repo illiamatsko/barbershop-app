@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { BarberDto } from '@barbershop-app/shared/types';
+import { BarberSummaryDto } from '@barbershop-app/shared/types';
 import { NgOptimizedImage } from '@angular/common';
 import { CalendarIcon } from '@barbershop-app/shared/ui';
 
@@ -13,7 +13,7 @@ import { CalendarIcon } from '@barbershop-app/shared/ui';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BarberCard {
-  barber = input.required<BarberDto>();
+  barber = input.required<BarberSummaryDto>();
   imgUrl =
     'https://t4.ftcdn.net/jpg/04/31/64/75/360_F_431647519_usrbQ8Z983hTYe8zgA7t1XVc5fEtqcpa.jpg';
 }

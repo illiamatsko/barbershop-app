@@ -1,12 +1,9 @@
 import {
   ChangeDetectionStrategy,
-  Component,
+  Component, computed,
   CUSTOM_ELEMENTS_SCHEMA,
-  inject,
-  OnInit,
-  signal
+  inject
 } from '@angular/core';
-import { BarberSummaryDto } from '@barbershop-app/shared/types';
 import { BarberCard } from './barber-card/barber-card';
 import { InViewDirective, RightArrowIcon, LeftArrowIcon } from '@barbershop-app/shared/ui';
 import { BarberStore } from '@barbershop-app/client/core/application';
@@ -20,11 +17,7 @@ import { BarberStore } from '@barbershop-app/client/core/application';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BarbersSection implements OnInit {
+export class BarbersSection {
   private barberStore = inject(BarberStore)
-  barbers = signal<BarberSummaryDto[]>([]);
-
-  async ngOnInit() {
-    this.barbers.set(this.barberStore.barbers());
-  }
+  barbers = computed(() => this.barberStore.barbers());
 }
