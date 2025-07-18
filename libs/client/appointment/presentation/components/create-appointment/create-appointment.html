@@ -1,15 +1,80 @@
-<header class="flex items-center justify-between px-12 py-6 bg-neutral-900">
-  <div class="left">
-    <lib-logo-icon class="logo" [width]="53" [height]="53"/>
+<div class="bg-black min-h-screen text-white">
 
-    <div class="brand">
-      <div class="title">STRIX</div>
-      <div class="subtitle">Barber Shop</div>
+  <header class="flex items-center justify-between px-12 py-6 bg-neutral-900">
+    <div class="left">
+      <lib-logo-icon class="logo" [width]="53" [height]="53"/>
+
+      <div class="brand">
+        <div class="title">STRIX</div>
+        <div class="subtitle">Barber Shop</div>
+      </div>
+    </div>
+
+    <button class="flex items-center gap-2 text-yellow-500 hover:text-yellow-400 border border-yellow-500/30 hover:border-yellow-500/50 px-3 py-2 rounded-lg transition-all duration-200">
+      <lib-left-arrow-icon class="text-yellow-500" [width]="18" [height]="18" />
+      Back to Home
+    </button>
+  </header>
+
+  <!-- Stepper -->
+  <div class="max-w-6xl mx-auto mt-10">
+    <ol class="flex justify-between items-start relative">
+      <!-- Step 1 -->
+      <li class="flex-1 text-center relative">
+        <div class="w-12 h-12 rounded-full bg-primary text-black font-bold flex items-center justify-center mx-auto mb-2 relative">1</div>
+        <div class="text-primary font-semibold text-sm">Barbershop</div>
+        <div class="absolute top-6 left-[calc(50%+2.25rem)] w-[calc(100%-4.5rem)] h-0.5 bg-primary"></div>
+      </li>
+      <li class="flex-1 text-center relative">
+        <div class="w-12 h-12 rounded-full bg-black border-2 border-gray-600 text-gray-400 font-bold flex items-center justify-center mx-auto mb-2 relative">2</div>
+        <div class="text-gray-400 font-semibold text-sm">Barber</div>
+        <div class="absolute top-6 left-[calc(50%+2.25rem)] w-[calc(100%-4.5rem)] h-0.5 bg-gray-600"></div>
+      </li>
+      <li class="flex-1 text-center relative">
+        <div class="w-12 h-12 rounded-full bg-black border-2 border-gray-600 text-gray-400 font-bold flex items-center justify-center mx-auto mb-2 relative">3</div>
+        <div class="text-gray-400 font-semibold text-sm">Service</div>
+        <div class="absolute top-6 left-[calc(50%+2.25rem)] w-[calc(100%-4.5rem)] h-0.5 bg-gray-600"></div>
+      </li>
+      <li class="flex-1 text-center relative">
+        <div class="w-12 h-12 rounded-full bg-black border-2 border-gray-600 text-gray-400 font-bold flex items-center justify-center mx-auto mb-2 relative">4</div>
+        <div class="text-gray-400 font-semibold text-sm">Date & Time</div>
+        <div class="absolute top-6 left-[calc(50%+2.25rem)] w-[calc(100%-4.5rem)] h-0.5 bg-gray-600"></div>
+      </li>
+      <li class="flex-1 text-center relative">
+        <div class="w-12 h-12 rounded-full bg-black border-2 border-gray-600 text-gray-400 font-bold flex items-center justify-center mx-auto mb-2 relative">5</div>
+        <div class="text-gray-400 font-semibold text-sm">Contacts</div>
+      </li>
+    </ol>
+  </div>
+
+
+  <div class="px-6 pb-12">
+    <div class="step-content max-w-4xl mx-auto mt-8 px-8 pb-6 pt-8 bg-neutral-900 border border-gray-700/30 rounded-2xl">
+      @switch(currentStep()) {
+        @case(1) {
+          <app-select-barbershop/>
+        }
+        @case(2) {
+          <app-select-barber/>
+        }
+        @case(3) {
+          <app-select-service/>
+        }
+        @case(4) {
+          <app-select-time/>
+        }
+        @case(5) {
+          <app-confirmation/>
+        }
+      }
+
+      <!-- Navigation -->
+      <div class="flex justify-end mt-10">
+        <button id="next-btn" class="px-6 py-3 flex items-center gap-2 bg-primary text-black font-semibold rounded-lg hover:bg-yellow-400/90 transition-colors duration-200">
+          Next <lib-right-arrow-icon [width]="15" [height]="15"/>
+        </button>
+      </div>
     </div>
   </div>
 
-  <button class="flex items-center gap-2 text-yellow-500 hover:text-yellow-400 border border-yellow-500/30 hover:border-yellow-500/50 px-3 py-2 rounded-lg transition-all duration-200">
-    <lib-left-arrow-icon class="text-yellow-500" [width]="18" [height]="18" />
-    Back to Home
-  </button>
-</header>
+</div>
