@@ -6,10 +6,10 @@ import {
   OnInit,
   signal
 } from '@angular/core';
-import { BarberDto } from '@barbershop-app/shared/types';
-import { GetAllBarbersUseCase } from '@barbershop-app/client/barber/application';
+import { BarberSummaryDto } from '@barbershop-app/shared/types';
 import { BarberCard } from './barber-card/barber-card';
 import { InViewDirective, RightArrowIcon, LeftArrowIcon } from '@barbershop-app/shared/ui';
+import { BarberStore } from '@barbershop-app/client/core/application';
 
 
 @Component({
@@ -21,10 +21,10 @@ import { InViewDirective, RightArrowIcon, LeftArrowIcon } from '@barbershop-app/
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BarbersSection implements OnInit {
-  private getAllBarbersUseCase = inject(GetAllBarbersUseCase);
-  barbers = signal<BarberDto[]>([]);
+  private barberStore = inject(BarberStore)
+  barbers = signal<BarberSummaryDto[]>([]);
 
   async ngOnInit() {
-    this.barbers.set(await this.getAllBarbersUseCase.execute());
+    this.barbers.set(this.barberStore.barbers());
   }
 }
