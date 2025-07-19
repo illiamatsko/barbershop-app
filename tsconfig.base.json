@@ -33,6 +33,11 @@
       "@barbershop-app/api/barber/domain": ["libs/api/modules/barber/domain/index.ts"],
       "@barbershop-app/api/barber/infrastructure": ["libs/api/modules/barber/infrastructure/index.ts"],
 
+      "@barbershop-app/api/barbershop/presentation": ["libs/api/modules/barbershop/presentation/index.ts"],
+      "@barbershop-app/api/barbershop/application": ["libs/api/modules/barbershop/application/index.ts"],
+      "@barbershop-app/api/barbershop/domain": ["libs/api/modules/barbershop/domain/index.ts"],
+      "@barbershop-app/api/barbershop/infrastructure": ["libs/api/modules/barbershop/infrastructure/index.ts"],
+
       "@barbershop-app/api/service/presentation": ["libs/api/modules/service/presentation/index.ts"],
       "@barbershop-app/api/service/application": ["libs/api/modules/service/application/index.ts"],
       "@barbershop-app/api/service/domain": ["libs/api/modules/service/domain/index.ts"],
