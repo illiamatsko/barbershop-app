@@ -94,6 +94,6 @@
     "webpack-cli": "^5.1.4"
   },
   "prisma": {
-    "schema": "libs/api/core/infrastructure/persistence/prisma/schema/"
+    "schema": "libs/api/core/persistence/prisma/schema/"
   }
 }

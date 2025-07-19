@@ -1,7 +1,10 @@
 import { BarbershopEntity, BarbershopRepository } from '@barbershop-app/api/barbershop/domain';
 import { PrismaService } from '@barbershop-app/api/core/persistence';
 import { BarbershopMapper } from '../mappers/barbershop.mapper';
+import { Injectable } from '@nestjs/common';
 
+
+@Injectable()
 export class PrismaBarbershopRepository implements BarbershopRepository {
   constructor(private prisma: PrismaService) {}
 
