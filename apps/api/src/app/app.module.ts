@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { ConfigModule } from '@nestjs/config';
-import { BarberModule } from './barber/barber.module';
 import { RouterModule } from '@nestjs/core';
-import { AuthModule } from './auth/auth.module';
-import { UserModule } from './user/user.module';
 import { routes } from './app.routes';
+import { ServiceModule } from '@barbershop-app/api/service/presentation';
+import { BarberModule } from '@barbershop-app/api/barber/presentation';
+import { AuthModule } from '@barbershop-app/api/auth/presentation';
 
 @Module({
   imports: [
@@ -15,8 +15,8 @@ import { routes } from './app.routes';
       envFilePath: '.env',
     }),
     AuthModule,
-    UserModule,
     BarberModule,
+    ServiceModule,
     RouterModule.register(routes)
   ],
   controllers: [],

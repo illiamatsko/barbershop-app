@@ -1,10 +1,16 @@
-export * from './auth/jwt-payload.interface';
+export * from './dtos/appointment/appointment.dto'
 
-export * from './dtos/barber-full.dto';
-export * from './dtos/barber-summary.dto'
-export * from './dtos/barber-status.dto'
-export * from './dtos/service.dto';
-export * from './dtos/time-slot.dto';
-export * from './dtos/user.dto';
-export * from './dtos/appointment.dto'
-export * from './dtos/review.dto'
+export * from './dtos/auth/user.dto';
+
+export * from './dtos/barber/barber-full.dto';
+export * from './dtos/barber/barber-status.dto'
+export * from './dtos/barber/barber-summary.dto'
+export * from './dtos/barber/create-barber.payload'
+
+export * from './dtos/customer/create-customer.payload'
+export * from './dtos/customer/customer.dto'
+
+export * from './dtos/service/service.dto';
+
+
+

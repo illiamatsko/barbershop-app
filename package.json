@@ -7,7 +7,7 @@
     "prisma-generate": "prisma generate",
     "db-reset": "prisma migrate reset",
     "prisma-deploy": "prisma migrate deploy",
-    "seed-db": "ts-node libs/api/core/infrastructure/persistence/prisma/seed-data/seed.ts"
+    "seed-db": "ts-node libs/api/core/persistence/prisma/db-seed/seed.ts"
   },
   "private": true,
   "dependencies": {

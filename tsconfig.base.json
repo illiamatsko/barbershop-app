@@ -15,44 +15,56 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@barbershop-app/api/core/domain": ["libs/api/core/domain/index.ts"],
-      "@barbershop-app/api/core/infrastructure": ["libs/api/core/infrastructure/index.ts"],
+      "@barbershop-app/api/core/persistence": ["libs/api/core/persistence/index.ts"],
+      "@barbershop-app/api/shared/auth": ["libs/api/shared/index.ts"],
 
-      "@barbershop-app/api/auth/application": ["libs/api/auth/application/index.ts"],
-      "@barbershop-app/api/auth/infrastructure": ["libs/api/auth/infrastructure/index.ts"],
+      "@barbershop-app/api/auth/presentation": ["libs/api/modules/auth/presentation/index.ts"],
+      "@barbershop-app/api/auth/application": ["libs/api/modules/auth/application/index.ts"],
+      "@barbershop-app/api/auth/domain": ["libs/api/modules/auth/domain/index.ts"],
+      "@barbershop-app/api/auth/infrastructure": ["libs/api/modules/auth/infrastructure/index.ts"],
 
-      "@barbershop-app/api/barber/application": ["libs/api/barber/application/index.ts"],
+      "@barbershop-app/api/customer/presentation": ["libs/api/modules/customer/presentation/index.ts"],
+      "@barbershop-app/api/customer/application": ["libs/api/modules/customer/application/index.ts"],
+      "@barbershop-app/api/customer/domain": ["libs/api/modules/customer/domain/index.ts"],
+      "@barbershop-app/api/customer/infrastructure": ["libs/api/modules/customer/infrastructure/index.ts"],
 
-      "@barbershop-app/api/service/application": ["libs/api/service/application/index.ts"],
+      "@barbershop-app/api/barber/presentation": ["libs/api/modules/barber/presentation/index.ts"],
+      "@barbershop-app/api/barber/application": ["libs/api/modules/barber/application/index.ts"],
+      "@barbershop-app/api/barber/domain": ["libs/api/modules/barber/domain/index.ts"],
+      "@barbershop-app/api/barber/infrastructure": ["libs/api/modules/barber/infrastructure/index.ts"],
+
+      "@barbershop-app/api/service/presentation": ["libs/api/modules/service/presentation/index.ts"],
+      "@barbershop-app/api/service/application": ["libs/api/modules/service/application/index.ts"],
+      "@barbershop-app/api/service/domain": ["libs/api/modules/service/domain/index.ts"],
+      "@barbershop-app/api/service/infrastructure": ["libs/api/modules/service/infrastructure/index.ts"],
+
 
       "@barbershop-app/client/core/application": ["libs/client/core/application/index.ts"],
       "@barbershop-app/client/core/infrastructure": ["libs/client/core/infrastructure/index.ts"],
       "@barbershop-app/client/core/domain": ["libs/client/core/domain/index.ts"],
 
-      "@barbershop-app/client/auth/presentation": ["libs/client/auth/presentation/index.ts"],
-      "@barbershop-app/client/auth/application": ["libs/client/auth/application/index.ts"],
-      "@barbershop-app/client/auth/domain": ["libs/client/auth/domain/index.ts"],
-      "@barbershop-app/client/auth/infrastructure": ["libs/client/auth/infrastructure/index.ts"],
+      "@barbershop-app/client/auth/presentation": ["libs/client/modules/auth/presentation/index.ts"],
+      "@barbershop-app/client/auth/application": ["libs/client/modules/auth/application/index.ts"],
+      "@barbershop-app/client/auth/domain": ["libs/client/modules/auth/domain/index.ts"],
+      "@barbershop-app/client/auth/infrastructure": ["libs/client/modules/auth/infrastructure/index.ts"],
 
-      "@barbershop-app/client/appointment/presentation": ["libs/client/appointment/presentation/index.ts"],
-      "@barbershop-app/client/appointment/application": ["libs/client/appointment/application/index.ts"],
-      "@barbershop-app/client/appointment/domain": ["libs/client/appointment/domain/index.ts"],
-      "@barbershop-app/client/appointment/infrastructure": ["libs/client/appointment/infrastructure/index.ts"],
+      "@barbershop-app/client/appointment/presentation": ["libs/client/modules/appointment/presentation/index.ts"],
+      "@barbershop-app/client/appointment/application": ["libs/client/modules/appointment/application/index.ts"],
+      "@barbershop-app/client/appointment/domain": ["libs/client/modules/appointment/domain/index.ts"],
+      "@barbershop-app/client/appointment/infrastructure": ["libs/client/modules/appointment/infrastructure/index.ts"],
 
-      "@barbershop-app/client/barber/application": ["libs/client/barber/application/index.ts"],
-      "@barbershop-app/client/barber/domain": ["libs/client/barber/domain/index.ts"],
-      "@barbershop-app/client/barber/infrastructure": ["libs/client/barber/infrastructure/index.ts"],
+      "@barbershop-app/client/barber/application": ["libs/client/modules/barber/application/index.ts"],
+      "@barbershop-app/client/barber/domain": ["libs/client/modules/barber/domain/index.ts"],
+      "@barbershop-app/client/barber/infrastructure": ["libs/client/modules/barber/infrastructure/index.ts"],
 
-      "@barbershop-app/client/service/application": ["libs/client/service/application/index.ts"],
-      "@barbershop-app/client/service/domain": ["libs/client/service/domain/index.ts"],
-      "@barbershop-app/client/service/infrastructure": ["libs/client/service/infrastructure/index.ts"],
+      "@barbershop-app/client/service/application": ["libs/client/modules/service/application/index.ts"],
+      "@barbershop-app/client/service/domain": ["libs/client/modules/service/domain/index.ts"],
+      "@barbershop-app/client/service/infrastructure": ["libs/client/modules/service/infrastructure/index.ts"],
 
-      "@barbershop-app/client/layout/presentation": ["libs/client/layout/presentation/index.ts"],
+      "@barbershop-app/client/layout/presentation": ["libs/client/modules/layout/presentation/index.ts"],
 
-      "@barbershop-app/shared/ui": ["libs/shared/ui/index.ts"],
-      "@barbershop-app/shared/env": ["libs/shared/env/index.ts"],
       "@barbershop-app/shared/types": ["libs/shared/types/index.ts"],
-      "@barbershop-app/shared/utils/infrastructure": ["libs/shared/utils/infrastructure/index.ts"]
+      "@env/*": ["libs/client/shared/env/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]
