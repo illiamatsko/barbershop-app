@@ -25,4 +25,23 @@ import { Confirmation } from '../confirmation/confirmation';
 })
 export class CreateAppointment {
   currentStep = signal<number>(1);
+  selectedBarbershopId = signal<number>(-1);
+
+  selectBarbershop(id: number) {
+    this.selectedBarbershopId.set(id);
+  }
+
+  nextStep() {
+    if(this.currentStep() < 5) {
+      this.currentStep.update((step) => step+1);
+      console.log(this.currentStep())
+    }
+  }
+
+  prevStep() {
+    if(this.currentStep() > 1) {
+      this.currentStep.update((step) => step-1);
+      console.log(this.currentStep())
+    }
+  }
 }

@@ -52,7 +52,10 @@
     <div class="step-content max-w-4xl mx-auto mt-8 px-8 pb-6 pt-8 bg-neutral-900 border border-gray-700/30 rounded-2xl">
       @switch(currentStep()) {
         @case(1) {
-          <app-select-barbershop/>
+          <app-select-barbershop
+            (selectedBarbershopOutput)="selectBarbershop($event)"
+            [selectedBarbershopId]="selectedBarbershopId()"
+          />
         }
         @case(2) {
           <app-select-barber/>
@@ -69,11 +72,22 @@
       }
 
       <!-- Navigation -->
-      <div class="flex justify-end mt-10">
-        <button id="next-btn" class="px-6 py-3 flex items-center gap-2 bg-primary text-black font-semibold rounded-lg hover:bg-yellow-400/90 transition-colors duration-200">
-          Next <lib-right-arrow-icon [width]="15" [height]="15"/>
+      <div class="flex justify-between mt-10">
+        <button (click)="prevStep()" class="px-6 py-3 flex items-center gap-2 bg-primary text-black font-semibold rounded-lg hover:bg-yellow-400/90 transition-colors duration-200">
+          <lib-left-arrow-icon [width]="15" [height]="15" />
+          Prev
+        </button>
+
+        <button (click)="nextStep()" class="px-6 py-3 flex items-center gap-2 bg-primary text-black font-semibold rounded-lg hover:bg-yellow-400/90 transition-colors duration-200">
+          @if(currentStep() == 5) {
+            Confirm
+          } @else {
+            Next
+            <lib-right-arrow-icon [width]="15" [height]="15" />
+          }
         </button>
       </div>
+
     </div>
   </div>
 
