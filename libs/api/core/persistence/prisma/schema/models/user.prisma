@@ -10,6 +10,7 @@ model User {
 
   barber   Barber?
   customer Customer?
+  manager  Manager?
 }
 
 enum Role {

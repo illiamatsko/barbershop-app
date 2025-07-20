@@ -63,6 +63,7 @@ async function main() {
   // 3. Create Users
   const customerPassword = await hashPassword('customer@example.com');
   const barberPassword = await hashPassword('barber-old@example.com');
+  const managerPassword = await hashPassword('manager@example.com');
 
   const customerUser = await prisma.user.create({
     data: {
@@ -81,11 +82,29 @@ async function main() {
     },
   });
 
+  const managerUser = await prisma.user.create({
+    data: {
+      email: 'manager@example.com',
+      password: managerPassword,
+      firstName: 'Manager',
+      lastName: 'Doe',
+      phoneNumber: '9988776655',
+      role: 'MANAGER',
+    },
+  });
+
+  const manager = await prisma.manager.create({
+    data: {
+      userId: managerUser.id,
+    },
+  });
+
   const barbershop = await prisma.barbershop.create({
     data: {
       name: 'Barbershop',
       address: 'Main Street 123',
       phoneNumber: '+380931234567',
+      managerId: manager.id
     },
   });
 
