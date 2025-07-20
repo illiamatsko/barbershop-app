@@ -1,6 +1,7 @@
 import { Request } from 'express';
-import { UserDto } from '@barbershop-app/shared/types';
+import { CustomerEntity } from '../entities/customer.entity';
+import { BarberFullEntity } from '../entities/barber-full.entity';
 
 export interface AuthRequest extends Request {
-  user: UserDto
+  user: CustomerEntity | BarberFullEntity
 }

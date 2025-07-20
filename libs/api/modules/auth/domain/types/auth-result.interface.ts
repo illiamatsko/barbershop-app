@@ -1,6 +1,6 @@
-import { UserDto } from '@barbershop-app/shared/types';
+import { BarberFullDto, CustomerDto } from '@barbershop-app/shared/types';
 
 export interface AuthResult {
-  user: UserDto;
+  user: CustomerDto | BarberFullDto;
   token: string;
 }

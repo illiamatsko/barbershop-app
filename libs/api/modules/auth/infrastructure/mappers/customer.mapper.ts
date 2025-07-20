@@ -1,9 +1,9 @@
 import { CustomerEntity } from '@barbershop-app/api/auth/domain';
-import { Customer, User } from '@prisma/client';
 import { RoleMap } from '@barbershop-app/api/shared/auth';
+import { RawCustomerType } from '../types/raw-customer.type';
 
 export class CustomerMapper {
-  static toEntity(customer: Customer & User): CustomerEntity {
+  static toEntity(customer: RawCustomerType): CustomerEntity {
     return {
       id: customer.id,
       email: customer.email,

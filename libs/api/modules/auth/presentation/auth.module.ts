@@ -6,7 +6,12 @@ import {
   PrismaPasswordRepository,
   PrismaUserRepository
 } from '@barbershop-app/api/auth/infrastructure';
-import { SignInUseCase, CreateBarberUseCase, CreateCustomerUseCase } from '@barbershop-app/api/auth/application';
+import {
+  SignInUseCase,
+  CreateBarberUseCase,
+  CreateCustomerUseCase,
+  BarberRoleStrategy, CustomerRoleStrategy, GetUserFromTokenUseCase
+} from '@barbershop-app/api/auth/application';
 import {
   AuthTokenGenerator, BarberRepository, CustomerRepository,
   PasswordHelper,
@@ -35,6 +40,18 @@ import { AuthController } from './auth.controller';
       SignInUseCase,
       CreateBarberUseCase,
       CreateCustomerUseCase,
+      GetUserFromTokenUseCase,
+      CustomerRoleStrategy,
+      BarberRoleStrategy,
+      {
+        provide: 'ROLE_STRATEGIES',
+        useFactory: (
+          customerStrategy: CustomerRoleStrategy,
+          barberStrategy: BarberRoleStrategy,
+        ) => [customerStrategy, barberStrategy],
+        inject: [CustomerRoleStrategy, BarberRoleStrategy],
+      },
+
       {
         provide: UserRepository,
         useClass: PrismaUserRepository

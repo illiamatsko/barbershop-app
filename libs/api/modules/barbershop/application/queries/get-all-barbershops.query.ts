@@ -1,7 +1,7 @@
 import { Query } from '@nestjs/cqrs';
-import { BarbershopEntity } from '@barbershop-app/api/barbershop/domain';
+import { BarbershopDto } from '@barbershop-app/shared/types';
 
-export class GetAllBarbershopsQuery extends Query<BarbershopEntity[]> {
+export class GetAllBarbershopsQuery extends Query<BarbershopDto[]> {
   constructor() {
     super();
   }

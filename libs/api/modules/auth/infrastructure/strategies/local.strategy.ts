@@ -4,7 +4,6 @@ import { Strategy } from 'passport-local';
 import {
   PasswordHelper,
   PasswordRepository,
-  UserMapper,
   UserRepository
 } from '@barbershop-app/api/auth/domain';
 
@@ -25,10 +24,10 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     if (!bd_password || !await this.passwordHelper.checkPassword(password, bd_password))
       throw new UnauthorizedException('Incorrect email or password');
 
-    const userEntity = await this.userRepo.findByEmail(email);
+    const userEntity = await this.userRepo.findUserByEmail(email);
     if(!userEntity)
       throw new UnauthorizedException('Incorrect email or password');
 
-    return UserMapper.toDto(userEntity);
+    return userEntity;
   }
 }

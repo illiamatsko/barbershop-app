@@ -1,8 +1,8 @@
 import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { UserMapper, UserRepository } from '@barbershop-app/api/auth/domain';
-import { UserDto } from '@barbershop-app/shared/types';
+import { UserRepository } from '@barbershop-app/api/auth/domain';
+import { JwtPayload } from '@barbershop-app/api/shared/auth';
 
 
 @Injectable()
@@ -20,10 +20,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: UserDto) {
-    const userEntity = await this.userRepo.findByEmail(payload.email);
+  async validate(payload: JwtPayload) {
+    const userEntity = await this.userRepo.findUserByEmail(payload.email);
     if(!userEntity) throw new UnauthorizedException('User does not exist');
 
-    return UserMapper.toDto(userEntity);
+    return userEntity;
   }
 }

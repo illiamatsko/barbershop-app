@@ -1,15 +1,22 @@
 import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
-import { UserDto } from '@barbershop-app/shared/types';
-import { CommandBus } from '@nestjs/cqrs';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { AuthRequest, AuthResult } from '@barbershop-app/api/auth/domain';
-import { CreateCustomerDto, CreateBarberDto, CreateBarberCommand } from '@barbershop-app/api/auth/application';
+import {
+  CreateCustomerDto,
+  CreateBarberDto,
+  CreateBarberCommand,
+  GetUserFromTokenQuery
+} from '@barbershop-app/api/auth/application';
 import { CreateCustomerCommand, SignInCommand } from '@barbershop-app/api/auth/application';
 import { JwtGuard, LocalGuard, RoleGuard, Roles } from '@barbershop-app/api/shared/auth';
 
 
 @Controller()
 export class AuthController {
-  constructor(private commandBus: CommandBus) {}
+  constructor(
+    private commandBus: CommandBus,
+    private queryBus: QueryBus
+  ) {}
 
   @UseGuards(LocalGuard)
   @Post('sign-in')
@@ -31,7 +38,7 @@ export class AuthController {
 
   @UseGuards(JwtGuard)
   @Get('me')
-  GetUserFromToken(@Req() req: AuthRequest): UserDto {
-    return req.user;
+  GetUserFromToken(@Req() req: AuthRequest) {
+    return this.queryBus.execute(new GetUserFromTokenQuery(req.user));
   }
 }

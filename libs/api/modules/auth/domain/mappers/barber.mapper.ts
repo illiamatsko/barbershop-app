@@ -15,15 +15,15 @@ export class BarberMapper {
       phoneNumber: barber.phoneNumber,
       experience: barber.experience,
       status: barber.status,
-      starRating: 5,
-      reviewsCount: 5,
+      starRating: barber.starRating,
+      reviewsCount: barber.reviewsCount,
       location: barber.location,
       role: barber.role.toString(),
       createdAt: barber.createdAt.toISOString(),
     };
   }
 
-  static toCreateUserPayload(createBarberDto: CreateBarberDto): CreateUserDto {
+  static toCreateUserDto(createBarberDto: CreateBarberDto): CreateUserDto {
     return {
       email: createBarberDto.email,
       password: createBarberDto.password,
@@ -34,7 +34,7 @@ export class BarberMapper {
     };
   }
 
-  static toCreateBarberRecordPayload(createBarberDto: CreateBarberDto, userId: number): CreateBarberRecordDto {
+  static toCreateBarberRecordDto(createBarberDto: CreateBarberDto, userId: number): CreateBarberRecordDto {
     return {
       userId,
       barbershopId: createBarberDto.barbershopId,

@@ -8,6 +8,8 @@ export interface BarberFullEntity {
   phoneNumber: string;
   experience: number;
   status: string,
+  starRating: number,
+  reviewsCount: number,
   location: string,
   role: RolesEnum;
   createdAt: Date;

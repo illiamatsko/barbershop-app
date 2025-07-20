@@ -14,15 +14,43 @@ export class PrismaBarberRepository implements BarberRepository {
   }
 
   async createBarber(createBarberRecordPayload: CreateBarberRecordDto): Promise<BarberFullEntity> {
-    const barber = await this.prisma.barber.create({
+    const createdBarber = await this.prisma.barber.create({
       data: createBarberRecordPayload,
+    });
+
+    const user = await this.prisma.user.findUnique({
+      where: { id: createdBarber.userId },
       include: {
-        user: true,
-        status: true,
-        barbershop: true
+        barber: {
+          include: {
+            status: true,
+            barbershop: true,
+            reviews: true
+          }
+        }
       }
     });
 
-    return BarberMapper.toFullEntity({ ...barber, ...barber.user }, barber.status.name, barber.barbershop.address)
+    if (!user) throw new Error('User not found after creating barber');
+
+    return BarberMapper.toFullEntity(user);
+  }
+
+  async getByEmail(email: string): Promise<BarberFullEntity | null> {
+    const user = await this.prisma.user.findUnique({
+      where: { email },
+      include: {
+        barber: {
+          include: {
+            status: true,
+            barbershop: true,
+            reviews: true
+          }
+        }
+      }
+    });
+    if (!user || !user.barber) return null;
+
+    return BarberMapper.toFullEntity(user);
   }
 }

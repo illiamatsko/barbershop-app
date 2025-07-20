@@ -20,10 +20,10 @@ export class CreateBarberUseCase
   ) {}
 
   async execute({ payload }: CreateBarberCommand): Promise<AuthResult> {
-    const createUserPayload = BarberMapper.toCreateUserPayload(payload);
+    const createUserPayload = BarberMapper.toCreateUserDto(payload);
     const user = await this.userRepo.create(createUserPayload);
 
-    const createBarberRecordPayload = BarberMapper.toCreateBarberRecordPayload(
+    const createBarberRecordPayload = BarberMapper.toCreateBarberRecordDto(
       payload,
       user.id
     );
