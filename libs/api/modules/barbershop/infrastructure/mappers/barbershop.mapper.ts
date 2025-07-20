@@ -4,7 +4,10 @@ import { BarbershopEntity } from '@barbershop-app/api/barbershop/domain';
 export class BarbershopMapper {
   static toEntity(barbershop: Barbershop): BarbershopEntity {
     return {
-      id: barbershop.id
+      id: barbershop.id,
+      name: barbershop.name,
+      address: barbershop.address,
+      phoneNumber: barbershop.phoneNumber
     }
   }
 }
