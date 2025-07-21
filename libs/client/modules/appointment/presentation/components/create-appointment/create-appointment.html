@@ -17,36 +17,7 @@
   </header>
 
   <!-- Stepper -->
-  <div class="max-w-6xl mx-auto mt-10">
-    <ol class="flex justify-between items-start relative">
-      <!-- Step 1 -->
-      <li class="flex-1 text-center relative">
-        <div class="w-12 h-12 rounded-full bg-primary text-black font-bold flex items-center justify-center mx-auto mb-2 relative">1</div>
-        <div class="text-primary font-semibold text-sm">Barbershop</div>
-        <div class="absolute top-6 left-[calc(50%+2.25rem)] w-[calc(100%-4.5rem)] h-0.5 bg-primary"></div>
-      </li>
-      <li class="flex-1 text-center relative">
-        <div class="w-12 h-12 rounded-full bg-black border-2 border-gray-600 text-gray-400 font-bold flex items-center justify-center mx-auto mb-2 relative">2</div>
-        <div class="text-gray-400 font-semibold text-sm">Barber</div>
-        <div class="absolute top-6 left-[calc(50%+2.25rem)] w-[calc(100%-4.5rem)] h-0.5 bg-gray-600"></div>
-      </li>
-      <li class="flex-1 text-center relative">
-        <div class="w-12 h-12 rounded-full bg-black border-2 border-gray-600 text-gray-400 font-bold flex items-center justify-center mx-auto mb-2 relative">3</div>
-        <div class="text-gray-400 font-semibold text-sm">Service</div>
-        <div class="absolute top-6 left-[calc(50%+2.25rem)] w-[calc(100%-4.5rem)] h-0.5 bg-gray-600"></div>
-      </li>
-      <li class="flex-1 text-center relative">
-        <div class="w-12 h-12 rounded-full bg-black border-2 border-gray-600 text-gray-400 font-bold flex items-center justify-center mx-auto mb-2 relative">4</div>
-        <div class="text-gray-400 font-semibold text-sm">Date & Time</div>
-        <div class="absolute top-6 left-[calc(50%+2.25rem)] w-[calc(100%-4.5rem)] h-0.5 bg-gray-600"></div>
-      </li>
-      <li class="flex-1 text-center relative">
-        <div class="w-12 h-12 rounded-full bg-black border-2 border-gray-600 text-gray-400 font-bold flex items-center justify-center mx-auto mb-2 relative">5</div>
-        <div class="text-gray-400 font-semibold text-sm">Contacts</div>
-      </li>
-    </ol>
-  </div>
-
+  <app-stepper [currentStep]="currentStep()" [steps]="steps" />
 
   <div class="px-6 pb-12">
     <div class="step-content max-w-4xl mx-auto mt-8 px-8 pb-6 pt-8 bg-neutral-900 border border-gray-700/30 rounded-2xl">

@@ -5,6 +5,7 @@ import { SelectBarber } from '../select-barber/select-barber';
 import { SelectService } from '../select-service/select-service';
 import { SelectTime } from '../select-time/select-time';
 import { Confirmation } from '../confirmation/confirmation';
+import { Stepper } from './stepper/stepper';
 
 
 @Component({
@@ -18,12 +19,14 @@ import { Confirmation } from '../confirmation/confirmation';
     SelectTime,
     Confirmation,
     RightArrowIcon,
+    Stepper,
   ],
   templateUrl: './create-appointment.html',
   styleUrl: './create-appointment.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateAppointment {
+  steps = ['Barbershop', 'Barber', 'Service', 'Date & Time', 'Contacts'];
   currentStep = signal<number>(1);
   selectedBarbershopId = signal<number>(-1);
 
@@ -32,16 +35,16 @@ export class CreateAppointment {
   }
 
   nextStep() {
-    if(this.currentStep() < 5) {
-      this.currentStep.update((step) => step+1);
-      console.log(this.currentStep())
+    if (this.currentStep() < 5) {
+      this.currentStep.update((step) => step + 1);
+      console.log(this.currentStep());
     }
   }
 
   prevStep() {
-    if(this.currentStep() > 1) {
-      this.currentStep.update((step) => step-1);
-      console.log(this.currentStep())
+    if (this.currentStep() > 1) {
+      this.currentStep.update((step) => step - 1);
+      console.log(this.currentStep());
     }
   }
 }

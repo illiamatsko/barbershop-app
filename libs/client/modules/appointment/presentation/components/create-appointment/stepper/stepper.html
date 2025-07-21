@@ -1,0 +1,33 @@
+<div class="stepper-container">
+  <ol class="stepper-list">
+    @for (step of steps(); track step; let i = $index) {
+      <li class="stepper-item">
+        <div
+          class="stepper-circle"
+          [class.active]="currentStep() >= i + 1"
+          [class.current]="currentStep() === i + 1"
+          [class.inactive]="currentStep() < i + 1"
+        >
+          {{ i + 1 }}
+        </div>
+
+        <div
+          class="stepper-label"
+          [class.label-active]="currentStep() === i + 1"
+          [class.label-inactive]="currentStep() !== i + 1"
+        >
+          {{ step }}
+        </div>
+
+        @if (i < steps().length - 1) {
+          <div class="stepper-line-base"></div>
+
+          <div
+            class="stepper-line-progress"
+            [style.width]="currentStep() > i + 1 ? 'calc(100% - 4.5rem)' : '0'"
+          ></div>
+        }
+      </li>
+    }
+  </ol>
+</div>

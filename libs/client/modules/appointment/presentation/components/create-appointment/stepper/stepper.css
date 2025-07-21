@@ -1,0 +1,47 @@
+.stepper-container {
+  @apply max-w-6xl mx-auto mt-10;
+}
+
+.stepper-list {
+  @apply flex justify-between items-start relative;
+}
+
+.stepper-item {
+  @apply flex-1 text-center relative;
+}
+
+.stepper-circle {
+  @apply w-12 h-12 rounded-full font-bold flex items-center justify-center mx-auto mb-2 relative transition-colors duration-500;
+}
+
+.stepper-circle.active {
+  @apply bg-primary text-black;
+}
+
+.stepper-circle.current {
+  @apply animate-pulse;
+}
+
+.stepper-circle.inactive {
+  @apply bg-black border-2 border-gray-600 text-gray-400;
+}
+
+.stepper-label {
+  @apply font-semibold text-sm transition-colors duration-500;
+}
+
+.stepper-label.label-active {
+  @apply text-primary;
+}
+
+.stepper-label.label-inactive {
+  @apply text-gray-400;
+}
+
+.stepper-line-base {
+  @apply absolute top-6 left-[calc(50%+2.25rem)] w-[calc(100%-4.5rem)] h-0.5 bg-gray-600;
+}
+
+.stepper-line-progress {
+  @apply absolute top-6 left-[calc(50%+2.25rem)] h-0.5 bg-yellow-500 origin-left transition-all duration-500;
+}
