@@ -124,6 +124,7 @@ async function main() {
   const barber = await prisma.barber.create({
     data: {
       userId: barberUser.id,
+      photoUrl: 'https://res.cloudinary.com/dx7xjflm0/image/upload/f_auto,q_90,w_500,h_500,c_fill,g_face,dpr_auto/v1753095264/barber_19_frilfd.avif',
       experience: 96,
       barbershopId: barbershop.id,
       statusId: status.id,

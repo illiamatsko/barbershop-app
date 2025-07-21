@@ -4,6 +4,7 @@ export interface CreateBarberPayload {
   firstName: string
   lastName: string
   phoneNumber: string
+  photoUrl: string
   experience: number
   barbershopId: number
   statusId: number

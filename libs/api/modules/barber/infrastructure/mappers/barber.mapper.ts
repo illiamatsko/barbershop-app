@@ -8,6 +8,7 @@ export class BarberMapper {
       id: user.id,
       firstName: user.firstName,
       lastName: user.lastName,
+      photoUrl: barber.photoUrl,
       experience: barber.experience,
       status,
       location,

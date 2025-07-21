@@ -3,6 +3,7 @@ model Barber {
   userId Int  @unique
   user   User @relation(fields: [userId], references: [id])
 
+  photoUrl     String
   experience   Int
   barbershop   Barbershop      @relation(fields: [barbershopId], references: [id])
   barbershopId Int

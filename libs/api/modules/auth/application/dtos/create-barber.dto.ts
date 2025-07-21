@@ -1,4 +1,4 @@
-import { IsEmail, IsNumber, IsPhoneNumber, IsString } from 'class-validator';
+import { IsEmail, IsNumber, IsPhoneNumber, IsString, IsUrl } from 'class-validator';
 import { CreateBarberPayload } from '@barbershop-app/shared/types';
 
 export class CreateBarberDto implements CreateBarberPayload {
@@ -16,6 +16,9 @@ export class CreateBarberDto implements CreateBarberPayload {
 
   @IsPhoneNumber('UA')
   phoneNumber!: string
+
+  @IsUrl()
+  photoUrl!: string
 
   @IsNumber()
   experience!: number

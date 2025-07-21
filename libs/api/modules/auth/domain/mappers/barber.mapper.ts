@@ -13,6 +13,7 @@ export class BarberMapper {
       firstName: barber.firstName,
       lastName: barber.lastName,
       phoneNumber: barber.phoneNumber,
+      photoUrl: barber.photoUrl,
       experience: barber.experience,
       status: barber.status,
       starRating: barber.starRating,
@@ -39,6 +40,7 @@ export class BarberMapper {
       userId,
       barbershopId: createBarberDto.barbershopId,
       statusId: createBarberDto.statusId,
+      photoUrl: createBarberDto.photoUrl,
       experience: createBarberDto.experience
     }
   }

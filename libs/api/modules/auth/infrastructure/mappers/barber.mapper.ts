@@ -17,6 +17,7 @@ export class BarberMapper {
       firstName: user.firstName,
       lastName: user.lastName,
       phoneNumber: user.phoneNumber,
+      photoUrl: barber.photoUrl,
       experience: barber.experience,
       status: barber.status.name,
       starRating: barberStarRating,

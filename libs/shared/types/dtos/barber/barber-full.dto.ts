@@ -4,6 +4,7 @@ export interface BarberFullDto {
   firstName: string
   lastName: string
   phoneNumber: string
+  photoUrl: string
   experience: number
   starRating: number
   reviewsCount: number
