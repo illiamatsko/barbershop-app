@@ -1,6 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { GetBarberServicesQuery } from '../queries/get-barber-services.query';
-import { ServiceDto } from '@barbershop-app/shared/types';
+import { ServiceDto } from '@barbershop-app/shared/domain';
 import { ServiceRepository, ServiceMapper } from '@barbershop-app/api/service/domain';
 
 

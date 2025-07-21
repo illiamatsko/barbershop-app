@@ -1,4 +1,4 @@
-import { BarbershopDto } from '@barbershop-app/shared/types';
+import { BarbershopDto } from '@barbershop-app/shared/domain';
 import { Observable } from 'rxjs';
 
 export abstract class BarbershopGateway {

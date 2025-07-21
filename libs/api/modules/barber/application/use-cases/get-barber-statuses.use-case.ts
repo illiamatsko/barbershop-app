@@ -1,7 +1,7 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { GetBarberStatusesQuery } from '../queries/get-barber-statuses.query';
 import { BarberRepository, BarberStatusMapper } from '@barbershop-app/api/barber/domain';
-import { BarberStatusDto } from '@barbershop-app/shared/types';
+import { BarberStatusDto } from '@barbershop-app/shared/domain';
 
 @QueryHandler(GetBarberStatusesQuery)
 export class GetBarberStatusesUseCase implements IQueryHandler<GetBarberStatusesQuery> {

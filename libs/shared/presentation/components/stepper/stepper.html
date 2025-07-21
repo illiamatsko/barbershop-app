@@ -13,8 +13,9 @@
 
         <div
           class="stepper-label"
-          [class.label-active]="currentStep() === i + 1"
-          [class.label-inactive]="currentStep() !== i + 1"
+          [class.active]="currentStep() >= i"
+          [class.current]="currentStep() === i + 1"
+          [class.inactive]="currentStep() < i + 1"
         >
           {{ step }}
         </div>

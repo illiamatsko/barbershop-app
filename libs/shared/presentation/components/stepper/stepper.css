@@ -30,11 +30,15 @@
   @apply font-semibold text-sm transition-colors duration-500;
 }
 
-.stepper-label.label-active {
+.stepper-label.active {
   @apply text-primary;
 }
 
-.stepper-label.label-inactive {
+.stepper-label.current {
+  @apply animate-pulse;
+}
+
+.stepper-label.inactive {
   @apply text-gray-400;
 }
 
@@ -43,5 +47,5 @@
 }
 
 .stepper-line-progress {
-  @apply absolute top-6 left-[calc(50%+2.25rem)] h-0.5 bg-yellow-500 origin-left transition-all duration-500;
+  @apply absolute top-6 left-[calc(50%+2.25rem)] h-0.5 bg-yellow-500 origin-left transition-all duration-300;
 }

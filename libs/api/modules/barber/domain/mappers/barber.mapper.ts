@@ -1,4 +1,4 @@
-import { BarberFullDto, BarberSummaryDto } from '@barbershop-app/shared/types';
+import { BarberFullDto, BarberSummaryDto } from '@barbershop-app/shared/domain';
 import { BarberSummaryEntity } from '../entities/barber-summary.entity';
 import { BarberFullEntity } from '../entities/barber-full.entity';
 

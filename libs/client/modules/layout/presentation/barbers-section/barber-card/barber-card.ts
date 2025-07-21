@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { BarberSummaryDto } from '@barbershop-app/shared/types';
+import { BarberSummaryDto } from '@barbershop-app/shared/domain';
 import { NgOptimizedImage } from '@angular/common';
-import { CalendarIcon } from '../../../../../shared';
+import { CalendarIcon } from '@barbershop-app/shared/presentation';
 
 
 @Component({

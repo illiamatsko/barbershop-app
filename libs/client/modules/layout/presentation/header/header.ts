@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import { LogoIcon, ProfileIcon } from '../../../../shared';
+import { LogoIcon, ProfileIcon } from '@barbershop-app/shared/presentation';
 import { AuthStore } from '@barbershop-app/client/core/application';
 
 

@@ -1,4 +1,4 @@
-import { AppointmentDto } from '@barbershop-app/shared/types';
+import { AppointmentDto } from '@barbershop-app/shared/domain';
 
 
 export abstract class AppointmentGateway {

@@ -1,4 +1,4 @@
-import { AppointmentDto } from '@barbershop-app/shared/types';
+import { AppointmentDto } from '@barbershop-app/shared/domain';
 import { AppointmentGateway } from '@barbershop-app/client/appointment/domain';
 import { inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';

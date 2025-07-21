@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BarberStatusDto } from '@barbershop-app/shared/types';
+import { BarberStatusDto } from '../@barbershop-app/shared/domain';
 
 
 @Component({

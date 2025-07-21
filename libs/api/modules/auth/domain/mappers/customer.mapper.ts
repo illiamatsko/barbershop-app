@@ -1,5 +1,5 @@
 import { CreateUserDto } from '../dtos/create-user.dto';
-import { CustomerDto } from '@barbershop-app/shared/types';
+import { CustomerDto } from '@barbershop-app/shared/domain';
 import { CustomerEntity } from '../entities/customer.entity';
 import { CreateCustomerDto } from '../dtos/create-customer.dto';
 import { CreateCustomerRecordDto } from '../dtos/create-customer-record.dto';

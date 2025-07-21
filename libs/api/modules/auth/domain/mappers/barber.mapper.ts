@@ -1,5 +1,5 @@
 import { BarberFullEntity } from '../entities/barber-full.entity';
-import { BarberFullDto } from '@barbershop-app/shared/types';
+import { BarberFullDto } from '@barbershop-app/shared/domain';
 import { CreateBarberDto } from '../dtos/create-barber.dto';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { CreateBarberRecordDto } from '../dtos/create-barber-record.dto';

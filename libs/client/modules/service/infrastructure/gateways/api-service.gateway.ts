@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { ServiceDto } from '@barbershop-app/shared/types';
+import { ServiceDto } from '@barbershop-app/shared/domain';
 import { inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';

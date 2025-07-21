@@ -1,4 +1,4 @@
-import { BarberStatusDto } from '@barbershop-app/shared/types';
+import { BarberStatusDto } from '@barbershop-app/shared/domain';
 import { BarberSummaryEntity } from '../entities/barber-summary.entity';
 
 export abstract class BarberRepository {

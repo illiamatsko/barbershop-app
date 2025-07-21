@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
-import { InViewDirective } from '../../../../shared';
+import { InViewDirective } from '@barbershop-app/shared/presentation';
 
 
 @Component({

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import { ServiceGateway } from '../../domain';
+import { ServiceGateway } from '@barbershop-app/client/service/domain';
 
 
 @Injectable({ providedIn: 'root' })

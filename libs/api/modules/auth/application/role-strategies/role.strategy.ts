@@ -1,4 +1,4 @@
-import { BarberFullDto, CustomerDto } from '@barbershop-app/shared/types';
+import { BarberFullDto, CustomerDto } from '@barbershop-app/shared/domain';
 
 export interface RoleStrategy {
   canHandle(role: string): boolean;

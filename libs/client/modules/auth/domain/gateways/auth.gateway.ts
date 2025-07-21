@@ -1,4 +1,4 @@
-import { UserDto } from '@barbershop-app/shared/types';
+import { UserDto } from '@barbershop-app/shared/domain';
 import { Observable } from 'rxjs';
 import { AuthState } from '@barbershop-app/client/core/application';
 import { SignInDto } from '../dtos/sign-in.dto';

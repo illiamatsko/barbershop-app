@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { GetAllBarbershopsQuery } from '@barbershop-app/api/barbershop/application';
-import { BarbershopDto } from '@barbershop-app/shared/types';
+import { BarbershopDto } from '@barbershop-app/shared/domain';
 
 @Controller()
 export class BarbershopController {

@@ -1,5 +1,5 @@
 import { BarberStatusEntity } from '../entities/barber-status.entity';
-import { BarberStatusDto } from '@barbershop-app/shared/types';
+import { BarberStatusDto } from '@barbershop-app/shared/domain';
 
 
 export class BarberStatusMapper {

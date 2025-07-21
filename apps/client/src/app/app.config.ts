@@ -18,9 +18,7 @@ import { ServiceGateway } from '@barbershop-app/client/service/domain';
 import { ApiServiceGateway } from '@barbershop-app/client/service/infrastructure';
 import { AppointmentGateway, BarbershopGateway } from '@barbershop-app/client/appointment/domain';
 import { ApiAppointmentGateway } from '@barbershop-app/client/appointment/infrastructure';
-import {
-  ApiBarbershopGateway
-} from '../../../../libs/client/modules/appointment/infrastructure/gateways/api-barbershop.gateway';
+import { ApiBarbershopGateway } from '@barbershop-app/client/appointment/infrastructure';
 
 export const appConfig: ApplicationConfig = {
   providers: [

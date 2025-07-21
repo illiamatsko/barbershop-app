@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 
 @Component({
-  selector: 'app-stepper',
+  selector: 'lib-stepper',
   imports: [],
   templateUrl: './stepper.html',
   styleUrl: './stepper.css',

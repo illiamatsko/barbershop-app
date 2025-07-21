@@ -1,4 +1,4 @@
-import { UserDto } from '@barbershop-app/shared/types';
+import { UserDto } from '@barbershop-app/shared/domain';
 
 export interface AuthState {
   user: UserDto;

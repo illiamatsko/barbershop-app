@@ -5,7 +5,7 @@ import {
   inject
 } from '@angular/core';
 import { BarberCard } from './barber-card/barber-card';
-import { InViewDirective, RightArrowIcon, LeftArrowIcon } from '../../../../shared';
+import { InViewDirective, RightArrowIcon, LeftArrowIcon } from '@barbershop-app/shared/presentation';
 import { BarberStore } from '@barbershop-app/client/core/application';
 
 

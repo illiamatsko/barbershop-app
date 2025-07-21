@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { BarberStatusDto, BarberSummaryDto } from '@barbershop-app/shared/types';
+import { BarberStatusDto, BarberSummaryDto } from '@barbershop-app/shared/domain';
 
 export abstract class BarberGateway {
   abstract getAllBarbers(): Observable<BarberSummaryDto[]>

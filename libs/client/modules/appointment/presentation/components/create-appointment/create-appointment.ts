@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { LeftArrowIcon, LogoIcon, RightArrowIcon } from '../../../../../shared';
+import { LeftArrowIcon, LogoIcon, RightArrowIcon, Stepper } from '@barbershop-app/shared/presentation';
 import { SelectBarbershop } from '../select-barbershop/select-barbershop';
 import { SelectBarber } from '../select-barber/select-barber';
 import { SelectService } from '../select-service/select-service';
 import { SelectTime } from '../select-time/select-time';
 import { Confirmation } from '../confirmation/confirmation';
-import { Stepper } from './stepper/stepper';
 
 
 @Component({

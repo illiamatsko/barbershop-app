@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, input, OnInit, output, signal } from '@angular/core';
 import { GetAllBarbershopsUseCase } from '@barbershop-app/client/appointment/application';
-import { BarbershopDto } from '@barbershop-app/shared/types';
+import { BarbershopDto } from '@barbershop-app/shared/domain';
 import { NgClass } from '@angular/common';
 
 

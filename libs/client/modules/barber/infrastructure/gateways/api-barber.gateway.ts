@@ -1,6 +1,6 @@
 import { BarberGateway } from '@barbershop-app/client/barber/domain';
 import { Observable } from 'rxjs';
-import { BarberStatusDto, BarberSummaryDto } from '@barbershop-app/shared/types';
+import { BarberStatusDto, BarberSummaryDto } from '@barbershop-app/shared/domain';
 import { inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';

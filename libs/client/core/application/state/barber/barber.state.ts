@@ -1,4 +1,4 @@
-import { BarberSummaryDto } from '@barbershop-app/shared/types';
+import { BarberSummaryDto } from '@barbershop-app/shared/domain';
 
 export interface BarberState {
   barbers: BarberSummaryDto[]

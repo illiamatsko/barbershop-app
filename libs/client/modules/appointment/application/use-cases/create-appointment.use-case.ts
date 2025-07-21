@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { AppointmentGateway } from '@barbershop-app/client/appointment/domain';
-import { AppointmentDto } from '@barbershop-app/shared/types';
+import { AppointmentDto } from '@barbershop-app/shared/domain';
 
 
 @Injectable({ providedIn: 'root' })

@@ -1,5 +1,5 @@
 import { Query } from '@nestjs/cqrs';
-import { ServiceDto } from '@barbershop-app/shared/types';
+import { ServiceDto } from '@barbershop-app/shared/domain';
 
 export class GetBarberServicesQuery extends Query<ServiceDto[]> {
   constructor(

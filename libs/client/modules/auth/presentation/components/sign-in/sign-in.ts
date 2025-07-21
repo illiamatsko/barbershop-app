@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FormField } from '../../../../../shared';
+import { FormField } from '@barbershop-app/shared/presentation';
 import { RouterLink } from '@angular/router';
 import { SignInUseCase } from '@barbershop-app/client/auth/application';
 import { ErrorStore } from '@barbershop-app/client/core/application';

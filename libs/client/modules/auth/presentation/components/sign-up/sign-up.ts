@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { matchValidator, phoneNumberValidator } from '@barbershop-app/client/auth/infrastructure';
 import { RouterLink } from '@angular/router';
-import { FormField, PhoneInput } from '../../../../../shared';
+import { FormField, PhoneInput } from '@barbershop-app/shared/presentation';
 import { SignUpUseCase } from '@barbershop-app/client/auth/application';
 import { ErrorStore } from '@barbershop-app/client/core/application';
 import { AuthForm } from '../auth-form/auth-form';

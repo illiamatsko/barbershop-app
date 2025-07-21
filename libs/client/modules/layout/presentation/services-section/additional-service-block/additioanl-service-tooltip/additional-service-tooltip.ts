@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ServiceDto } from '@barbershop-app/shared/types';
-import { ClockIcon } from '../../../../../../shared';
+import { ServiceDto } from '../@barbershop-app/shared/domain';
+import { ClockIcon } from '../@barbershop-app/shared/presentation';
 
 
 @Component({

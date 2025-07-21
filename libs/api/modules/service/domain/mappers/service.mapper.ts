@@ -1,4 +1,4 @@
-import { ServiceDto } from '@barbershop-app/shared/types';
+import { ServiceDto } from '@barbershop-app/shared/domain';
 import { ServiceEntity } from '../entities/service.entity';
 
 export class ServiceMapper {

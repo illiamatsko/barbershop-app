@@ -1,5 +1,5 @@
 import { BarbershopEntity } from '../entities/barbershop.entity';
-import { BarbershopDto } from '@barbershop-app/shared/types';
+import { BarbershopDto } from '@barbershop-app/shared/domain';
 
 export class BarbershopMapper {
   static toDto(barbershop: BarbershopEntity): BarbershopDto {
