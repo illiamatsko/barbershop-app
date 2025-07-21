@@ -12,3 +12,5 @@ export * from './components/stepper/stepper'
 
 
 export * from './directives/in-view.directive'
+
+export * from './pipes/round-half.pipe'

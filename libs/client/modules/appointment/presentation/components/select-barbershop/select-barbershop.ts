@@ -14,11 +14,12 @@ import { NgClass } from '@angular/common';
 export class SelectBarbershop implements OnInit {
   private getAllBarbershopsUseCase = inject(GetAllBarbershopsUseCase);
   barbershops = signal<BarbershopDto[]>([]);
-  selectedBarbershopOutput = output<number>();
+
   selectedBarbershopId = input.required<number>();
+  selectedBarbershopIdOutput = output<number>();
 
   onClick(id: number) {
-    this.selectedBarbershopOutput.emit(id);
+    this.selectedBarbershopIdOutput.emit(id);
   }
 
   async ngOnInit() {

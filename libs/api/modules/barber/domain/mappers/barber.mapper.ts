@@ -15,7 +15,7 @@ export class BarberMapper {
       status: barber.status,
       starRating: 5,
       reviewsCount: 5,
-      location: barber.location,
+      barbershopId: barber.barbershopId,
       role: barber.role.toString(),
       createdAt: barber.createdAt.toISOString()
     };
@@ -31,6 +31,7 @@ export class BarberMapper {
       status: barber.status,
       starRating: 5,
       reviewsCount: 5,
+      barbershopId: barber.barbershopId,
       location: barber.location,
     }
   }

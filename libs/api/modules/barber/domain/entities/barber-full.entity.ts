@@ -9,7 +9,7 @@ export interface BarberFullEntity {
   photoUrl: string
   experience: number
   status: string
-  location: string
+  barbershopId: number
   role: RolesEnum
   createdAt: Date
 }

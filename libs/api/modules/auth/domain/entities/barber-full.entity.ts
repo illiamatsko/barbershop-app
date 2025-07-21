@@ -11,7 +11,7 @@ export interface BarberFullEntity {
   status: string
   starRating: number
   reviewsCount: number
-  location: string
+  barbershopId: number
   role: RolesEnum
   createdAt: Date
 }

@@ -1,0 +1,13 @@
+<div class="text-center mb-12">
+  <h2 class="text-5xl font-bold text-white leading-tight">
+    Choose your <span class="text-yellow-500">Barber</span>
+  </h2>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+  @for(barber of barbers(); track $index) {
+    <app-barber-card (click)="onClick(barber.id)"
+                     [barber]="barber"
+                     [isSelected]="barber.id === selectedBarberId()"/>
+  }
+</div>

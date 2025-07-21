@@ -9,7 +9,7 @@ export interface BarberFullDto {
   starRating: number
   reviewsCount: number
   status: string
-  location: string
+  barbershopId: number
   role: string
   createdAt: string
 }

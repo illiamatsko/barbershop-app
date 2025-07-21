@@ -7,5 +7,6 @@ export interface BarberSummaryDto {
   starRating: number
   reviewsCount: number
   status: string
+  barbershopId: number
   location: string
 }

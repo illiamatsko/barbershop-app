@@ -1,16 +1,16 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { LeftArrowIcon, LogoIcon, RightArrowIcon, Stepper } from '@barbershop-app/shared/presentation';
+import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { LeftArrowIcon, RightArrowIcon, Stepper } from '@barbershop-app/shared/presentation';
 import { SelectBarbershop } from '../select-barbershop/select-barbershop';
 import { SelectBarber } from '../select-barber/select-barber';
 import { SelectService } from '../select-service/select-service';
 import { SelectTime } from '../select-time/select-time';
 import { Confirmation } from '../confirmation/confirmation';
+import { Header } from './header/header';
 
 
 @Component({
   selector: 'app-create-appointment',
   imports: [
-    LogoIcon,
     LeftArrowIcon,
     SelectBarbershop,
     SelectBarber,
@@ -19,6 +19,7 @@ import { Confirmation } from '../confirmation/confirmation';
     Confirmation,
     RightArrowIcon,
     Stepper,
+    Header,
   ],
   templateUrl: './create-appointment.html',
   styleUrl: './create-appointment.css',
@@ -28,22 +29,36 @@ export class CreateAppointment {
   steps = ['Barbershop', 'Barber', 'Service', 'Date & Time', 'Contacts'];
   currentStep = signal<number>(1);
   selectedBarbershopId = signal<number>(-1);
+  selectedBarberId = signal<number>(-1);
+
+  canProceed = computed(() => {
+    switch (this.currentStep()) {
+      case 1:
+        return this.selectedBarbershopId() !== -1;
+      case 2:
+        return this.selectedBarberId() !== -1;
+      default:
+        return false;
+    }
+  });
 
   selectBarbershop(id: number) {
     this.selectedBarbershopId.set(id);
   }
 
+  selectBarber(id: number) {
+    this.selectedBarberId.set(id);
+  }
+
   nextStep() {
-    if (this.currentStep() < 5) {
+    if (this.currentStep() < 5 && this.canProceed()) {
       this.currentStep.update((step) => step + 1);
-      console.log(this.currentStep());
     }
   }
 
   prevStep() {
     if (this.currentStep() > 1) {
       this.currentStep.update((step) => step - 1);
-      console.log(this.currentStep());
     }
   }
 }

@@ -12,6 +12,7 @@ export class BarberMapper {
       experience: barber.experience,
       status,
       location,
+      barbershopId: barber.barbershopId,
       role: RoleMap[user.role],
     };
   }

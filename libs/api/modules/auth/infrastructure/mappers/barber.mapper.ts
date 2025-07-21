@@ -22,7 +22,7 @@ export class BarberMapper {
       status: barber.status.name,
       starRating: barberStarRating,
       reviewsCount,
-      location: barber.barbershop.address,
+      barbershopId: barber.barbershopId,
       role: RoleMap[user.role],
       createdAt: user.createdAt,
     };
