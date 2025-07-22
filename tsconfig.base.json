@@ -68,8 +68,10 @@
 
       "@barbershop-app/client/layout/presentation": ["libs/client/modules/layout/presentation/index.ts"],
 
+      "@barbershop-app/client/shared/presentation": ["libs/client/shared/presentation/index.ts"],
+
+
       "@barbershop-app/shared/domain": ["libs/shared/domain/index.ts"],
-      "@barbershop-app/shared/presentation": ["libs/shared/presentation/index.ts"],
       "@env/*": ["libs/shared/domain/env/*"]
     }
   },

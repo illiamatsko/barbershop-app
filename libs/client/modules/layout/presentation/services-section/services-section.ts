@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ExpertiseLevelsBlock } from './expertise-levels-block/expertise-levels-block';
 import { MainServicesBlock } from './main-services-block/main-services-block';
 import { AdditionalServiceBlock } from './additional-service-block/additional-service-block';
-import { InViewDirective } from '@barbershop-app/shared/presentation';
+import { InViewDirective } from '@barbershop-app/client/shared/presentation';
 import { BarberStatusDto } from '@barbershop-app/shared/domain';
 import { firstValueFrom } from 'rxjs';
 import { BarberGateway } from '@barbershop-app/client/barber/domain';

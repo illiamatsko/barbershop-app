@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MainServiceCard } from './main-service-card/main-service-card';
 import { ServiceDto } from '@barbershop-app/shared/domain';
-import { InViewDirective } from '@barbershop-app/shared/presentation';
+import { InViewDirective } from '@barbershop-app/client/shared/presentation';
 
 
 @Component({

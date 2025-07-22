@@ -9,7 +9,7 @@
 
     <div class="w-16 h-16 rounded-full overflow-hidden shrink-0 bg-gray-700">
       <img
-        [ngSrc]="barber().photoUrl"
+        [ngSrc]="getRelativeCloudinaryPath(barber().photoUrl)"
         class="w-full h-full object-cover"
         width="64"
         height="64"

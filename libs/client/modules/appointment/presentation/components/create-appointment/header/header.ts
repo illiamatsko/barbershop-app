@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { LeftArrowIcon, LogoIcon } from '@barbershop-app/shared/presentation';
+import { LeftArrowIcon, LogoIcon } from '@barbershop-app/client/shared/presentation';
 
 
 @Component({

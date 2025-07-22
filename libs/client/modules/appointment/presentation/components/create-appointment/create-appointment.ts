@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
-import { LeftArrowIcon, RightArrowIcon, Stepper } from '@barbershop-app/shared/presentation';
+import { LeftArrowIcon, RightArrowIcon, Stepper } from '@barbershop-app/client/shared/presentation';
 import { SelectBarbershop } from '../select-barbershop/select-barbershop';
 import { SelectBarber } from '../select-barber/select-barber';
 import { SelectService } from '../select-service/select-service';

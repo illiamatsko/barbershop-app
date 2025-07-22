@@ -1,10 +1,12 @@
 <div class="barber-card group">
   <div class="barber-card-image-container">
     <img
-      [ngSrc]=barber().photoUrl
+      [ngSrc]="getRelativeCloudinaryPath(barber().photoUrl)"
       alt="Daniel"
       class="barber-card-image"
-      fill=""/>
+      fill=""
+      priority=""
+    />
     <div class="barber-card-gradient"></div>
 
     <div class="barber-card-info">

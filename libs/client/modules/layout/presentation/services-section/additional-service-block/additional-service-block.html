@@ -6,7 +6,12 @@
 
   <div class="block-grid">
     @for(service of services(); track service.id) {
-      <app-additional-service-card [service]="service" />
+      <lib-service-card-compact
+        [name]="service.name"
+        [duration]="service.duration"
+        [description]="service.description"
+        [minPrice]="service.minPrice"
+      />
     }
   </div>
 </div>

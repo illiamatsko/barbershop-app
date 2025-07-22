@@ -19,6 +19,7 @@ import { ApiServiceGateway } from '@barbershop-app/client/service/infrastructure
 import { AppointmentGateway, BarbershopGateway } from '@barbershop-app/client/appointment/domain';
 import { ApiAppointmentGateway } from '@barbershop-app/client/appointment/infrastructure';
 import { ApiBarbershopGateway } from '@barbershop-app/client/appointment/infrastructure';
+import { provideCloudinaryLoader } from '@angular/common';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,6 +28,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(appRoutes),
     provideHttpClient(withInterceptors([ErrorInterceptor])),
     provideAnimations(),
+    provideCloudinaryLoader('https://res.cloudinary.com/dx7xjflm0/'),
     provideToastr({
       positionClass: 'toast-bottom-right'
     }),

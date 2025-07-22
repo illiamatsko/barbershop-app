@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BarberStatusCard } from './barber-status-card/barber-status-card';
-import { InViewDirective } from '@barbershop-app/shared/presentation';
+import { InViewDirective } from '@barbershop-app/client/shared/presentation';
 import { BarberStatusDto } from '@barbershop-app/shared/domain';
 
 

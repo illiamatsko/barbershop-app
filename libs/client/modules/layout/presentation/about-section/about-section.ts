@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
-import { InViewDirective } from '@barbershop-app/shared/presentation';
+import { InViewDirective } from '@barbershop-app/client/shared/presentation';
 
 
 @Component({
@@ -10,4 +10,6 @@ import { InViewDirective } from '@barbershop-app/shared/presentation';
   styleUrl: './about-section.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AboutSection {}
+export class AboutSection {
+  imgUrl = 'v1753200001/about-section_cdearf.avif'
+}

@@ -1,19 +1,19 @@
 <div class="tooltip group-hover:opacity-100 group-hover:visible">
   <div class="tooltip-header">
-    <h5>{{ service().name }}</h5>
+    <h5>{{ name() }}</h5>
   </div>
 
   <p class="tooltip-description">
-    {{ service().description }}
+    {{ description() }}
   </p>
 
   <div class="tooltip-meta">
     <div class="tooltip-duration">
       <lib-clock-icon class="icon" [width]="18" [height]="18"/>
-      <span>{{ service().duration }} min</span>
+      <span>{{ duration() }} min</span>
     </div>
     <div class="tooltip-price">
-      from {{ service().minPrice | currency:'UAH':'symbol':'1.0-0' }}
+      from {{ minPrice() | currency:'UAH':'symbol':'1.0-0' }}
     </div>
   </div>
 

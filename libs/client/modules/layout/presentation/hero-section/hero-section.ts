@@ -12,7 +12,7 @@ import { NgStyle } from '@angular/common';
 })
 export class HeroSection implements AfterViewInit, OnDestroy {
   backgroundImg =
-    'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80';
+    'https://res.cloudinary.com/dx7xjflm0/image/upload/v1753197217/hero-section_nhyjmf.avif';
 
   get backgroundStyle() {
     return { 'background-image': `url(${this.backgroundImg})` };
