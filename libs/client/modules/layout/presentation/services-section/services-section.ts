@@ -1,13 +1,13 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExpertiseLevelsBlock } from './expertise-levels-block/expertise-levels-block';
 import { MainServicesBlock } from './main-services-block/main-services-block';
 import { AdditionalServiceBlock } from './additional-service-block/additional-service-block';
 import { InViewDirective } from '@barbershop-app/shared/presentation';
-import { BarberStatusDto, ServiceDto } from '@barbershop-app/shared/domain';
-import { ServiceGateway } from '@barbershop-app/client/service/domain';
+import { BarberStatusDto } from '@barbershop-app/shared/domain';
 import { firstValueFrom } from 'rxjs';
 import { BarberGateway } from '@barbershop-app/client/barber/domain';
+import { ServiceStore } from '@barbershop-app/client/core/application';
 
 
 @Component({
@@ -25,19 +25,13 @@ import { BarberGateway } from '@barbershop-app/client/barber/domain';
 })
 export class ServicesSection implements OnInit {
   private barberGateway = inject(BarberGateway);
-  private serviceGateway = inject(ServiceGateway);
+  private serviceStore = inject(ServiceStore);
 
-  mainServices = signal<ServiceDto[]>([]);
-  additionalServices = signal<ServiceDto[]>([]);
+  mainServices = computed(() => this.serviceStore.services().filter(service => service.isMain));
+  additionalServices = computed(() => this.serviceStore.services().filter(service => !service.isMain));
   barberStatuses = signal<BarberStatusDto[]>([]);
 
   async ngOnInit() {
-    this.serviceGateway.getAllServices().subscribe({
-      next: (res) => {
-        this.mainServices.set(res.filter(service => service.isMain));
-        this.additionalServices.set(res.filter(service => !service.isMain));
-      },
-    });
     this.barberStatuses.set(await firstValueFrom(this.barberGateway.getBarberStatuses()));
   }
 }

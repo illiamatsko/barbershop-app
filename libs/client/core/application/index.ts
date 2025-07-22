@@ -1,6 +1,11 @@
 export * from './state/auth/auth.store'
 export * from './state/auth/auth.state'
+
 export * from './state/barber/barber.store'
 export * from './state/barber/barber.state'
-export * from './state/error/errorStore'
+
+export * from './state/error/error.store'
 export * from './state/error/error.state'
+
+export * from './state/service/service.store'
+export * from './state/service/service.state'
