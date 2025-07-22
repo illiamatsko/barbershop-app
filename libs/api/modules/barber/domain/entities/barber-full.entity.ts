@@ -8,6 +8,8 @@ export interface BarberFullEntity {
   phoneNumber: string
   photoUrl: string
   experience: number
+  starRating: number
+  reviewsCount: number
   status: string
   barbershopId: number
   role: RolesEnum

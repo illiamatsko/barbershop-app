@@ -7,6 +7,8 @@ export interface BarberSummaryEntity {
   photoUrl: string
   experience: number
   status: string
+  reviewsCount: number,
+  starRating: number,
   barbershopId: number
   location: string
   role: RolesEnum

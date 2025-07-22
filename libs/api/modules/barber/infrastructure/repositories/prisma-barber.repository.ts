@@ -17,7 +17,8 @@ export class PrismaBarberRepository implements BarberRepository {
         barber: {
           include: {
             status: true,
-            barbershop: true
+            barbershop: true,
+            reviews: true
           }
         }, }
     });
@@ -25,11 +26,8 @@ export class PrismaBarberRepository implements BarberRepository {
     const barberEntities = [];
     for(const user of users) {
       if(!user || !user.barber) continue;
-      const barber = user.barber;
-      const status = barber.status.name;
-      const address = barber.barbershop.address;
 
-      barberEntities.push(BarberMapper.toSummaryEntity(barber, user, status, address));
+      barberEntities.push(BarberMapper.toSummaryEntity(user));
     }
 
     return barberEntities;
