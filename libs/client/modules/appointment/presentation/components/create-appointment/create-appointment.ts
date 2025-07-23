@@ -30,6 +30,7 @@ export class CreateAppointment {
   currentStep = signal<number>(1);
   selectedBarbershopId = signal<number>(-1);
   selectedBarberId = signal<number>(-1);
+  selectedServiceId = signal<number>(-1);
 
   canProceed = computed(() => {
     switch (this.currentStep()) {
@@ -37,6 +38,8 @@ export class CreateAppointment {
         return this.selectedBarbershopId() !== -1;
       case 2:
         return this.selectedBarberId() !== -1;
+      case 3:
+        return this.selectedServiceId() !== -1;
       default:
         return false;
     }
@@ -48,6 +51,10 @@ export class CreateAppointment {
 
   selectBarber(id: number) {
     this.selectedBarberId.set(id);
+  }
+
+  setService(id: number) {
+    this.selectedServiceId.set(id);
   }
 
   nextStep() {

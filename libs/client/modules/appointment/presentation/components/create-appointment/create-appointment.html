@@ -21,7 +21,11 @@
           />
         }
         @case(3) {
-          <app-select-service/>
+          <app-select-service
+            [selectedBarberId]="selectedBarberId()"
+            [selectedServiceId]="selectedServiceId()"
+            (selectedServiceIdOutput)="setService($event)"
+          />
         }
         @case(4) {
           <app-select-time/>
