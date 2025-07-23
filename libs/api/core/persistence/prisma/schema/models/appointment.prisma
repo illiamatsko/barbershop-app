@@ -2,9 +2,9 @@ model Appointment {
   id         Int               @id @default(autoincrement())
   comment    String
   status     AppointmentStatus @default(CONFIRMED)
-  customer   Customer          @relation(fields: [customerId], references: [id])
+  customer   Customer          @relation(fields: [customerId], references: [userId])
   customerId Int
-  barber     Barber            @relation(fields: [barberId], references: [id])
+  barber     Barber            @relation(fields: [barberId], references: [userId])
   barberId   Int
   service    Service           @relation(fields: [serviceId], references: [id])
   serviceId  Int
@@ -20,7 +20,7 @@ model TimeSlot {
   id            Int          @id @default(autoincrement())
   startTime     DateTime
   status        SlotStatus   @default(AVAILABLE)
-  barber        Barber       @relation(fields: [barberId], references: [id])
+  barber        Barber       @relation(fields: [barberId], references: [userId])
   barberId      Int
   appointment   Appointment? @relation(fields: [appointmentId], references: [id])
   appointmentId Int?

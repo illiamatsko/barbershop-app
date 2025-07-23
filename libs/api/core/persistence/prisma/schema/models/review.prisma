@@ -2,8 +2,8 @@ model Review {
   id         Int      @id @default(autoincrement())
   starRating Int
   content    String
-  barber     Barber   @relation(fields: [barberId], references: [id])
+  barber     Barber   @relation(fields: [barberId], references: [userId])
   barberId   Int
-  Customer   Customer @relation(fields: [customerId], references: [id])
+  Customer   Customer @relation(fields: [customerId], references: [userId])
   customerId Int
 }

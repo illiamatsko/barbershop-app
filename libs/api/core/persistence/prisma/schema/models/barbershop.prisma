@@ -4,6 +4,6 @@ model Barbershop {
   address     String   @unique
   phoneNumber String   @unique
   barbers     Barber[]
-  manager     Manager  @relation(fields: [managerId], references: [id])
+  manager     Manager  @relation(fields: [managerId], references: [userId])
   managerId   Int      @unique
 }

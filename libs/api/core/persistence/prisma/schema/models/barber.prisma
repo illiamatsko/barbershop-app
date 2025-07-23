@@ -1,5 +1,4 @@
 model Barber {
-  id     Int  @id @default(autoincrement())
   userId Int  @unique
   user   User @relation(fields: [userId], references: [id])
 
@@ -13,6 +12,8 @@ model Barber {
   appointments Appointment[]
   timeSlot     TimeSlot[]
   reviews      Review[]
+
+  @@id([userId])
 }
 
 model BarberStatus {
@@ -25,7 +26,7 @@ model BarberStatus {
 }
 
 model BarberService {
-  barber    Barber  @relation(fields: [barberId], references: [id])
+  barber    Barber  @relation(fields: [barberId], references: [userId])
   barberId  Int
   service   Service @relation(fields: [serviceId], references: [id])
   serviceId Int

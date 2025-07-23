@@ -104,7 +104,7 @@ async function main() {
       name: 'Barbershop',
       address: 'Main Street 123',
       phoneNumber: '+380931234567',
-      managerId: manager.id
+      managerId: managerUser.id
     },
   });
 
@@ -135,8 +135,8 @@ async function main() {
     data: {
       content: 'Very professional and friendly!',
       starRating: 5,
-      barberId: barber.id,
-      customerId: customer.id
+      barberId: barberUser.id,
+      customerId: customerUser.id
     },
   });
 
@@ -144,7 +144,7 @@ async function main() {
   for (const service of services) {
     await prisma.barberService.create({
       data: {
-        barberId: barber.id,
+        barberId: barberUser.id,
         serviceId: service.id,
       },
     });
@@ -167,8 +167,8 @@ async function main() {
     data: {
       status: 'CONFIRMED',
       comment: '',
-      customerId: customer.id,
-      barberId: barber.id,
+      customerId: customerUser.id,
+      barberId: barberUser.id,
       serviceId: selectedService.id,
     },
   });
@@ -188,7 +188,7 @@ async function main() {
       return prisma.timeSlot.create({
         data: {
           startTime: time,
-          barberId: barber.id,
+          barberId: barberUser.id,
           status: isBooked ? 'BOOKED' : 'AVAILABLE',
           appointmentId: isBooked ? appointment.id : null,
         },
