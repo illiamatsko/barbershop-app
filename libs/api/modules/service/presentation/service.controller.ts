@@ -1,6 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import { GetAllServicesQuery, GetBarberServicesQuery } from '@barbershop-app/api/service/application';
+import { GetAllServicesQuery, GetBarberServicesIdsQuery } from '@barbershop-app/api/service/application';
 
 @Controller()
 export class ServiceController {
@@ -13,6 +13,6 @@ export class ServiceController {
 
   @Get('barber/:id')
   GetServicesByBarberId(@Param('id') id: string) {
-    return this.queryBus.execute(new GetBarberServicesQuery(+id));
+    return this.queryBus.execute(new GetBarberServicesIdsQuery(+id));
   }
 }

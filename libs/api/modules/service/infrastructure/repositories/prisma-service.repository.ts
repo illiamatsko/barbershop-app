@@ -18,21 +18,17 @@ export class PrismaServiceRepository implements ServiceRepository {
     return services.map(this.mapServiceWithPrices);
   }
 
-  async getServicesByBarberId(id: number): Promise<ServiceEntity[]> {
+  async getServiceIdsByBarberId(id: number): Promise<number[]> {
     const barberServices = await this.prisma.barberService.findMany({
       where: {
         barberId: id,
       },
-      include: {
-        service: {
-          include: {
-            servicePrice: true
-          }
-        }
-      }
+      select: {
+        serviceId: true,
+      },
     });
 
-    return barberServices.map(bs => this.mapServiceWithPrices(bs.service));
+    return barberServices.map(bs => bs.serviceId);
   }
 
   private mapServiceWithPrices(service: Service & { servicePrice: ServicePrice[] }): ServiceEntity {

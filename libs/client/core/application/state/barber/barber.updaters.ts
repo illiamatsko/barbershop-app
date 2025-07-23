@@ -1,7 +1,24 @@
 import { BarberState } from './barber.state';
+import { BarberSummaryDto } from '@barbershop-app/shared/domain';
 
-export function setBarbers(res: BarberState): BarberState {
+export function setBarbers(state: BarberState, barbers: BarberSummaryDto[]): BarberState {
   return {
-    barbers: res.barbers
-  }
+    ...state,
+    barbers
+  };
 }
+
+
+export function setBarberServicesIds(
+  state: BarberState,
+  servicesIds: Record<number, number[]>
+): BarberState {
+  return {
+    ...state,
+    servicesByBarberId: {
+      ...state.servicesByBarberId,
+      ...servicesIds,
+    },
+  };
+}
+

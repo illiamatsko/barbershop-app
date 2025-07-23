@@ -9,9 +9,6 @@ export class GetAllBarbersUseCase {
   private barberStore = inject(BarberStore);
 
   async execute() {
-    this.barberStore.setBarbers(
-      {
-        barbers: await firstValueFrom(this.barberGateway.getAllBarbers())
-      });
+    this.barberStore.setBarbers(await firstValueFrom(this.barberGateway.getAllBarbers()));
   }
 }
