@@ -16,7 +16,7 @@
     </div>
 
     <div class="barber-card-button-container">
-      <button class="barber-card-button">
+      <button (click)="navigateToBooking()" class="barber-card-button">
         <lib-calendar-icon class="barber-card-button-icon" [width]="30" [height]="30"/>
         Book with {{ barber().firstName }}
       </button>

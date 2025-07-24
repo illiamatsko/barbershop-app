@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
-import { BarberStore } from '@barbershop-app/client/core/application';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { BarberCard } from './barber-card/barber-card';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { BookingFlowStore } from '@barbershop-app/client/core/application';
 
 
 @Component({
@@ -9,18 +10,25 @@ import { BarberCard } from './barber-card/barber-card';
   templateUrl: './select-barber.html',
   styleUrl: './select-barber.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('collapse', [
+      state('open', style({ height: '*', opacity: 1, padding: '*' })),
+      state('closed', style({ height: '0px', opacity: 1, padding: '0px' })),
+      transition('open <=> closed', animate('300ms ease-in-out')),
+    ])
+  ]
 })
 export class SelectBarber {
-  private barberStore = inject(BarberStore);
-  barbers = computed(() =>
-    this.barberStore.barbers()
-      .filter((barber) => barber.barbershopId === this.selectedBarbershopId()));
+  private bookingFlowStore = inject(BookingFlowStore);
+  barbers = computed(() => this.bookingFlowStore.availableBarbers());
+  selectedBarberId = computed(() => this.bookingFlowStore.selectedBarberId());
+  isOpen = signal(true);
 
-  selectedBarbershopId = input.required<number>();
-  selectedBarberId = input.required<number>();
-  selectedBarberIdOutput = output<number>();
+  toggleOpen() {
+    this.isOpen.update((v) => !v);
+  }
 
-  onClick(id: number) {
-    this.selectedBarberIdOutput.emit(id);
+  onSelectBarber(id: number) {
+    this.bookingFlowStore.selectBarber(id);
   }
 }

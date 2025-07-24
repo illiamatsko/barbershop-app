@@ -1,11 +1,12 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
-import { LeftArrowIcon, RightArrowIcon, Stepper } from '@barbershop-app/client/shared/presentation';
+import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
+import { LeftArrowIcon, RightArrowIcon } from '@barbershop-app/client/shared/presentation';
 import { SelectBarbershop } from '../select-barbershop/select-barbershop';
 import { SelectBarber } from '../select-barber/select-barber';
 import { SelectService } from '../select-service/select-service';
 import { SelectTime } from '../select-time/select-time';
 import { Confirmation } from '../confirmation/confirmation';
 import { Header } from './header/header';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -18,14 +19,15 @@ import { Header } from './header/header';
     SelectTime,
     Confirmation,
     RightArrowIcon,
-    Stepper,
     Header,
   ],
   templateUrl: './create-appointment.html',
   styleUrl: './create-appointment.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CreateAppointment {
+export class CreateAppointment implements OnInit {
+  private route = inject(ActivatedRoute);
+
   steps = ['Barbershop', 'Barber', 'Service', 'Date & Time', 'Contacts'];
   currentStep = signal<number>(1);
   selectedBarbershopId = signal<number>(-1);
@@ -44,6 +46,22 @@ export class CreateAppointment {
         return false;
     }
   });
+
+  ngOnInit() {
+    const step = this.route.snapshot.queryParams['step'];
+    const barberId = this.route.snapshot.queryParams['barberId'];
+    const serviceId = this.route.snapshot.queryParams['serviceId'];
+
+    if(step === 'service') {
+      this.selectedBarbershopId.set(1)
+      this.selectedBarberId.set(+barberId);
+      this.currentStep.set(3);
+    }
+    if(step === 'barbershop') {
+      this.selectedServiceId.set(serviceId);
+      // what to do
+    }
+  }
 
   selectBarbershop(id: number) {
     this.selectedBarbershopId.set(id);

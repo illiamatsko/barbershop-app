@@ -1,30 +1,36 @@
-import { ChangeDetectionStrategy, Component, inject, input, OnInit, output, signal } from '@angular/core';
-import { GetAllBarbershopsUseCase } from '@barbershop-app/client/appointment/application';
-import { BarbershopDto } from '@barbershop-app/shared/domain';
-import { NgClass } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { BarbershopCard } from './barbershop-card/barbershop-card';
+import { BookingFlowStore } from '@barbershop-app/client/core/application';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 
 @Component({
   selector: 'app-select-barbershop',
-  imports: [NgClass],
+  imports: [BarbershopCard],
   templateUrl: './select-barbershop.html',
   styleUrl: './select-barbershop.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('collapse', [
+      state('open', style({ height: '*', opacity: 1, padding: '*' })),
+      state('closed', style({ height: '0px', opacity: 1, padding: '0px' })),
+      transition('open <=> closed', animate('300ms ease-in-out')),
+    ])
+  ]
 })
-export class SelectBarbershop implements OnInit {
-  private getAllBarbershopsUseCase = inject(GetAllBarbershopsUseCase);
-  barbershops = signal<BarbershopDto[]>([]);
+export class SelectBarbershop {
+  bookingFlowStore = inject(BookingFlowStore);
+  barbershops = computed(() => this.bookingFlowStore.availableBarbershops());
+  selectedBarbershopId = computed(() =>
+    this.bookingFlowStore.selectedBarbershopId()
+  );
+  isOpen = signal(true);
 
-  selectedBarbershopId = input.required<number>();
-  selectedBarbershopIdOutput = output<number>();
-
-  onClick(id: number) {
-    this.selectedBarbershopIdOutput.emit(id);
+  toggleOpen() {
+    this.isOpen.update((v) => !v);
   }
 
-  async ngOnInit() {
-    this.getAllBarbershopsUseCase.execute().subscribe({
-      next: (res) => this.barbershops.set(res),
-    });
+  onSelectBarbershop(id: number) {
+    this.bookingFlowStore.selectBarbershop(id);
   }
 }

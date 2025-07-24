@@ -11,31 +11,31 @@ import { ServiceCardCompact } from '@barbershop-app/client/shared/presentation';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectService {
-  barberStore = inject(BarberStore);
-  serviceStore = inject(ServiceStore);
-
-  selectedBarberId = input.required<number>();
-  selectedServiceId = input.required<number>();
-  selectedServiceIdOutput = output<number>();
-
-  constructor() {
-    effect(() => {
-      const id = this.selectedBarberId();
-      const all = this.barberStore.servicesByBarberId();
-      if (!all[id]) {
-        this.barberStore.setBarberServicesIds(id);
-      }
-    });
-  }
-
-  serviceIds = computed(() => this.barberStore.servicesByBarberId()[this.selectedBarberId()] ?? []);
-  services = computed(() =>
-    this.serviceStore.services().filter(service =>
-      this.serviceIds().includes(service.id)
-    )
-  );
-
-  onClick(id: number) {
-    this.selectedServiceIdOutput.emit(id);
-  }
+  // barberStore = inject(BarberStore);
+  // serviceStore = inject(ServiceStore);
+  //
+  // selectedBarberId = input.required<number>();
+  // selectedServiceId = input.required<number>();
+  // selectedServiceIdOutput = output<number>();
+  //
+  // constructor() {
+  //   effect(() => {
+  //     const id = this.selectedBarberId();
+  //     const all = this.barberStore.servicesByBarberId();
+  //     if (!all[id]) {
+  //       this.barberStore.setBarberServicesIds(id);
+  //     }
+  //   });
+  // }
+  //
+  // serviceIds = computed(() => this.barberStore.servicesByBarberId()[this.selectedBarberId()] ?? []);
+  // services = computed(() =>
+  //   this.serviceStore.services().filter(service =>
+  //     this.serviceIds().includes(service.id)
+  //   )
+  // );
+  //
+  // onClick(id: number) {
+  //   this.selectedServiceIdOutput.emit(id);
+  // }
 }
