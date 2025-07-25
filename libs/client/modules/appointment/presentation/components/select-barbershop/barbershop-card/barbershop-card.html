@@ -1,0 +1,18 @@
+<div
+
+  class="bg-neutral-850 rounded-xl overflow-hidden border hover:border-yellow-500 duration-300 cursor-pointer"
+  [ngClass]="{
+    'border-yellow-500 bg-yellow-500/5': isSelected(),
+    'border-gray-600 hover:border-yellow-500': !isSelected()
+  }"
+>
+  <img
+    src="https://placehold.co/600x300/1a1a1a/fff?text=Map+Placeholder"
+    alt="Barbershop map"
+    class="w-full h-72 object-cover"
+  />
+  <div class="px-6 py-4">
+    <h3 class="text-2xl font-semibold text-white mb-1">{{ barbershop().name }}</h3>
+    <p class="text-sm text-gray-400">{{ barbershop().address }}</p>
+  </div>
+</div>

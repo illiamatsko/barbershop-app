@@ -15,4 +15,5 @@ export class ServiceTooltip {
   duration = input.required<number>();
   description = input.required<string>();
   minPrice = input.required<number>();
+  allowBooking = input.required<boolean>();
 }

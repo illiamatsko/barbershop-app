@@ -82,29 +82,55 @@ async function main() {
     },
   });
 
-  const managerUser = await prisma.user.create({
+  const managerUser1 = await prisma.user.create({
     data: {
-      email: 'manager@example.com',
+      email: 'manager1@example.com',
       password: managerPassword,
-      firstName: 'Manager',
-      lastName: 'Doe',
-      phoneNumber: '9988776655',
+      firstName: 'Manager1',
+      lastName: 'Doe1',
+      phoneNumber: '9988776651',
       role: 'MANAGER',
     },
   });
 
-  const manager = await prisma.manager.create({
+  const manager1 = await prisma.manager.create({
     data: {
-      userId: managerUser.id,
+      userId: managerUser1.id,
     },
   });
 
-  const barbershop = await prisma.barbershop.create({
+  const managerUser2 = await prisma.user.create({
     data: {
-      name: 'Barbershop',
-      address: 'Main Street 123',
-      phoneNumber: '+380931234567',
-      managerId: managerUser.id
+      email: 'manager2@example.com',
+      password: managerPassword,
+      firstName: 'Manager2',
+      lastName: 'Doe2',
+      phoneNumber: '9988776652',
+      role: 'MANAGER',
+    },
+  });
+
+  const manager2 = await prisma.manager.create({
+    data: {
+      userId: managerUser2.id,
+    },
+  });
+
+  const barbershop1 = await prisma.barbershop.create({
+    data: {
+      name: 'Barbershop1',
+      address: 'Main Street 1',
+      phoneNumber: '0931234561',
+      managerId: managerUser1.id
+    },
+  });
+
+  const barbershop2 = await prisma.barbershop.create({
+    data: {
+      name: 'Barbershop2',
+      address: 'Main Street 2',
+      phoneNumber: '0931234562',
+      managerId: managerUser2.id
     },
   });
 
@@ -126,7 +152,7 @@ async function main() {
       userId: barberUser.id,
       photoUrl: 'https://res.cloudinary.com/dx7xjflm0/image/upload/f_auto,q_90,w_500,h_500,c_fill,g_face,dpr_auto/v1753095264/barber_19_frilfd.avif',
       experience: 96,
-      barbershopId: barbershop.id,
+      barbershopId: barbershop1.id,
       statusId: status.id,
     },
   });

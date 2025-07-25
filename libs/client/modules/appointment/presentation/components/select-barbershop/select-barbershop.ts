@@ -2,11 +2,12 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { BarbershopCard } from './barbershop-card/barbershop-card';
 import { BookingFlowStore } from '@barbershop-app/client/core/application';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { ExpandArrowIcon } from '@barbershop-app/client/shared/presentation';
 
 
 @Component({
   selector: 'app-select-barbershop',
-  imports: [BarbershopCard],
+  imports: [BarbershopCard, ExpandArrowIcon],
   templateUrl: './select-barbershop.html',
   styleUrl: './select-barbershop.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -15,8 +16,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
       state('open', style({ height: '*', opacity: 1, padding: '*' })),
       state('closed', style({ height: '0px', opacity: 1, padding: '0px' })),
       transition('open <=> closed', animate('300ms ease-in-out')),
-    ])
-  ]
+    ]),
+  ],
 })
 export class SelectBarbershop {
   bookingFlowStore = inject(BookingFlowStore);
@@ -31,6 +32,6 @@ export class SelectBarbershop {
   }
 
   onSelectBarbershop(id: number) {
-    this.bookingFlowStore.selectBarbershop(id);
+    this.bookingFlowStore.toggleSelectBarbershop(id);
   }
 }

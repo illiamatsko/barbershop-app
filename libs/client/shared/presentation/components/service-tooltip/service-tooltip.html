@@ -17,8 +17,10 @@
     </div>
   </div>
 
-  <button class="tooltip-button">
-    <i class="fas fa-calendar-alt mr-2"></i>
-    Book now
-  </button>
+  @if(allowBooking()) {
+    <button class="tooltip-button">
+      <i class="fas fa-calendar-alt mr-2"></i>
+      Book now
+    </button>
+  }
 </div>

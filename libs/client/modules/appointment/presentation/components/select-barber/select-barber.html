@@ -1,36 +1,30 @@
 <section
   class="p-2 rounded-2xl overflow-hidden mb-6 border transition-colors duration-300"
   [class.border-yellow-400]="selectedBarberId()"
-  [class.border-gray-600]="!!selectedBarberId()"
+  [class.border-gray-600]="!selectedBarberId()"
 >
 <header
     class="flex justify-between items-center px-3 py-3 cursor-pointer"
     (click)="toggleOpen()"
   >
     <h2 class="text-lg font-semibold text-white flex items-center gap-4">
-      <div class="w-14 h-14 bg-yellow-900/60 rounded-xl flex items-center justify-center shadow-inner">
-        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="text-yellow-400" viewBox="0 0 24 24">
+      <div class="w-14 h-14 bg-yellow-900/60 text-yellow-500 rounded-xl flex items-center justify-center shadow-inner">
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" class="fill-current" viewBox="0 0 24 24">
           <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
         </svg>
       </div>
-      <span class="text-2xl">Select a Barber</span>
+      <span class="text-2xl">Select Barber</span>
     </h2>
 
-    <button>
-      <svg
-        [class.rotate-180]="isOpen()"
-        class="w-8 h-8 text-yellow-400 transition-transform duration-300"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-      </svg>
-    </button>
+  <button class="text-yellow-500">
+    <lib-expand-arrow-icon
+      [width]="35"
+      [height]="35"
+      [isOpen]="isOpen()"
+    />
+  </button>
 
-  </header>
+</header>
 
   <div
     [@collapse]="isOpen() ? 'open' : 'closed'"

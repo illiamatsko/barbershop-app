@@ -5,6 +5,7 @@ export * from './components/icons/profile-icon/profile-icon'
 export * from './components/icons/logo-icon/logo-icon'
 export * from './components/icons/right-arrow-icon/right-arrow-icon'
 export * from './components/icons/left-arrow-icon/left-arrow-icon'
+export * from './components/icons/expand-arrow-icon/expand-arrow-icon'
 export * from './components/service-tooltip/service-tooltip'
 export * from './components/service-card-compact/service-card-compact'
 
