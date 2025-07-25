@@ -1,41 +1,34 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, input, output } from '@angular/core';
-import { BarberStore, ServiceStore } from '@barbershop-app/client/core/application';
-import { ServiceCardCompact } from '@barbershop-app/client/shared/presentation';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ExpandArrowIcon, ScissorsIcon, ServiceCardCompact } from '@barbershop-app/client/shared/presentation';
+import { BookingFlowStore } from '@barbershop-app/client/core/application';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 
 @Component({
   selector: 'app-select-service',
-  imports: [ServiceCardCompact],
+  imports: [ServiceCardCompact, ExpandArrowIcon, ScissorsIcon],
   templateUrl: './select-service.html',
   styleUrl: './select-service.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('collapse', [
+      state('open', style({ height: '*', opacity: 1, padding: '*' })),
+      state('closed', style({ height: '0px', opacity: 1, padding: '0px' })),
+      transition('open <=> closed', animate('300ms ease-in-out')),
+    ]),
+  ],
 })
 export class SelectService {
-  // barberStore = inject(BarberStore);
-  // serviceStore = inject(ServiceStore);
-  //
-  // selectedBarberId = input.required<number>();
-  // selectedServiceId = input.required<number>();
-  // selectedServiceIdOutput = output<number>();
-  //
-  // constructor() {
-  //   effect(() => {
-  //     const id = this.selectedBarberId();
-  //     const all = this.barberStore.servicesByBarberId();
-  //     if (!all[id]) {
-  //       this.barberStore.setBarberServicesIds(id);
-  //     }
-  //   });
-  // }
-  //
-  // serviceIds = computed(() => this.barberStore.servicesByBarberId()[this.selectedBarberId()] ?? []);
-  // services = computed(() =>
-  //   this.serviceStore.services().filter(service =>
-  //     this.serviceIds().includes(service.id)
-  //   )
-  // );
-  //
-  // onClick(id: number) {
-  //   this.selectedServiceIdOutput.emit(id);
-  // }
+  bookingFlowStore = inject(BookingFlowStore);
+  services = computed(() => this.bookingFlowStore.availableServices());
+  selectedServiceId = computed(() => this.bookingFlowStore.selectedServiceId());
+  isOpen = signal(true);
+
+  toggleOpen() {
+    this.isOpen.update((v) => !v);
+  }
+
+  onSelectService(id: number) {
+    this.bookingFlowStore.toggleSelectService(id);
+  }
 }

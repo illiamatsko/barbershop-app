@@ -136,23 +136,44 @@ async function main() {
 
   const status = barberStatuses[3];
 
-  const barberUser = await prisma.user.create({
+  const barberUser1 = await prisma.user.create({
     data: {
-      email: 'barber@example.com',
+      email: 'barber1@example.com',
       password: barberPassword,
-      firstName: 'Barber',
-      lastName: 'Johnson',
-      phoneNumber: '1234567890',
+      firstName: 'Barber1',
+      lastName: 'Johnson1',
+      phoneNumber: '1234567891',
       role: 'BARBER',
     },
   });
 
-  const barber = await prisma.barber.create({
+  const barber1 = await prisma.barber.create({
     data: {
-      userId: barberUser.id,
+      userId: barberUser1.id,
       photoUrl: 'https://res.cloudinary.com/dx7xjflm0/image/upload/f_auto,q_90,w_500,h_500,c_fill,g_face,dpr_auto/v1753095264/barber_19_frilfd.avif',
       experience: 96,
       barbershopId: barbershop1.id,
+      statusId: status.id,
+    },
+  });
+
+  const barberUser2 = await prisma.user.create({
+    data: {
+      email: 'barber2@example.com',
+      password: barberPassword,
+      firstName: 'Barber2',
+      lastName: 'Johnson2',
+      phoneNumber: '1234567892',
+      role: 'BARBER',
+    },
+  });
+
+  const barber2 = await prisma.barber.create({
+    data: {
+      userId: barberUser2.id,
+      photoUrl: 'https://res.cloudinary.com/dx7xjflm0/image/upload/f_auto,q_90,w_500,h_500,c_fill,g_face,dpr_auto/v1753095264/barber_19_frilfd.avif',
+      experience: 96,
+      barbershopId: barbershop2.id,
       statusId: status.id,
     },
   });
@@ -161,17 +182,25 @@ async function main() {
     data: {
       content: 'Very professional and friendly!',
       starRating: 5,
-      barberId: barberUser.id,
+      barberId: barberUser1.id,
       customerId: customerUser.id
     },
   });
 
   // 4. Connect Barber to Services
-  for (const service of services) {
+  for (let i=0; i<services.length; i+=2) {
     await prisma.barberService.create({
       data: {
-        barberId: barberUser.id,
-        serviceId: service.id,
+        barberId: barberUser1.id,
+        serviceId: services[i].id,
+      },
+    });
+  }
+  for (let i= 1; i+1<services.length; i+=2) {
+    await prisma.barberService.create({
+      data: {
+        barberId: barberUser2.id,
+        serviceId: services[i].id,
       },
     });
   }
@@ -194,7 +223,7 @@ async function main() {
       status: 'CONFIRMED',
       comment: '',
       customerId: customerUser.id,
-      barberId: barberUser.id,
+      barberId: barberUser1.id,
       serviceId: selectedService.id,
     },
   });
@@ -214,7 +243,7 @@ async function main() {
       return prisma.timeSlot.create({
         data: {
           startTime: time,
-          barberId: barberUser.id,
+          barberId: barberUser1.id,
           status: isBooked ? 'BOOKED' : 'AVAILABLE',
           appointmentId: isBooked ? appointment.id : null,
         },

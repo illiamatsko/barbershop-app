@@ -8,7 +8,7 @@ model Barber {
   barbershopId Int
   services     BarberService[]
   status       BarberStatus    @relation(fields: [statusId], references: [id])
-  statusId     Int             @unique
+  statusId     Int
   appointments Appointment[]
   timeSlot     TimeSlot[]
   reviews      Review[]

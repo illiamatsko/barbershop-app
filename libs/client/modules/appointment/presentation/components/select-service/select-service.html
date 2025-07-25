@@ -1,17 +1,48 @@
-<!--<div class="text-center mb-12">-->
-<!--  <h2 class="text-5xl font-bold text-white leading-tight">-->
-<!--    Choose preferred <span class="text-yellow-500">Service</span>-->
-<!--  </h2>-->
-<!--</div>-->
+<section
+  class="p-2 rounded-2xl mb-6 border transition-colors duration-300 overflow-hidden"
+  [class.border-yellow-500]="selectedServiceId()"
+  [class.border-gray-600]="!selectedServiceId()"
+>
+  <header
+    class="flex justify-between items-center px-3 py-3 cursor-pointer"
+    (click)="toggleOpen()"
+  >
+    <h2 class="text-lg font-semibold text-white flex items-center gap-4">
+      <div class="w-14 h-14 text-yellow-500 bg-yellow-900/60 rounded-xl flex items-center justify-center shadow-inner">
+        <lib-scissors-icon
+          [width]="27"
+          [height]="27"
+        />
+      </div>
+      <span class="text-2xl">Select Service</span>
+    </h2>
 
-<!--<div class="grid grid-cols-1 md:grid-cols-2 gap-8">-->
-<!--  @for(service of services(); track $index) {-->
-<!--    <lib-service-card-compact-->
-<!--      (click)="onClick(service.id)"-->
-<!--      [name]="service.name"-->
-<!--      [description]="service.description"-->
-<!--      [duration]="service.duration"-->
-<!--      [minPrice]="service.minPrice"-->
-<!--    />-->
-<!--  }-->
-<!--</div>-->
+    <button class="text-yellow-500">
+      <lib-expand-arrow-icon
+        [width]="35"
+        [height]="35"
+        [isOpen]="isOpen()"
+      />
+    </button>
+
+  </header>
+
+  <div
+    [@collapse]="isOpen() ? 'open' : 'closed'"
+    class="bg-neutral-900"
+  >
+    <div class="p-4 grid grid-cols-2 gap-4">
+      @for(service of services(); track $index) {
+        <lib-service-card-compact
+          (click)="onSelectService(service.id)"
+          [name]="service.name"
+          [duration]="service.duration"
+          [description]="service.description"
+          [minPrice]="service.minPrice"
+          [isSelected]="service.id === selectedServiceId()"
+          [allowBooking]="false"
+        />
+      }
+    </div>
+  </div>
+</section>
