@@ -18,25 +18,25 @@ export const BookingFlowStore = signalStore(
     return {
       availableBarbershops: computed(() => {
         const barbershops = barbershopStore.barbershops();
-        return barbershops
+        // return barbershops
 
         // Filter barbershops that have barbers offering the selected service
-        // const serviceId = store.selectedServiceId();
-        // if(!serviceId) return barbershops;
-        //
-        // const barbers = barberStore.barbers().filter(barber => {
-        //   const servicesByBarberId = barberStore.servicesByBarberId()[barber.id];
-        //   if(!servicesByBarberId) {
-        //     barberStore.setBarberServicesIds(barber.id);
-        //     return [];
-        //   }
-        //
-        //   return servicesByBarberId.includes(serviceId);
-        // });
-        //
-        // const availableBarbershopIds = barbers.map(b => b.barbershopId);
-        //
-        // return barbershops.filter(shop => availableBarbershopIds.includes(shop.id));
+        const serviceId = store.selectedServiceId();
+        if(!serviceId) return barbershops;
+
+        const barbers = barberStore.barbers().filter(barber => {
+          const servicesByBarberId = barberStore.servicesByBarberId()[barber.id];
+          if(!servicesByBarberId) {
+            barberStore.setBarberServicesIds(barber.id);
+            return [];
+          }
+
+          return servicesByBarberId.includes(serviceId);
+        });
+
+        const availableBarbershopIds = barbers.map(b => b.barbershopId);
+
+        return barbershops.filter(shop => availableBarbershopIds.includes(shop.id));
       }),
 
       availableBarbers: computed(() => {
@@ -55,7 +55,7 @@ export const BookingFlowStore = signalStore(
 
         const servicesByBarberId = barberStore.servicesByBarberId();
         if (store.selectedServiceId()) {
-          barbers = barberStore.barbers().filter(barber => {
+          barbers = barbers.filter(barber => {
             if(!servicesByBarberId[barber.id]) {
               barberStore.setBarberServicesIds(barber.id)
               return false;
