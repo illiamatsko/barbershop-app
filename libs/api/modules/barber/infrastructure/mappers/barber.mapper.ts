@@ -10,6 +10,7 @@ export class BarberMapper {
     const reviewsCount = barber.reviews.length;
     const reviewsRatingSum = barber.reviews.reduce((sum, review) => sum + review.starRating, 0);
     const barberStarRating = reviewsCount > 0 ? reviewsRatingSum / reviewsCount : 0;
+    const serviceIds = barber.services.map(service => service.serviceId);
 
     return {
       id: user.id,
@@ -22,6 +23,7 @@ export class BarberMapper {
       reviewsCount: reviewsCount,
       location: barber.barbershop.address,
       barbershopId: barber.barbershopId,
+      serviceIds,
       role: RoleMap[user.role],
     };
   }

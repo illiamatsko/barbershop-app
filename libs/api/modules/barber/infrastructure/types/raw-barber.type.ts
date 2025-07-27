@@ -6,6 +6,7 @@ export type RawBarberType = Prisma.UserGetPayload<{
       include: {
         status: true;
         barbershop: true;
+        services: true;
         reviews: true;
       };
     };
