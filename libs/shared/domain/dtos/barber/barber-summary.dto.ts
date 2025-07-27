@@ -8,6 +8,6 @@ export interface BarberSummaryDto {
   reviewsCount: number
   status: string
   barbershopId: number
-  servicesIds: number[]
+  serviceIds: number[]
   location: string
 }

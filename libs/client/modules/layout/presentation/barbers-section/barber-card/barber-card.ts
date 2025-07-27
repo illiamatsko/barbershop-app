@@ -2,12 +2,12 @@ import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core
 import { BarberSummaryDto } from '@barbershop-app/shared/domain';
 import { NgOptimizedImage } from '@angular/common';
 import { CalendarIcon } from '@barbershop-app/client/shared/presentation';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 
 @Component({
   selector: 'app-barber-card',
-  imports: [NgOptimizedImage, CalendarIcon, RouterLink],
+  imports: [NgOptimizedImage, CalendarIcon],
   templateUrl: './barber-card.html',
   styleUrl: './barber-card.css',
   schemas: [],

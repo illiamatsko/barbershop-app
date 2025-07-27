@@ -13,7 +13,7 @@ export class BarberMapper {
       starRating: barber.starRating,
       reviewsCount: barber.reviewsCount,
       barbershopId: barber.barbershopId,
-      servicesIds: barber.servicesIds,
+      serviceIds: barber.serviceIds,
       location: barber.location,
     }
   }

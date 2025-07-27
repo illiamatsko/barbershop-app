@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { BarbershopCard } from './barbershop-card/barbershop-card';
 import { BookingFlowStore } from '@barbershop-app/client/core/application';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -21,10 +21,8 @@ import { ExpandArrowIcon } from '@barbershop-app/client/shared/presentation';
 })
 export class SelectBarbershop {
   bookingFlowStore = inject(BookingFlowStore);
-  barbershops = computed(() => this.bookingFlowStore.availableBarbershops());
-  selectedBarbershopId = computed(() =>
-    this.bookingFlowStore.selectedBarbershopId()
-  );
+  barbershops = this.bookingFlowStore.availableBarbershops;
+  selectedBarbershopId = this.bookingFlowStore.selectedBarbershopId;
   isOpen = signal(true);
 
   toggleOpen() {

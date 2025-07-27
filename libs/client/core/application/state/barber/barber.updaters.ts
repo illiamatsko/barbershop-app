@@ -8,17 +8,3 @@ export function setBarbers(state: BarberState, barbers: BarberSummaryDto[]): Bar
   };
 }
 
-
-export function setBarberServicesIds(
-  state: BarberState,
-  servicesIds: Record<number, number[]>
-): BarberState {
-  return {
-    ...state,
-    servicesByBarberId: {
-      ...state.servicesByBarberId,
-      ...servicesIds,
-    },
-  };
-}
-

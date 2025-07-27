@@ -18,6 +18,7 @@ export class PrismaBarberRepository implements BarberRepository {
           include: {
             status: true,
             barbershop: true,
+            services: true,
             reviews: true
           }
         }, }

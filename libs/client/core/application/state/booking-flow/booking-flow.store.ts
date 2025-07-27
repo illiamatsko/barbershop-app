@@ -18,76 +18,51 @@ export const BookingFlowStore = signalStore(
     return {
       availableBarbershops: computed(() => {
         const barbershops = barbershopStore.barbershops();
-        // return barbershops
+        const barbers = barberStore.barbers();
+        const selectedServiceId = store.selectedServiceId();
+        console.log('computing barbershops');
 
-        // Filter barbershops that have barbers offering the selected service
-        const serviceId = store.selectedServiceId();
-        if(!serviceId) return barbershops;
+        if (!selectedServiceId) return barbershops;
 
-        const barbers = barberStore.barbers().filter(barber => {
-          const servicesByBarberId = barberStore.servicesByBarberId()[barber.id];
-          if(!servicesByBarberId) {
-            barberStore.setBarberServicesIds(barber.id);
-            return [];
-          }
+        const filteredBarbers = barbers.filter(barber => barber.serviceIds.includes(selectedServiceId));
 
-          return servicesByBarberId.includes(serviceId);
-        });
-
-        const availableBarbershopIds = barbers.map(b => b.barbershopId);
+        const availableBarbershopIds = [ ...new Set(filteredBarbers.map(b => b.barbershopId))];
 
         return barbershops.filter(shop => availableBarbershopIds.includes(shop.id));
       }),
 
       availableBarbers: computed(() => {
-        let barbers = barberStore.barbers();
+        const barbers = barberStore.barbers();
+        const selectedServiceId = store.selectedServiceId();
+        const selectedBarbershopId = store.selectedBarbershopId();
+        console.log('computing barbers');
 
-        // Filter by barbershop if selected
-        if (store.selectedBarbershopId()) {
-          barbers = barbers.filter(
-            barber => barber.barbershopId === store.selectedBarbershopId()
-          );
-        }
+        let filtered = barbers;
+        if(selectedServiceId)
+          filtered = barbers.filter(barber => barber.serviceIds.includes(selectedServiceId));
 
-        // Filter by service if selected
-        const serviceId = store.selectedServiceId();
-        if(!serviceId) return barbers;
-
-        const servicesByBarberId = barberStore.servicesByBarberId();
-        if (store.selectedServiceId()) {
-          barbers = barbers.filter(barber => {
-            if(!servicesByBarberId[barber.id]) {
-              barberStore.setBarberServicesIds(barber.id)
-              return false;
-            }
-            return servicesByBarberId[barber.id].includes(serviceId);
-          }
-          );
-        }
-
-        return barbers;
+        if(!selectedBarbershopId) return filtered;
+        return filtered.filter(barber => barber.barbershopId === selectedBarbershopId);
       }),
 
       availableServices: computed(() => {
         const services = serviceStore.services();
+        const barbers = barberStore.barbers();
+        const selectedBarberId = store.selectedBarberId();
+        console.log('computing services');
 
         // No filtering if no barber selected
-        if (!store.selectedBarberId()) {
+        if (!selectedBarberId) {
           return services;
         }
 
         // Filter by barber's available services
-        const barberId = store.selectedBarberId();
-        if(!barberId) return services;
+        const barber = barbers.find(barber => barber.id === selectedBarberId);
+        if(!barber) return services;
 
-        const servicesByBarberId = barberStore.servicesByBarberId()[barberId];
-        if(!servicesByBarberId) {
-          barberStore.setBarberServicesIds(barberId);
-          return [];
-        }
-
+        const serviceIds = barber.serviceIds;
         return services.filter(service =>
-          servicesByBarberId.includes(service.id)
+          serviceIds.includes(service.id)
         );
       }),
     }
@@ -98,25 +73,21 @@ export const BookingFlowStore = signalStore(
 
     return {
       toggleSelectBarbershop: (barbershopId: number) => {
-        const selectedBarbershopId = store.selectedBarbershopId();
-        const selectedBarberId = store.selectedBarberId();
+        const clickedOnSelected = store.selectedBarbershopId() === barbershopId;
 
-        if (selectedBarbershopId === barbershopId && !selectedBarberId) {
-          patchState(store, { selectedBarbershopId: null });
-          return;
+        if(clickedOnSelected) {
+          patchState(store, {
+            selectedBarbershopId: null,
+            selectedBarberId: null,
+          });
+        } else {
+          console.log('setting barbershop', barbershopId)
+          patchState(store, {
+            selectedBarbershopId: barbershopId,
+            selectedBarberId: null,
+          });
         }
-
-        const newState: Partial<BookingFlowState> = {
-          selectedBarbershopId: barbershopId,
-        };
-
-        if (selectedBarberId && selectedBarbershopId !== barbershopId) {
-          newState.selectedBarberId = null;
-        }
-
-        patchState(store, newState);
       },
-
 
       toggleSelectBarber: (barberId: number) => {
         if(store.selectedBarberId() && barberId === store.selectedBarberId()) {
