@@ -26,8 +26,7 @@ export class BarberCard {
   navigateToBooking() {
     this.router.navigate(['/appointment/create'], {
       queryParams: {
-        barberId: this.barber().id,
-        step: 'service'
+        barberId: this.barber().id
       }
     }).then();
   }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { BarberCard } from './barber-card/barber-card';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { BookingFlowStore } from '@barbershop-app/client/core/application';
@@ -32,4 +32,6 @@ export class SelectBarber {
   onSelectBarber(id: number) {
     this.bookingFlowStore.toggleSelectBarber(id);
   }
+
+  protected readonly computed = computed;
 }

@@ -1,5 +1,5 @@
 import { BookingFlowState } from './booking-flow.state';
-import { BarbershopDto, BarberSummaryDto, ServiceDto } from '@barbershop-app/shared/domain';
+import { BarberSummaryDto } from '@barbershop-app/shared/domain';
 
 export function barberUpdater(
   state: BookingFlowState,
@@ -25,24 +25,6 @@ export function barberUpdater(
   };
 }
 
-export function filterBarbers(
-  barbers: BarberSummaryDto[],
-  selectedServiceId: number | null,
-  selectedBarbershopId: number | null
-): BarberSummaryDto[] {
-  let filtered = barbers;
-
-  if (selectedServiceId) {
-    filtered = filtered.filter(barber => barber.serviceIds.includes(selectedServiceId));
-  }
-
-  if (selectedBarbershopId) {
-    filtered = filtered.filter(barber => barber.barbershopId === selectedBarbershopId);
-  }
-
-  return filtered;
-}
-
 export function barbershopUpdater(
   state: BookingFlowState,
   barbershopId: number
@@ -64,22 +46,6 @@ export function barbershopUpdater(
   }
 }
 
-export function filterBarbershops(
-  barbershops: BarbershopDto[],
-  barbers: BarberSummaryDto[],
-  selectedServiceId: number | null
-): BarbershopDto[] {
-  if (!selectedServiceId) {
-    return barbershops;
-  }
-
-  const filteredBarbers = barbers.filter(barber => barber.serviceIds.includes(selectedServiceId));
-
-  const availableBarbershopIds = [ ...new Set(filteredBarbers.map(b => b.barbershopId))];
-
-  return barbershops.filter(shop => availableBarbershopIds.includes(shop.id));
-}
-
 export function serviceUpdater(
   state: BookingFlowState,
   serviceId: number
@@ -97,22 +63,4 @@ export function serviceUpdater(
       selectedServiceId: serviceId
     }
   }
-}
-
-export function filterServices(
-  services: ServiceDto[],
-  barbers: BarberSummaryDto[],
-  selectedBarberId: number | null
-): ServiceDto[] {
-  if (!selectedBarberId) {
-    return services;
-  }
-
-  const barber = barbers.find(barber => barber.id === selectedBarberId);
-  if(!barber) {
-    return services;
-  }
-
-  const barberServiceIds = barber.serviceIds;
-  return services.filter(service => barberServiceIds.includes(service.id));
 }

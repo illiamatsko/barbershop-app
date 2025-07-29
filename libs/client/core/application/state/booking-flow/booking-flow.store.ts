@@ -1,22 +1,39 @@
-import { BookingFlowState, initialBookingFlowState } from './booking-flow.state';
-import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
-import { computed, inject } from '@angular/core';
+import {
+  BookingFlowState,
+  initialBookingFlowState,
+} from './booking-flow.state';
+import {
+  getState,
+  patchState,
+  signalStore,
+  withComputed,
+  withMethods,
+  withState
+} from '@ngrx/signals';
+import { computed, effect, inject } from '@angular/core';
 import { BarbershopStore } from '../barbershop/barbershop.store';
 import { BarberStore } from '../barber/barber.store';
 import { ServiceStore } from '../service/service.store';
 import {
-  filterBarbers,
   barberUpdater,
   barbershopUpdater,
-  serviceUpdater, filterBarbershops, filterServices
+  serviceUpdater,
 } from './booking-flow.updaters';
-
+import {
+  filterBarbers,
+  filterBarbershops,
+  filterServices,
+} from './booking-flow.filters';
+import { ActivatedRoute, Router } from '@angular/router';
+import { distinctUntilChanged, map } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { withEffects } from '@ngrx/signals/events';
 
 export const BookingFlowStore = signalStore(
   { providedIn: 'root' },
   withState<BookingFlowState>(initialBookingFlowState),
 
-  withComputed(store => {
+  withComputed((store) => {
     const barbers = inject(BarberStore).barbers;
     const barbershops = inject(BarbershopStore).barbershops;
     const services = inject(ServiceStore).services;
@@ -24,7 +41,10 @@ export const BookingFlowStore = signalStore(
     return {
       availableBarbershops: computed(() => {
         const selectedServiceId = store.selectedServiceId();
-        console.log('computing barbershops');
+        // console.log(
+        //   'computing barbershops',
+        //   filterBarbershops(barbershops(), barbers(), selectedServiceId)
+        // );
 
         return filterBarbershops(barbershops(), barbers(), selectedServiceId);
       }),
@@ -32,35 +52,93 @@ export const BookingFlowStore = signalStore(
       availableBarbers: computed(() => {
         const selectedServiceId = store.selectedServiceId();
         const selectedBarbershopId = store.selectedBarbershopId();
-        console.log('computing barbers');
+        console.log(1,
+          'computing barbers',
+          selectedServiceId, selectedBarbershopId
+        );
 
-        return filterBarbers(barbers(), selectedServiceId, selectedBarbershopId);
+        return filterBarbers(
+          barbers(),
+          selectedServiceId,
+          selectedBarbershopId
+        );
       }),
 
       availableServices: computed(() => {
         const selectedBarberId = store.selectedBarberId();
-        console.log('computing services');
+        // console.log(
+        //   'computing services',
+        //   filterServices(services(), barbers(), selectedBarberId)
+        // );
 
         return filterServices(services(), barbers(), selectedBarberId);
-      }),
-    }
+      })
+    };
   }),
 
-  withMethods(store => {
+  withMethods((store) => {
+    const router = inject(Router);
     const barbers = inject(BarberStore).barbers;
 
     return {
       toggleSelectBarbershop: (barbershopId: number) => {
-        patchState(store, (state) => barbershopUpdater(state, barbershopId))
+        const currentState = getState(store);
+        const nextParams = barbershopUpdater(currentState, barbershopId);
+
+        router.navigate([], {
+          queryParams: nextParams,
+          queryParamsHandling: 'merge',
+        }).then();
       },
 
+
       toggleSelectBarber: (barberId: number) => {
-        patchState(store, (state) => barberUpdater(state, barbers(), barberId));
+        const currentState = getState(store);
+        const nextParams = barberUpdater(currentState, barbers(), barberId);
+
+        router.navigate([], {
+          queryParams: nextParams,
+          queryParamsHandling: 'merge',
+        }).then();
       },
 
       toggleSelectService: (serviceId: number) => {
-        patchState(store, (state) => serviceUpdater(state, serviceId));
-      }
-    }
+        const currentState = getState(store);
+        const nextParams = serviceUpdater(currentState, serviceId);
+
+        router.navigate([], {
+          queryParams: nextParams,
+          queryParamsHandling: 'merge',
+        }).then();
+      },
+    };
+  }),
+
+  withEffects((store) => {
+    const route = inject(ActivatedRoute);
+
+    const urlParams = toSignal(
+      route.queryParams.pipe(
+        map((params) => ({
+          barberId: params['selectedBarberId'] ? +params['selectedBarberId'] : null,
+          serviceId: params['selectedServiceId'] ? +params['selectedServiceId'] : null,
+          barbershopId: params['selectedBarbershopId'] ? +params['selectedBarbershopId'] : null,
+        })),
+        distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b))
+      )
+    );
+
+    effect(() => {
+      const params = urlParams();
+      if(!params) return;
+
+      patchState(store, {
+        selectedBarberId: params.barberId ?? null,
+        selectedServiceId: params.serviceId ?? null,
+        selectedBarbershopId: params.barbershopId ?? null,
+      });
+    });
+
+    return {};
   })
 );
