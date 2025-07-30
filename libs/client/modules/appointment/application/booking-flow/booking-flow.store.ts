@@ -11,9 +11,6 @@ import {
   withState
 } from '@ngrx/signals';
 import { computed, effect, inject } from '@angular/core';
-import { BarbershopStore } from '../barbershop/barbershop.store';
-import { BarberStore } from '../barber/barber.store';
-import { ServiceStore } from '../service/service.store';
 import {
   barberUpdater,
   barbershopUpdater,
@@ -28,6 +25,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { distinctUntilChanged, map } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { withEffects } from '@ngrx/signals/events';
+import { BarbershopStore, BarberStore, ServiceStore } from '@barbershop-app/client/core/application';
 
 export const BookingFlowStore = signalStore(
   { providedIn: 'root' },

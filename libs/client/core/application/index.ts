@@ -12,6 +12,3 @@ export * from './state/error/error.state'
 
 export * from './state/service/service.store'
 export * from './state/service/service.state'
-
-export * from './state/booking-flow/booking-flow.store'
-export * from './state/booking-flow/booking-flow.state'
