@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { BarberCard } from './barber-card/barber-card';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { BookingFlowStore } from '@barbershop-app/client/core/application';
 import { ExpandArrowIcon } from '@barbershop-app/client/shared/presentation';
+import { BookingFlowStore } from '@barbershop-app/client/appointment/application';
 
 
 @Component({

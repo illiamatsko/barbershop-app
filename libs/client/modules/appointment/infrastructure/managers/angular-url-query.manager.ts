@@ -1,11 +1,12 @@
 import { inject, Signal } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { UrlQuery } from '@barbershop-app/client/appointment/domain';
+import { BarberStore } from '@barbershop-app/client/core/application';
 
 export class AngularUrlQueryManager {
-  private router = inject(Router);
+  private barberStore = inject(BarberStore);
   private route = inject(ActivatedRoute);
 
   private toNullableNumber(value: unknown): number | null {
@@ -32,11 +33,14 @@ export class AngularUrlQueryManager {
     );
   }
 
-  updateParams(params: Partial<UrlQuery>): void {
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: params,
-      queryParamsHandling: 'merge',
-    });
+  setParams(query: UrlQuery) {
+    if(!query.barbershopId || !query.barberId || !query.serviceId) return;
+
+    const newState = query;
+
+    const barber = this.barberStore.barbers()[query.barberId];
+    if(barber.barbershopId != query.barbershopId) {
+      newState.barbershopId = barber.barbershopId;
+    }
   }
 }
