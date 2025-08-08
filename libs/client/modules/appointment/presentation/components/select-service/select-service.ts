@@ -21,7 +21,7 @@ import { BookingFlowStore } from '@barbershop-app/client/appointment/application
 export class SelectService {
   bookingFlowStore = inject(BookingFlowStore);
   services = this.bookingFlowStore.availableServices;
-  selectedServiceId = this.bookingFlowStore.selectedServiceId;
+  selectedServiceId = this.bookingFlowStore.serviceId;
   isOpen = signal(true);
 
   toggleOpen() {

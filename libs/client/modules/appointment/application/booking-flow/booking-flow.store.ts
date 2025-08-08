@@ -10,22 +10,17 @@ import {
   withMethods,
   withState
 } from '@ngrx/signals';
-import { computed, effect, inject } from '@angular/core';
-import {
-  barberUpdater,
-  barbershopUpdater,
-  serviceUpdater,
-} from './booking-flow.updaters';
+import { computed, effect, inject, untracked } from '@angular/core';
 import {
   filterBarbers,
   filterBarbershops,
   filterServices,
 } from './booking-flow.filters';
-import { ActivatedRoute, Router } from '@angular/router';
-import { distinctUntilChanged, map } from 'rxjs';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Router } from '@angular/router';
 import { withEffects } from '@ngrx/signals/events';
 import { BarbershopStore, BarberStore, ServiceStore } from '@barbershop-app/client/core/application';
+import {UrlQueryManager} from "../managers/url-query.manager";
+
 
 export const BookingFlowStore = signalStore(
   { providedIn: 'root' },
@@ -38,50 +33,50 @@ export const BookingFlowStore = signalStore(
 
     return {
       availableBarbershops: computed(() => {
-        const selectedServiceId = store.selectedServiceId();
+        const serviceId = store.serviceId();
         // console.log(
         //   'computing barbershops',
-        //   filterBarbershops(barbershops(), barbers(), selectedServiceId)
+        //   filterBarbershops(barbershops(), barbers(), serviceId)
         // );
 
-        return filterBarbershops(barbershops(), barbers(), selectedServiceId);
+        return filterBarbershops(barbershops(), barbers(), serviceId);
       }),
 
       availableBarbers: computed(() => {
-        const selectedServiceId = store.selectedServiceId();
-        const selectedBarbershopId = store.selectedBarbershopId();
-        console.log(1,
-          'computing barbers',
-          selectedServiceId, selectedBarbershopId
-        );
+        const serviceId = store.serviceId();
+        const barbershopId = store.barbershopId();
+        // console.log(1,
+        //   'computing barbers',
+        //   serviceId, barbershopId
+        // );
 
         return filterBarbers(
           barbers(),
-          selectedServiceId,
-          selectedBarbershopId
+          serviceId,
+          barbershopId
         );
       }),
 
       availableServices: computed(() => {
-        const selectedBarberId = store.selectedBarberId();
+        const barberId = store.barberId();
         // console.log(
         //   'computing services',
-        //   filterServices(services(), barbers(), selectedBarberId)
+        //   filterServices(services(), barbers(), barberId)
         // );
 
-        return filterServices(services(), barbers(), selectedBarberId);
+        return filterServices(services(), barbers(), barberId);
       })
     };
   }),
 
   withMethods((store) => {
     const router = inject(Router);
-    const barbers = inject(BarberStore).barbers;
 
     return {
       toggleSelectBarbershop: (barbershopId: number) => {
         const currentState = getState(store);
-        const nextParams = barbershopUpdater(currentState, barbershopId);
+        // const nextParams = barbershopUpdater(currentState, barbershopId);
+        const nextParams = { ...currentState, barbershopId }
 
         router.navigate([], {
           queryParams: nextParams,
@@ -92,7 +87,8 @@ export const BookingFlowStore = signalStore(
 
       toggleSelectBarber: (barberId: number) => {
         const currentState = getState(store);
-        const nextParams = barberUpdater(currentState, barbers(), barberId);
+        // const nextParams = barberUpdater(currentState, barbers(), barberId);
+        const nextParams = { ...currentState, barberId }
 
         router.navigate([], {
           queryParams: nextParams,
@@ -102,7 +98,8 @@ export const BookingFlowStore = signalStore(
 
       toggleSelectService: (serviceId: number) => {
         const currentState = getState(store);
-        const nextParams = serviceUpdater(currentState, serviceId);
+        // const nextParams = serviceUpdater(currentState, serviceId);
+        const nextParams = { ...currentState, serviceId }
 
         router.navigate([], {
           queryParams: nextParams,
@@ -113,28 +110,31 @@ export const BookingFlowStore = signalStore(
   }),
 
   withEffects((store) => {
-    const route = inject(ActivatedRoute);
+    const router = inject(Router);
+    const urlQueryManager = inject(UrlQueryManager);
 
-    const urlParams = toSignal(
-      route.queryParams.pipe(
-        map((params) => ({
-          barberId: params['selectedBarberId'] ? +params['selectedBarberId'] : null,
-          serviceId: params['selectedServiceId'] ? +params['selectedServiceId'] : null,
-          barbershopId: params['selectedBarbershopId'] ? +params['selectedBarbershopId'] : null,
-        })),
-        distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b))
-      )
-    );
+    const stateChanged = (oldState: BookingFlowState, newState: BookingFlowState) => {
+      return oldState.barbershopId === newState.barbershopId &&
+        oldState.barberId === newState.barberId &&
+        oldState.serviceId === newState.serviceId
+    }
 
     effect(() => {
-      const params = urlParams();
-      if(!params) return;
+      const params = urlQueryManager.params();
+      const currenState = untracked(() => getState(store));
+      if (!params) return;
 
-      patchState(store, {
-        selectedBarberId: params.barberId ?? null,
-        selectedServiceId: params.serviceId ?? null,
-        selectedBarbershopId: params.barbershopId ?? null,
-      });
+      const next = urlQueryManager.setParams(params, currenState);
+      console.log('current', currenState)
+      console.log('next:', next)
+      console.log('')
+      if (!stateChanged(currenState, next)) {
+        console.log('change')
+        router.navigate([], {
+          queryParams: next
+        }).then();
+        patchState(store, next);
+      }
     });
 
     return {};

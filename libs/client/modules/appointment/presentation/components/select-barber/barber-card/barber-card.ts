@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { BarberSummaryDto } from '@barbershop-app/shared/domain';
 import { NgClass, NgOptimizedImage } from '@angular/common';
 import { RoundHalfWithYearsPipe } from '@barbershop-app/client/shared/presentation';
@@ -14,12 +14,6 @@ import { RoundHalfWithYearsPipe } from '@barbershop-app/client/shared/presentati
 export class BarberCard {
   barber = input.required<BarberSummaryDto>();
   isSelected = input.required<boolean>();
-
-  constructor() {
-    effect(() => {
-      console.log('isSelected changed:', this.isSelected());
-    });
-  }
 
   getRelativeCloudinaryPath(fullUrl: string): string {
     const path = fullUrl.split('/');

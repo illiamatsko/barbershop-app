@@ -1,11 +1,11 @@
 export interface BookingFlowState {
-  selectedBarbershopId: number | null
-  selectedBarberId: number | null
-  selectedServiceId: number | null
+  barbershopId: number | null
+  barberId: number | null
+  serviceId: number | null
 }
 
 export const initialBookingFlowState: BookingFlowState = {
-  selectedBarbershopId: null,
-  selectedBarberId: null,
-  selectedServiceId: null
+  barbershopId: null,
+  barberId: null,
+  serviceId: null
 };

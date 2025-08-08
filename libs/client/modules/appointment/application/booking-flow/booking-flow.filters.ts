@@ -7,7 +7,7 @@ export function filterBarbers(
 ): BarberSummaryDto[] {
   let filtered = barbers;
 
-  console.log(2, filtered)
+  // console.log(2, filtered)
 
   if (selectedServiceId) {
     filtered = filtered.filter(barber => barber.serviceIds.includes(selectedServiceId));
@@ -16,7 +16,7 @@ export function filterBarbers(
   if (selectedBarbershopId) {
     filtered = filtered.filter(barber => barber.barbershopId === selectedBarbershopId);
   }
-  console.log(3, filtered)
+  // console.log(3, filtered)
   return filtered;
 }
 

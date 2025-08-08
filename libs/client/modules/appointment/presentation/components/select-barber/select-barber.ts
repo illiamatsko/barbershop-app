@@ -22,7 +22,7 @@ import { BookingFlowStore } from '@barbershop-app/client/appointment/application
 export class SelectBarber {
   private bookingFlowStore = inject(BookingFlowStore);
   barbers = this.bookingFlowStore.availableBarbers;
-  selectedBarberId = this.bookingFlowStore.selectedBarberId;
+  selectedBarberId = this.bookingFlowStore.barberId;
   isOpen = signal(true);
 
   toggleOpen() {

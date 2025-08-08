@@ -6,12 +6,12 @@ export function barberUpdater(
   barbers: BarberSummaryDto[],
   barberId: number
 ): BookingFlowState {
-  const clickedOnSelected = state.selectedBarberId === barberId;
+  const clickedOnSelected = state.barberId === barberId;
 
   if (clickedOnSelected) {
     return {
       ...state,
-      selectedBarberId: null,
+      barberId: null,
     };
   }
 
@@ -20,8 +20,8 @@ export function barberUpdater(
 
   return {
     ...state,
-    selectedBarberId: barberId,
-    selectedBarbershopId: barber.barbershopId,
+    barberId: barberId,
+    barbershopId: barber.barbershopId,
   };
 }
 
@@ -29,19 +29,19 @@ export function barbershopUpdater(
   state: BookingFlowState,
   barbershopId: number
 ): BookingFlowState {
-  const clickedOnSelected = state.selectedBarbershopId === barbershopId;
+  const clickedOnSelected = state.barbershopId === barbershopId;
 
   if(clickedOnSelected) {
     return {
       ...state,
-      selectedBarbershopId: null,
-      selectedBarberId: null
+      barbershopId: null,
+      barberId: null
     }
   } else {
     return {
       ...state,
-      selectedBarbershopId: barbershopId,
-      selectedBarberId: null
+      barbershopId: barbershopId,
+      barberId: null
     }
   }
 }
@@ -50,17 +50,17 @@ export function serviceUpdater(
   state: BookingFlowState,
   serviceId: number
 ): BookingFlowState {
-  const clickedOnSelected = serviceId === state.selectedServiceId;
+  const clickedOnSelected = serviceId === state.serviceId;
 
   if(clickedOnSelected) {
     return {
       ...state,
-      selectedServiceId: null
+      serviceId: null
     }
   } else {
     return {
       ...state,
-      selectedServiceId: serviceId
+      serviceId: serviceId
     }
   }
 }
