@@ -2,13 +2,12 @@ import { inject, Injectable } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
-import { BarberStore } from '@barbershop-app/client/core/application';
 import { BookingFlowState } from '../booking-flow/booking-flow.state';
+import { BarberSummaryDto, ServiceDto } from '@barbershop-app/shared/domain';
 
 
 @Injectable({ providedIn: 'root' })
 export class UrlQueryManager {
-  private barberStore = inject(BarberStore);
   private route = inject(ActivatedRoute);
 
   private toNullableNumber(value: unknown) {
@@ -27,41 +26,63 @@ export class UrlQueryManager {
     )
   );
 
-  setParams(urlQuery: BookingFlowState, currentState: BookingFlowState): BookingFlowState {
+  setParams(urlQuery: BookingFlowState, currentState: BookingFlowState, barbers: BarberSummaryDto[], services: ServiceDto[]): BookingFlowState {
+    console.log('ids', urlQuery.barbershopId, currentState.barbershopId)
     const barbershopChange = urlQuery.barbershopId !== currentState.barbershopId;
     const barberChange = urlQuery.barberId !== currentState.barberId;
     const serviceChange = urlQuery.serviceId !== currentState.serviceId;
 
+    console.log('url:', urlQuery)
+
+    const newState: BookingFlowState = {
+      barbershopId: null,
+      barberId: null,
+      serviceId: null
+    };
+
     if (barbershopChange) {
-      return { barbershopId: urlQuery.barbershopId, barberId: null, serviceId: null };
+      console.log('barbershop changed')
+      newState.barbershopId = urlQuery.barbershopId;
+    } else {
+      newState.barbershopId = currentState.barbershopId;
     }
 
     const barber = urlQuery.barberId
-      ? this.barberStore.barbers().find(b => b.id === urlQuery.barberId)
+      ? barbers.find(b => b.id === urlQuery.barberId)
       : null;
 
     if (barberChange) {
-      console.log('barber change 1')
-      if (!barber) {
-        return currentState;
+      console.log('barber changed')
+      if(!barber) {
+        console.log('barber1')
+        return newState;
       }
-      console.log('barber change 2')
-      return { barbershopId: barber.barbershopId, barberId: barber.id, serviceId: null };
+
+      newState.barberId = barber.id;
+      newState.barbershopId = barber.barbershopId;
+    } else {
+      newState.barberId = currentState.barberId;
     }
 
     if (serviceChange) {
-      // якщо serviceId не заданий у URL → просто скинути
-      if (!urlQuery.serviceId) {
-        return { ...currentState, serviceId: null };
-      }
-      // якщо barber не вибраний або не знайдений — не чіпаємо
-      if (!barber) return currentState;
+      console.log('service changed')
 
-      // ВИПРАВЛЕНО: якщо перукар має цей сервіс → ставимо, інакше скидаємо
-      const hasService = barber.serviceIds.includes(urlQuery.serviceId);
-      return { ...currentState, serviceId: hasService ? urlQuery.serviceId : null };
+      if(!urlQuery.serviceId) return newState;
+
+      if(barber) {
+        const hasService = barber.serviceIds.includes(urlQuery.serviceId);
+        newState.serviceId = hasService ? urlQuery.serviceId : null;
+      } else {
+        const isExisting = services.find(service => service.id === urlQuery.serviceId);
+
+        const availableServiceIds = [... new Set(barbers.filter(b => b.barbershopId === urlQuery.barbershopId).flatMap(bb => bb.serviceIds))];
+        const isAvailable = availableServiceIds.includes(urlQuery.serviceId);
+        newState.serviceId = isExisting && isAvailable ? urlQuery.serviceId : null;
+      }
+
+      return newState;
     }
 
-    return currentState;
+    return newState;
   }
 }

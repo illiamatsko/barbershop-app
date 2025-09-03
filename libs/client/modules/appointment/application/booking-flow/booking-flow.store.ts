@@ -16,7 +16,7 @@ import {
   filterBarbershops,
   filterServices,
 } from './booking-flow.filters';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { withEffects } from '@ngrx/signals/events';
 import { BarbershopStore, BarberStore, ServiceStore } from '@barbershop-app/client/core/application';
 import {UrlQueryManager} from "../managers/url-query.manager";
@@ -59,50 +59,62 @@ export const BookingFlowStore = signalStore(
 
       availableServices: computed(() => {
         const barberId = store.barberId();
+        const barbershopId = store.barbershopId();
         // console.log(
         //   'computing services',
         //   filterServices(services(), barbers(), barberId)
         // );
 
-        return filterServices(services(), barbers(), barberId);
+        return filterServices(services(), barbers(), barberId, barbershopId);
       })
     };
   }),
 
   withMethods((store) => {
+    const route = inject(ActivatedRoute);
     const router = inject(Router);
 
     return {
       toggleSelectBarbershop: (barbershopId: number) => {
         const currentState = getState(store);
-        // const nextParams = barbershopUpdater(currentState, barbershopId);
-        const nextParams = { ...currentState, barbershopId }
+        let newBarbershopId: number | null = barbershopId;
+
+        if(currentState.barbershopId && currentState.barbershopId === barbershopId) {
+          newBarbershopId = null;
+        }
 
         router.navigate([], {
-          queryParams: nextParams,
-          queryParamsHandling: 'merge',
+          relativeTo: route,
+          queryParams: { barbershopId: newBarbershopId },
+          replaceUrl: true
         }).then();
       },
 
 
       toggleSelectBarber: (barberId: number) => {
         const currentState = getState(store);
-        // const nextParams = barberUpdater(currentState, barbers(), barberId);
-        const nextParams = { ...currentState, barberId }
+        let newBarberId: number | null = barberId;
+
+        if(currentState.barberId && currentState.barberId === barberId) {
+          newBarberId = null;
+        }
 
         router.navigate([], {
-          queryParams: nextParams,
+          queryParams: { barberId: newBarberId },
           queryParamsHandling: 'merge',
         }).then();
       },
 
       toggleSelectService: (serviceId: number) => {
         const currentState = getState(store);
-        // const nextParams = serviceUpdater(currentState, serviceId);
-        const nextParams = { ...currentState, serviceId }
+        let newServiceId: number | null = serviceId;
+
+        if(currentState.serviceId && currentState.serviceId === serviceId) {
+          newServiceId = null;
+        }
 
         router.navigate([], {
-          queryParams: nextParams,
+          queryParams: { serviceId: newServiceId },
           queryParamsHandling: 'merge',
         }).then();
       },
@@ -112,29 +124,24 @@ export const BookingFlowStore = signalStore(
   withEffects((store) => {
     const router = inject(Router);
     const urlQueryManager = inject(UrlQueryManager);
-
-    const stateChanged = (oldState: BookingFlowState, newState: BookingFlowState) => {
-      return oldState.barbershopId === newState.barbershopId &&
-        oldState.barberId === newState.barberId &&
-        oldState.serviceId === newState.serviceId
-    }
+    const barberStore = inject(BarberStore);
+    const serviceStore = inject(ServiceStore);
 
     effect(() => {
       const params = urlQueryManager.params();
+      const barbers = barberStore.barbers();
+      const services = serviceStore.services();
       const currenState = untracked(() => getState(store));
-      if (!params) return;
+      if (!params || barbers.length < 1 || services.length < 1) return;
 
-      const next = urlQueryManager.setParams(params, currenState);
+      const next = urlQueryManager.setParams(params, currenState, barbers, services);
       console.log('current', currenState)
       console.log('next:', next)
       console.log('')
-      if (!stateChanged(currenState, next)) {
-        console.log('change')
-        router.navigate([], {
-          queryParams: next
-        }).then();
-        patchState(store, next);
-      }
+      patchState(store, next);
+      router.navigate([], {
+        queryParams: next
+      }).then();
     });
 
     return {};

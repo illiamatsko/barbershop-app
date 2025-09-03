@@ -1,4 +1,8 @@
-import { BarbershopDto, BarberSummaryDto, ServiceDto } from '@barbershop-app/shared/domain';
+import {
+  BarbershopDto,
+  BarberSummaryDto,
+  ServiceDto,
+} from '@barbershop-app/shared/domain';
 
 export function filterBarbers(
   barbers: BarberSummaryDto[],
@@ -10,11 +14,15 @@ export function filterBarbers(
   // console.log(2, filtered)
 
   if (selectedServiceId) {
-    filtered = filtered.filter(barber => barber.serviceIds.includes(selectedServiceId));
+    filtered = filtered.filter((barber) =>
+      barber.serviceIds.includes(selectedServiceId)
+    );
   }
 
   if (selectedBarbershopId) {
-    filtered = filtered.filter(barber => barber.barbershopId === selectedBarbershopId);
+    filtered = filtered.filter(
+      (barber) => barber.barbershopId === selectedBarbershopId
+    );
   }
   // console.log(3, filtered)
   return filtered;
@@ -39,17 +47,26 @@ export function filterBarbershops(
 export function filterServices(
   services: ServiceDto[],
   barbers: BarberSummaryDto[],
-  selectedBarberId: number | null
+  selectedBarberId: number | null,
+  selectedBarbershopId: number | null
 ): ServiceDto[] {
-  if (!selectedBarberId) {
-    return services;
+  if (!selectedBarberId && selectedBarbershopId) {
+    const availableBarbers = barbers.filter(barber => barber.barbershopId === selectedBarbershopId);
+    const availableServiceIds = [... new Set(availableBarbers.flatMap(barber => barber.serviceIds))];
+    return services.filter((service) =>
+      availableServiceIds.includes(service.id)
+    );
   }
 
-  const barber = barbers.find(barber => barber.id === selectedBarberId);
-  if(!barber) {
-    return services;
+  if(selectedBarberId) {
+    const barber = barbers.find(barber => barber.id === selectedBarberId);
+    if(!barber) {
+      return services;
+    }
+
+    const barberServiceIds = barber.serviceIds;
+    return services.filter(service => barberServiceIds.includes(service.id));
   }
 
-  const barberServiceIds = barber.serviceIds;
-  return services.filter(service => barberServiceIds.includes(service.id));
+  return services;
 }
