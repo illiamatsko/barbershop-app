@@ -124,17 +124,13 @@ export const BookingFlowStore = signalStore(
   withEffects((store) => {
     const router = inject(Router);
     const urlQueryManager = inject(UrlQueryManager);
-    const barberStore = inject(BarberStore);
-    const serviceStore = inject(ServiceStore);
 
     effect(() => {
       const params = urlQueryManager.params();
-      const barbers = barberStore.barbers();
-      const services = serviceStore.services();
       const currenState = untracked(() => getState(store));
-      if (!params || barbers.length < 1 || services.length < 1) return;
+      if (!params || !urlQueryManager.isReady()) return;
 
-      const next = urlQueryManager.setParams(params, currenState, barbers, services);
+      const next = urlQueryManager.setParams(params, currenState);
       console.log('current', currenState)
       console.log('next:', next)
       console.log('')

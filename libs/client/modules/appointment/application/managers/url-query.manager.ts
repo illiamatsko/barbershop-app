@@ -1,14 +1,19 @@
-import { inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { BookingFlowState } from '../booking-flow/booking-flow.state';
-import { BarberSummaryDto, ServiceDto } from '@barbershop-app/shared/domain';
+import { BarbershopStore, BarberStore, ServiceStore } from '@barbershop-app/client/core/application';
 
 
 @Injectable({ providedIn: 'root' })
 export class UrlQueryManager {
+  private barbershopSignal = inject(BarbershopStore).barbershops;
+  private barberSignal = inject(BarberStore).barbers;
+  private serviceSignal = inject(ServiceStore).services;
   private route = inject(ActivatedRoute);
+
+  public isReady = computed(() => this.barbershopSignal().length > 0 && this.barberSignal().length > 0 && this.serviceSignal().length > 0);
 
   private toNullableNumber(value: unknown) {
     if(!value) return null;
@@ -26,11 +31,15 @@ export class UrlQueryManager {
     )
   );
 
-  setParams(urlQuery: BookingFlowState, currentState: BookingFlowState, barbers: BarberSummaryDto[], services: ServiceDto[]): BookingFlowState {
+  setParams(urlQuery: BookingFlowState, currentState: BookingFlowState): BookingFlowState {
     console.log('ids', urlQuery.barbershopId, currentState.barbershopId)
     const barbershopChange = urlQuery.barbershopId !== currentState.barbershopId;
     const barberChange = urlQuery.barberId !== currentState.barberId;
     const serviceChange = urlQuery.serviceId !== currentState.serviceId;
+
+    const barbershops = this.barbershopSignal();
+    const barbers = this.barberSignal();
+    const services = this.serviceSignal();
 
     console.log('url:', urlQuery)
 
@@ -40,7 +49,12 @@ export class UrlQueryManager {
       serviceId: null
     };
 
-    if (barbershopChange) {
+    let isBarbershopValid = false;
+    if(urlQuery.barbershopId) {
+      isBarbershopValid = barbershops.map(shop => shop.id).includes(urlQuery.barbershopId);
+    }
+
+    if (barbershopChange && isBarbershopValid) {
       console.log('barbershop changed')
       newState.barbershopId = urlQuery.barbershopId;
     } else {
