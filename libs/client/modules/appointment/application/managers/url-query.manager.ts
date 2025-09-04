@@ -31,17 +31,12 @@ export class UrlQueryManager {
     )
   );
 
-  setParams(urlQuery: BookingFlowState, currentState: BookingFlowState): BookingFlowState {
-    console.log('ids', urlQuery.barbershopId, currentState.barbershopId)
-    const barbershopChange = urlQuery.barbershopId !== currentState.barbershopId;
-    const barberChange = urlQuery.barberId !== currentState.barberId;
-    const serviceChange = urlQuery.serviceId !== currentState.serviceId;
-
+  setParams(urlQueryParams: BookingFlowState): BookingFlowState {
     const barbershops = this.barbershopSignal();
     const barbers = this.barberSignal();
     const services = this.serviceSignal();
 
-    console.log('url:', urlQuery)
+    console.log('url:', urlQueryParams)
 
     const newState: BookingFlowState = {
       barbershopId: null,
@@ -49,52 +44,35 @@ export class UrlQueryManager {
       serviceId: null
     };
 
-    let isBarbershopValid = false;
-    if(urlQuery.barbershopId) {
-      isBarbershopValid = barbershops.map(shop => shop.id).includes(urlQuery.barbershopId);
-    }
-
-    if (barbershopChange && isBarbershopValid) {
-      console.log('barbershop changed')
-      newState.barbershopId = urlQuery.barbershopId;
+    const barbershop = barbershops.find(shop => shop.id === urlQueryParams.barbershopId);
+    if (barbershop) {
+      newState.barbershopId = urlQueryParams.barbershopId;
     } else {
-      newState.barbershopId = currentState.barbershopId;
+      newState.barbershopId = null;
     }
 
-    const barber = urlQuery.barberId
-      ? barbers.find(b => b.id === urlQuery.barberId)
-      : null;
-
-    if (barberChange) {
-      console.log('barber changed')
-      if(!barber) {
-        console.log('barber1')
-        return newState;
-      }
-
+    const barber = barbers.find(b => b.id === urlQueryParams.barberId);
+    if (barber) {
       newState.barberId = barber.id;
       newState.barbershopId = barber.barbershopId;
     } else {
-      newState.barberId = currentState.barberId;
+      newState.barberId = null;
     }
 
-    if (serviceChange) {
-      console.log('service changed')
-
-      if(!urlQuery.serviceId) return newState;
-
+    const service = services.find(service => service.id === urlQueryParams.serviceId);
+    if(service) {
       if(barber) {
-        const hasService = barber.serviceIds.includes(urlQuery.serviceId);
-        newState.serviceId = hasService ? urlQuery.serviceId : null;
+        const barberHasService = !!barber.serviceIds.find(() => urlQueryParams.serviceId);
+        newState.serviceId = barberHasService ? urlQueryParams.serviceId : null;
+      } else if (barbershop) {
+        const barbershopAvailableServiceIds = [... new Set(barbers.filter(b => b.barbershopId === urlQueryParams.barbershopId).flatMap(bb => bb.serviceIds))];
+        const isServiceAvailable = !!barbershopAvailableServiceIds.find(() => urlQueryParams.serviceId);
+        newState.serviceId = isServiceAvailable ? urlQueryParams.serviceId : null;
       } else {
-        const isExisting = services.find(service => service.id === urlQuery.serviceId);
-
-        const availableServiceIds = [... new Set(barbers.filter(b => b.barbershopId === urlQuery.barbershopId).flatMap(bb => bb.serviceIds))];
-        const isAvailable = availableServiceIds.includes(urlQuery.serviceId);
-        newState.serviceId = isExisting && isAvailable ? urlQuery.serviceId : null;
+        newState.serviceId = service.id;
       }
-
-      return newState;
+    } else {
+      newState.serviceId = null;
     }
 
     return newState;

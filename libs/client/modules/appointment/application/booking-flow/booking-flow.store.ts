@@ -86,7 +86,7 @@ export const BookingFlowStore = signalStore(
         router.navigate([], {
           relativeTo: route,
           queryParams: { barbershopId: newBarbershopId },
-          replaceUrl: true
+          queryParamsHandling: 'merge'
         }).then();
       },
 
@@ -101,7 +101,7 @@ export const BookingFlowStore = signalStore(
 
         router.navigate([], {
           queryParams: { barberId: newBarberId },
-          queryParamsHandling: 'merge',
+          queryParamsHandling: 'merge'
         }).then();
       },
 
@@ -115,7 +115,7 @@ export const BookingFlowStore = signalStore(
 
         router.navigate([], {
           queryParams: { serviceId: newServiceId },
-          queryParamsHandling: 'merge',
+          queryParamsHandling: 'merge'
         }).then();
       },
     };
@@ -130,7 +130,7 @@ export const BookingFlowStore = signalStore(
       const currenState = untracked(() => getState(store));
       if (!params || !urlQueryManager.isReady()) return;
 
-      const next = urlQueryManager.setParams(params, currenState);
+      const next = urlQueryManager.setParams(params);
       console.log('current', currenState)
       console.log('next:', next)
       console.log('')
