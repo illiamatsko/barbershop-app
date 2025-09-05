@@ -1,7 +1,9 @@
 <section
   class="p-2 rounded-2xl mb-6 border transition-colors duration-300 overflow-hidden"
-  [class.border-yellow-500]="selectedServiceId()"
-  [class.border-gray-600]="!selectedServiceId()"
+  [ngClass]="{
+    'border-yellow-500': selectedServiceId(),
+    'border-gray-600/60': !selectedServiceId()
+  }"
 >
   <header
     class="flex justify-between items-center px-3 py-3 cursor-pointer"

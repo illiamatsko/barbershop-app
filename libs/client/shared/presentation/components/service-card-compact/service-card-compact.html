@@ -1,8 +1,9 @@
-<div class="card group duration-400"
-     [class.border-gray-600]="!isSelected()"
-     [class.border-primary]="isSelected()">
-
-  <div class="card-overlay group-hover:opacity-100 duration-400"></div>
+<div
+  class="card group"
+  [ngClass]="{
+    'border-yellow-500 bg-yellow-500/5': isSelected(),
+    'border-gray-600/20 bg-neutral-800': !isSelected()
+  }">
 
   <div class="card-content">
     <div class="card-header">

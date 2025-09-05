@@ -2,11 +2,12 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { ExpandArrowIcon, ScissorsIcon, ServiceCardCompact } from '@barbershop-app/client/shared/presentation';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { BookingFlowStore } from '@barbershop-app/client/appointment/application';
+import {NgClass} from "@angular/common";
 
 
 @Component({
   selector: 'app-select-service',
-  imports: [ServiceCardCompact, ExpandArrowIcon, ScissorsIcon],
+  imports: [ServiceCardCompact, ExpandArrowIcon, ScissorsIcon, NgClass],
   templateUrl: './select-service.html',
   styleUrl: './select-service.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

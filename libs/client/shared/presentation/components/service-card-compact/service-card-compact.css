@@ -1,13 +1,6 @@
 .card {
-  @apply relative bg-neutral-800/55 border
-  rounded-xl p-5 transition-all hover:border-yellow-500/20
-  hover:shadow-lg hover:shadow-black/20;
-}
-
-.card-overlay {
-  @apply absolute inset-0 bg-gradient-to-br from-transparent
-  via-yellow-500/5 to-transparent opacity-0 transition-opacity
-  pointer-events-none rounded-xl;
+  @apply duration-300 relative bg-neutral-800 border
+  rounded-lg p-6 transition-all hover:border-primary;
 }
 
 .card-content {

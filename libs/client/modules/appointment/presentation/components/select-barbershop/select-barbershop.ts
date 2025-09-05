@@ -3,11 +3,12 @@ import { BarbershopCard } from './barbershop-card/barbershop-card';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ExpandArrowIcon } from '@barbershop-app/client/shared/presentation';
 import { BookingFlowStore } from '@barbershop-app/client/appointment/application';
+import { NgClass } from '@angular/common';
 
 
 @Component({
   selector: 'app-select-barbershop',
-  imports: [BarbershopCard, ExpandArrowIcon],
+  imports: [BarbershopCard, ExpandArrowIcon, NgClass],
   templateUrl: './select-barbershop.html',
   styleUrl: './select-barbershop.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
