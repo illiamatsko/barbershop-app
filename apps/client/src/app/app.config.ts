@@ -20,6 +20,9 @@ import { AppointmentGateway, BarbershopGateway } from '@barbershop-app/client/ap
 import { ApiAppointmentGateway } from '@barbershop-app/client/appointment/infrastructure';
 import { ApiBarbershopGateway } from '@barbershop-app/client/appointment/infrastructure';
 import { provideCloudinaryLoader } from '@angular/common';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeuix/themes/aura';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -28,6 +31,11 @@ export const appConfig: ApplicationConfig = {
     provideRouter(appRoutes),
     provideHttpClient(withInterceptors([ErrorInterceptor])),
     provideAnimations(),
+    providePrimeNG({
+      theme: {
+        preset: Aura
+      }
+    }),
     provideCloudinaryLoader('https://res.cloudinary.com/dx7xjflm0/'),
     provideToastr({
       positionClass: 'toast-bottom-right'
