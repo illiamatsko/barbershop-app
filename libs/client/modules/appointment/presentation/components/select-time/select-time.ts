@@ -90,7 +90,7 @@ export class SelectTime {
   async onSelectDate(date: Date) {
     this.selectedDateModel = date;
     this.selectedSlot.set(null);
-    console.log(await this.getBarberTimeslotsByDate.execute(1, date));
+    console.log(await this.getBarberTimeslotsByDate.execute(4, date));
   }
 
   onSelectSlot(slot: Slot) {

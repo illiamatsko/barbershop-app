@@ -1,13 +1,12 @@
 export * from './dtos/appointment/appointment.dto'
 
-export * from './dtos/time-slot/time-slot.dto'
-
 export * from './dtos/auth/user.dto';
 
 export * from './dtos/barber/barber-full.dto';
 export * from './dtos/barber/barber-status.dto'
 export * from './dtos/barber/barber-summary.dto'
 export * from './dtos/barber/create-barber.payload'
+export * from './dtos/barber/time-slot.dto'
 
 export * from './dtos/barbershop/barbershop.dto'
 

@@ -3,6 +3,7 @@ import { BarberRepository, BarberSummaryEntity, BarberStatusEntity } from '@barb
 import { BarberMapper } from '../mappers/barber.mapper';
 import { BarberStatusMapper } from '../mappers/barber-status.mapper';
 import { PrismaService } from '@barbershop-app/api/core/persistence';
+import { TimeSlotMapper } from '../mappers/time-slot.mapper';
 
 
 @Injectable()
@@ -43,5 +44,25 @@ export class PrismaBarberRepository implements BarberRepository {
     }
 
     return barberStatusEntities;
+  }
+
+  async getBarberTimeSlotsByDate(barberId: number, date: Date) {
+    const startOfDay = new Date(date);
+    startOfDay.setHours(0, 0, 0, 0);
+
+    const endOfDay = new Date(date);
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const barberTimeSlotsByDate = await this.prisma.timeSlot.findMany({
+      where: {
+        barberId,
+        startTime: {
+          gte: startOfDay,
+          lte: endOfDay,
+        },
+      },
+    });
+
+    return barberTimeSlotsByDate.map(slot => TimeSlotMapper.toEntity(slot));
   }
 }

@@ -2,7 +2,7 @@ import { Controller, Get, Param } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import {
   GetAllBarbersQuery,
-  GetBarberStatusesQuery
+  GetBarberStatusesQuery, GetBarberTimeSlotsByDateQuery
 } from '@barbershop-app/api/barber/application';
 
 
@@ -24,6 +24,7 @@ export class BarberController {
   GetBarberTimeSlotsByDate(@Param('barberId') _barberId: string, @Param('date') _date: string) {
     const date = new Date(_date);
     const barberId = +_barberId;
-    return [barberId, date.getDate()];
+
+    return this.queryBus.execute(new GetBarberTimeSlotsByDateQuery(barberId, date));
   }
 }
