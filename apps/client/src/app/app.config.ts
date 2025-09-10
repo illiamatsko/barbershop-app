@@ -33,7 +33,13 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     providePrimeNG({
       theme: {
-        preset: Aura
+        preset: Aura,
+        options: {
+          cssLayer: {
+            name: 'primeng',
+            order: 'tailwind-base, primeng, tailwind-utilities'
+          },
+        }
       }
     }),
     provideCloudinaryLoader('https://res.cloudinary.com/dx7xjflm0/'),

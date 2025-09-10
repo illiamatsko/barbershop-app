@@ -1,4 +1,5 @@
 import colors from 'tailwindcss/colors';
+import PrimeUI from 'tailwindcss-primeui';
 
 
 const { createGlobPatternsForDependencies } = require('@nx/angular/tailwind');
@@ -29,5 +30,5 @@ module.exports = {
       }
     },
   },
-  plugins: [],
+  plugins: [PrimeUI],
 };

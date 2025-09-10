@@ -1,0 +1,45 @@
+<section
+  class="p-2 rounded-2xl mb-6 border transition-colors duration-300 overflow-hidden"
+  [ngClass]="{
+    'border-primary': !!selectedSlot(),
+    'border-gray-600/60': !selectedSlot()
+  }"
+>
+  <header class="flex justify-between items-center px-3 py-3 cursor-pointer" (click)="toggleOpen()">
+    <h2 class="text-lg font-semibold text-white flex items-center gap-4">
+      <div class="w-14 h-14 text-yellow-500 bg-yellow-900/60 rounded-xl flex items-center justify-center shadow-inner">
+        <lib-clock-icon [width]="27" [height]="27"></lib-clock-icon>
+      </div>
+      <span class="text-2xl">Select Time</span>
+    </h2>
+    <button class="text-yellow-500">
+      <i class="pi" [ngClass]="isOpen() ? 'pi-chevron-up' : 'pi-chevron-down'" style="font-size: 1.6rem"></i>
+    </button>
+  </header>
+
+  <div [style.height]="isOpen() ? 'auto' : '0px'" class="bg-neutral-900 transition-[height] duration-300 overflow-hidden">
+    <div class="p-4 grid grid-cols-2 gap-2">
+
+      <!-- Календар (зліва) -->
+      <div class="theme-primeng-override">
+        <p-datepicker class="w-full"
+                      [(ngModel)]="selectedDateModel"
+                      [inline]="true"
+                      [showIcon]="false"
+                      [touchUI]="false"
+                      [minDate]="minDate"
+                      [maxDate]="maxDate"
+                      [disabledDates]="disabledDates"
+                      [dateFormat]="'dd.mm.yy'"
+                      [showOtherMonths]="true"
+                      [selectOtherMonths]="true"
+                      (onSelect)="onSelectDate($event)"
+        ></p-datepicker>
+      </div>
+
+      <div>
+
+      </div>
+    </div>
+  </div>
+</section>
