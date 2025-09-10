@@ -1,5 +1,7 @@
 export * from './dtos/appointment/appointment.dto'
 
+export * from './dtos/time-slot/time-slot.dto'
+
 export * from './dtos/auth/user.dto';
 
 export * from './dtos/barber/barber-full.dto';

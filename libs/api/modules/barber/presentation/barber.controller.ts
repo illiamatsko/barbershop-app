@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import {
   GetAllBarbersQuery,
@@ -18,5 +18,12 @@ export class BarberController {
   @Get('statuses')
   GetBarberStatuses() {
     return this.queryBus.execute(new GetBarberStatusesQuery());
+  }
+
+  @Get('timeslots/:barberId/:date')
+  GetBarberTimeSlotsByDate(@Param('barberId') _barberId: string, @Param('date') _date: string) {
+    const date = new Date(_date);
+    const barberId = +_barberId;
+    return [barberId, date.getDate()];
   }
 }

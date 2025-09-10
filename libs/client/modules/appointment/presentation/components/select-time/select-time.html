@@ -17,29 +17,46 @@
     </button>
   </header>
 
-  <div [style.height]="isOpen() ? 'auto' : '0px'" class="bg-neutral-900 transition-[height] duration-300 overflow-hidden">
-    <div class="p-4 grid grid-cols-2 gap-2">
+  <div [@collapse]="isOpen() ? 'open' : 'closed'" class="bg-neutral-900 transition-[height] duration-300 overflow-hidden">
+    <!-- Рівні колонки: 1:1 -->
+    <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
 
-      <!-- Календар (зліва) -->
-      <div class="theme-primeng-override">
-        <p-datepicker class="w-full"
-                      [(ngModel)]="selectedDateModel"
-                      [inline]="true"
-                      [showIcon]="false"
-                      [touchUI]="false"
-                      [minDate]="minDate"
-                      [maxDate]="maxDate"
-                      [disabledDates]="disabledDates"
-                      [dateFormat]="'dd.mm.yy'"
-                      [showOtherMonths]="true"
-                      [selectOtherMonths]="true"
-                      (onSelect)="onSelectDate($event)"
-        ></p-datepicker>
+      <!-- Ліва колонка: календар -->
+      <div class="min-w-0"> <!-- важливо дозволити стиск -->
+        <div class="theme-primeng-override">
+          <p-datepicker
+            class="w-full block"
+            styleClass="w-full block"
+            [(ngModel)]="selectedDateModel"
+            [inline]="true"
+            [showIcon]="false"
+            [touchUI]="false"
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            [dateFormat]="'dd.mm.yy'"
+            [showOtherMonths]="true"
+            [selectOtherMonths]="true"
+            (onSelect)="onSelectDate($event)"
+          ></p-datepicker>
+        </div>
       </div>
 
+      <!-- Права колонка: слоти (росте вниз скільки треба) -->
       <div>
-
+        <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 auto-rows-fr">
+          @for(i of [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]; track $index) {
+            <button
+              type="button"
+              class="p-3 rounded-xl border border-gray-600/20 bg-neutral-800
+                     text-white text-md cursor-pointer
+                     transition-all duration-300 hover:border-yellow-500 hover:bg-yellow-500/10"
+            >
+              13:00
+            </button>
+          }
+        </div>
       </div>
+
     </div>
   </div>
 </section>

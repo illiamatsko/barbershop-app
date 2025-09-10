@@ -1,8 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { CommonModule, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 import { ClockIcon } from '@barbershop-app/client/shared/presentation';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { BarberGateway } from '@barbershop-app/client/barber/domain';
+import { GetBarberTimeSlotsByDate } from '../../../../barber/application/use-cases/get-barber-time-slots-by-date';
 
 type Slot = {
   at: string;        // '10:00'
@@ -50,139 +53,47 @@ function generateSlots(from: string, to: string, stepMin: number, base: Partial<
   ],
   templateUrl: './select-time.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('collapse', [
+      state('open', style({ height: '*', opacity: 1, padding: '*' })),
+      state('closed', style({ height: '0px', opacity: 1, padding: '0px' })),
+      transition('open <=> closed', animate('300ms ease-in-out')),
+    ]),
+  ],
 })
 export class SelectTime {
-  // відкриття/закриття секції
-  private _open = signal(true);
-  isOpen = this._open.asReadonly();
+  private getBarberTimeslotsByDate = inject(GetBarberTimeSlotsByDate);
+
+  isOpen = signal(true);
   toggleOpen() {
-    this._open.set(!this._open());
+    this.isOpen.update((v) => !v);
   }
 
   // модель календаря
   selectedDateModel: Date | null = new Date();
 
   // обмеження/вимкнуті дати
-  minDate = new Date();
+  minDate = new Date(
+    new Date().getFullYear(),
+    new Date().getMonth(),
+    new Date().getDate() + 1
+  );
   maxDate = new Date(
     new Date().getFullYear(),
     new Date().getMonth(),
-    new Date().getDate() + 14
+    new Date().getDate() + 15
   );
-  disabledDates: Date[] = [];
 
-  // вибраний слот
   selectedSlot = signal<Slot | null>(null);
 
-  /**
-   * КАСТОМНІ СЛОТИ ДЛЯ КОНКРЕТНИХ ДАТ
-   * ключ — 'yyyy-mm-dd'
-   */
-  customSlotsByDate: Record<string, Slot[]> = {
-    // приклад: сьогодні — більше слотів і різні рівні/ціни
-    [dateKey(new Date())]: [
-      ...generateSlots('09:00', '12:00', 30, {
-        duration: 30,
-        level: 'Standard',
-        price: 350,
-      }),
-      ...generateSlots('13:00', '15:00', 30, {
-        duration: 45,
-        level: 'Senior',
-        price: 450,
-      }),
-      ...generateSlots('16:00', '18:00', 30, {
-        duration: 60,
-        level: 'Top',
-        price: 600,
-      }),
-    ],
-    // ще одна дата з кастомними слотами
-    ['2025-09-10']: [
-      ...generateSlots('10:00', '13:00', 20, {
-        duration: 20,
-        level: 'Standard',
-        price: 300,
-      }),
-      ...generateSlots('14:00', '16:00', 30, {
-        duration: 30,
-        level: 'Senior',
-        price: 420,
-      }),
-    ],
-  };
 
-  /**
-   * ДЕФОЛТНІ СЛОТИ (якщо дати немає в customSlotsByDate)
-   */
-  private defaultSlotsFor(date: Date): Slot[] {
-    // приклад: неділя (0) — порожньо
-    if (date.getDay() === 0) return [];
-    // інакше — стандартний набір
-    return [
-      {
-        at: '10:00',
-        label: '10:00',
-        duration: 30,
-        level: 'Standard',
-        price: 350,
-      },
-      {
-        at: '10:30',
-        label: '10:30',
-        duration: 30,
-        level: 'Standard',
-        price: 350,
-      },
-      {
-        at: '11:00',
-        label: '11:00',
-        duration: 45,
-        level: 'Senior',
-        price: 450,
-      },
-      { at: '12:00', label: '12:00', duration: 60, level: 'Top', price: 600 },
-      {
-        at: '14:00',
-        label: '14:00',
-        duration: 30,
-        level: 'Standard',
-        price: 350,
-      },
-      {
-        at: '15:30',
-        label: '15:30',
-        duration: 45,
-        level: 'Senior',
-        price: 450,
-      },
-    ];
-  }
-
-  // Список слотів на обрану дату: спершу кастомні, інакше дефолтні
-  timeSlots = computed<Slot[]>(() => {
-    const d = this.selectedDateModel;
-    if (!d) return [];
-
-    const key = dateKey(d);
-    const list = this.customSlotsByDate[key] ?? this.defaultSlotsFor(d);
-
-    // уніфікація: прибрати дублікати по часу, відсортувати по часу
-    const uniq = new Map<string, Slot>();
-    for (const s of list) if (!uniq.has(s.at)) uniq.set(s.at, s);
-    return Array.from(uniq.values()).sort((a, b) => a.at.localeCompare(b.at));
-  });
-
-  onSelectDate(date: Date) {
+  async onSelectDate(date: Date) {
     this.selectedDateModel = date;
-    this.selectedSlot.set(null); // скинути слот при зміні дати
+    this.selectedSlot.set(null);
+    console.log(await this.getBarberTimeslotsByDate.execute(1, date));
   }
 
   onSelectSlot(slot: Slot) {
-    const cur = this.selectedSlot();
-    this.selectedSlot.set(cur && cur.at === slot.at ? null : slot);
+    this.selectedSlot.update((cur) => cur && cur.at === slot.at ? null : slot);
   }
-
-  isSelectedSlot = (slot: Slot) => this.selectedSlot()?.at === slot.at;
-  trackSlot = (_: number, s: Slot) => s.at;
 }

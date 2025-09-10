@@ -1,6 +1,6 @@
 import { BarberGateway } from '@barbershop-app/client/barber/domain';
 import { Observable } from 'rxjs';
-import { BarberStatusDto, BarberSummaryDto } from '@barbershop-app/shared/domain';
+import { BarberStatusDto, BarberSummaryDto, TimeSlotDto } from '@barbershop-app/shared/domain';
 import { inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
@@ -16,5 +16,9 @@ export class ApiBarberGateway implements BarberGateway {
 
   getBarberStatuses(): Observable<BarberStatusDto[]> {
     return this.httpClient.get<BarberStatusDto[]>(`${this.API_URL}/barber/statuses`);
+  }
+
+  getBarberTimeSlotsByDate(barberId: number, date: Date) {
+    return this.httpClient.get<TimeSlotDto[]>(`${this.API_URL}/barber/timeslots/${barberId}/${date}`);
   }
 }
