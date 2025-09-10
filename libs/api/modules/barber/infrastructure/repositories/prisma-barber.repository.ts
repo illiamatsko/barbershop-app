@@ -1,5 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { BarberRepository, BarberSummaryEntity, BarberStatusEntity } from '@barbershop-app/api/barber/domain';
+import {
+  BarberRepository,
+  BarberSummaryEntity,
+  BarberStatusEntity,
+  TimeSlotEntity
+} from '@barbershop-app/api/barber/domain';
 import { BarberMapper } from '../mappers/barber.mapper';
 import { BarberStatusMapper } from '../mappers/barber-status.mapper';
 import { PrismaService } from '@barbershop-app/api/core/persistence';
@@ -46,7 +51,7 @@ export class PrismaBarberRepository implements BarberRepository {
     return barberStatusEntities;
   }
 
-  async getBarberTimeSlotsByDate(barberId: number, date: Date) {
+  async getBarberTimeSlotsByDate(barberId: number, date: Date): Promise<TimeSlotEntity[]> {
     const startOfDay = new Date(date);
     startOfDay.setHours(0, 0, 0, 0);
 
