@@ -20,7 +20,7 @@ import {NgClass} from "@angular/common";
   ],
 })
 export class SelectService {
-  bookingFlowStore = inject(BookingFlowStore);
+  private bookingFlowStore = inject(BookingFlowStore);
   services = this.bookingFlowStore.availableServices;
   selectedServiceId = this.bookingFlowStore.serviceId;
   isOpen = signal(true);

@@ -14,7 +14,7 @@ import { computed, effect, inject, untracked } from '@angular/core';
 import {
   filterBarbers,
   filterBarbershops,
-  filterServices,
+  filterServices, filterTimeSlots
 } from './booking-flow.filters';
 import { ActivatedRoute, Router } from '@angular/router';
 import { withEffects } from '@ngrx/signals/events';
@@ -66,6 +66,13 @@ export const BookingFlowStore = signalStore(
         // );
 
         return filterServices(services(), barbers(), barberId, barbershopId);
+      }),
+
+      availableTimeSlots: computed(() => {
+        const barberId = store.barberId();
+        const serviceId = store.serviceId();
+
+        return filterTimeSlots(services(), barbers(), barberId, serviceId);
       })
     };
   }),
@@ -89,7 +96,6 @@ export const BookingFlowStore = signalStore(
           queryParamsHandling: 'merge'
         }).then();
       },
-
 
       toggleSelectBarber: (barberId: number) => {
         const currentState = getState(store);
@@ -118,6 +124,21 @@ export const BookingFlowStore = signalStore(
           queryParamsHandling: 'merge'
         }).then();
       },
+
+      toggleSelectTimeSlot: (timeSlotId: number) => {
+        const currentState = getState(store);
+        let newTimeSlotId: number | null = timeSlotId;
+
+
+        if(currentState.timeSlotId === timeSlotId) {
+          newTimeSlotId = null;
+        }
+
+        router.navigate([], {
+          queryParams: { timeSlotId: newTimeSlotId },
+          queryParamsHandling: 'merge'
+        }).then();
+      }
     };
   }),
 

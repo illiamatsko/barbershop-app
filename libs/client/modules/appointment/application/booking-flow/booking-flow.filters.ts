@@ -1,7 +1,7 @@
 import {
   BarbershopDto,
   BarberSummaryDto,
-  ServiceDto,
+  ServiceDto, TimeSlotDto
 } from '@barbershop-app/shared/domain';
 
 export function filterBarbers(
@@ -69,4 +69,17 @@ export function filterServices(
   }
 
   return services;
+}
+
+export function filterTimeSlots(
+  services: ServiceDto[],
+  barbers: BarberSummaryDto[],
+  selectedBarberId: number | null,
+  selectedServiceId: number | null,
+): TimeSlotDto[] {
+  if(!selectedBarberId && !selectedServiceId) {
+    return [];
+  }
+
+  return [];
 }

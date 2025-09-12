@@ -27,6 +27,7 @@ export class UrlQueryManager {
         barbershopId: this.toNullableNumber(params['barbershopId']),
         barberId: this.toNullableNumber(params['barberId']),
         serviceId: this.toNullableNumber(params['serviceId']),
+        timeSlotId: this.toNullableNumber(params['timeSlotId'])
       }))
     )
   );
@@ -41,7 +42,8 @@ export class UrlQueryManager {
     const newState: BookingFlowState = {
       barbershopId: null,
       barberId: null,
-      serviceId: null
+      serviceId: null,
+      timeSlotId: null
     };
 
     const barbershop = barbershops.find(shop => shop.id === urlQueryParams.barbershopId);
@@ -74,6 +76,8 @@ export class UrlQueryManager {
     } else {
       newState.serviceId = null;
     }
+
+    newState.timeSlotId = urlQueryParams.timeSlotId
 
     return newState;
   }

@@ -6,6 +6,7 @@ import { ClockIcon } from '@barbershop-app/client/shared/presentation';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { GetBarberTimeSlotsByDate } from '@barbershop-app/client/barber/application';
 import { TimeSlotDto } from '@barbershop-app/shared/domain';
+import { BookingFlowStore } from '@barbershop-app/client/appointment/application';
 
 
 @Component({
@@ -30,20 +31,19 @@ import { TimeSlotDto } from '@barbershop-app/shared/domain';
 })
 export class SelectTime {
   private getBarberTimeslotsByDate = inject(GetBarberTimeSlotsByDate);
+  private bookingFlowStore = inject(BookingFlowStore);
   isOpen = signal(true);
   selectedDate = signal<Date | null>(null);
   slotsForSelectedDate = signal<TimeSlotDto[]>([]);
   selectedSlot = signal<TimeSlotDto | null>(null);
+
+  selectedDateModel: Date | null = new Date();
 
 
   toggleOpen() {
     this.isOpen.update((v) => !v);
   }
 
-  // модель календаря
-  selectedDateModel: Date | null = new Date();
-
-  // обмеження/вимкнуті дати
   minDate = new Date(
     new Date().getFullYear(),
     new Date().getMonth(),
@@ -54,8 +54,6 @@ export class SelectTime {
     new Date().getMonth(),
     new Date().getDate() + 15
   );
-
-
 
   async onSelectDate(date: Date) {
     this.selectedDateModel = date;
@@ -76,5 +74,6 @@ export class SelectTime {
 
   onSelectSlot(slot: TimeSlotDto) {
     this.selectedSlot.set(slot);
+    this.bookingFlowStore.toggleSelectTimeSlot(slot.id);
   }
 }
