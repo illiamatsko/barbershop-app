@@ -1,2 +1,2 @@
 export * from './use-cases/get-all-barbers.use-case'
-export * from './use-cases/get-barber-time-slots-by-date'
+export * from './use-cases/get-time-slots-by-date.use-case'

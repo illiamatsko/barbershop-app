@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import {
   GetAllBarbersUseCase,
-  GetBarberStatusesUseCase, GetBarberTimeSlotsByDateUseCase
+  GetBarberStatusesUseCase, GetTimeSlotsByDateUseCase
 } from '@barbershop-app/api/barber/application';
 import { BarberController } from './barber.controller';
 import { PrismaBarberRepository } from '@barbershop-app/api/barber/infrastructure';
@@ -16,7 +16,7 @@ import { PrismaModule } from '@barbershop-app/api/core/persistence';
     [
       GetAllBarbersUseCase,
       GetBarberStatusesUseCase,
-      GetBarberTimeSlotsByDateUseCase,
+      GetTimeSlotsByDateUseCase,
       {
         provide: BarberRepository,
         useClass: PrismaBarberRepository

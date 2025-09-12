@@ -13,22 +13,28 @@ async function hashPassword(password: string): Promise<string> {
   return `${salt}.${hash.toString('hex')}`;
 }
 
-function getTomorrowSlots(): Date[] {
+function getSlotsForDays(daysAhead: number, startHour = 9, endHour = 18, stepMinutes = 30): Date[] {
   const slots: Date[] = [];
-  const start = new Date();
-  start.setDate(start.getDate() + 1);
-  start.setHours(9, 0, 0, 0);
+  const now = new Date();
 
-  const end = new Date(start);
-  end.setHours(18, 0, 0, 0);
+  for (let day = 0; day < daysAhead; day++) {
+    const start = new Date(now);
+    start.setDate(start.getDate() + day);
+    start.setHours(startHour, 0, 0, 0);
 
-  while (start < end) {
-    slots.push(new Date(start));
-    start.setMinutes(start.getMinutes() + 30);
+    const end = new Date(start);
+    end.setHours(endHour, 0, 0, 0);
+
+    const cursor = new Date(start);
+    while (cursor < end) {
+      slots.push(new Date(cursor));
+      cursor.setMinutes(cursor.getMinutes() + stepMinutes);
+    }
   }
 
   return slots;
 }
+
 
 async function main() {
   const filePath = path.join(__dirname, 'seed-data.json');
@@ -228,28 +234,27 @@ async function main() {
     },
   });
 
-  // 7. Create TimeSlots
-  const slotTimes = getTomorrowSlots();
-  const slotDuration = 30;
-  const slotsRequired = selectedService.duration / slotDuration;
-  const appointmentSlots = slotTimes.slice(0, slotsRequired);
+  // 7. Create TimeSlots for all barbers on 7 days ahead
+  const allBarbers = [barber1, barber2]; // або await prisma.barber.findMany()
 
-  await Promise.all(
-    slotTimes.map((time) => {
-      const isBooked = appointmentSlots.some(
-        (appointmentTime) => appointmentTime.getTime() === time.getTime()
-      );
+  const slotTimes = getSlotsForDays(7); // 7 днів вперед
 
-      return prisma.timeSlot.create({
-        data: {
-          startTime: time,
-          barberId: barberUser1.id,
-          status: isBooked ? 'BOOKED' : 'AVAILABLE',
-          appointmentId: isBooked ? appointment.id : null,
-        },
-      });
-    })
-  );
+  for (const barber of allBarbers) {
+    await Promise.all(
+      slotTimes.map((time, idx) => {
+        const isBooked = idx % 2 === 0; // наприклад: кожен 10-й слот BOOKED для прикладу
+
+        return prisma.timeSlot.create({
+          data: {
+            startTime: time,
+            barberId: barber.userId,
+            status: isBooked ? 'BOOKED' : 'AVAILABLE',
+            appointmentId: isBooked ? appointment.id : null,
+          },
+        });
+      })
+    );
+  }
 }
 
 main()

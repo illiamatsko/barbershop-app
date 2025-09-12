@@ -6,5 +6,5 @@ export abstract class BarberGateway {
 
   abstract getBarberStatuses(): Observable<BarberStatusDto[]>
 
-  abstract getBarberTimeSlotsByDate(barberId: number, date: Date): Observable<TimeSlotDto[]>
+  abstract getTimeSlotsByDate(date: Date): Observable<TimeSlotDto[]>
 }

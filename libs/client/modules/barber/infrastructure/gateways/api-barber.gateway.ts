@@ -18,7 +18,7 @@ export class ApiBarberGateway implements BarberGateway {
     return this.httpClient.get<BarberStatusDto[]>(`${this.API_URL}/barber/statuses`);
   }
 
-  getBarberTimeSlotsByDate(barberId: number, date: Date): Observable<TimeSlotDto[]> {
-    return this.httpClient.get<TimeSlotDto[]>(`${this.API_URL}/barber/timeslots/${barberId}/${date}`);
+  getTimeSlotsByDate(date: Date): Observable<TimeSlotDto[]> {
+    return this.httpClient.get<TimeSlotDto[]>(`${this.API_URL}/barber/timeslots/${date}`);
   }
 }

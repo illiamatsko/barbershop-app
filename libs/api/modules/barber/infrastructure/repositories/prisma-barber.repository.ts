@@ -51,7 +51,7 @@ export class PrismaBarberRepository implements BarberRepository {
     return barberStatusEntities;
   }
 
-  async getBarberTimeSlotsByDate(barberId: number, date: Date): Promise<TimeSlotEntity[]> {
+  async getTimeSlotsByDate(date: Date): Promise<TimeSlotEntity[]> {
     const startOfDay = new Date(date);
     startOfDay.setHours(0, 0, 0, 0);
 
@@ -60,11 +60,11 @@ export class PrismaBarberRepository implements BarberRepository {
 
     const barberTimeSlotsByDate = await this.prisma.timeSlot.findMany({
       where: {
-        barberId,
         startTime: {
           gte: startOfDay,
           lte: endOfDay,
         },
+        status: 'AVAILABLE'
       },
     });
 

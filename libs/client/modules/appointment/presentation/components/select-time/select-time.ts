@@ -4,9 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 import { ClockIcon } from '@barbershop-app/client/shared/presentation';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { GetBarberTimeSlotsByDate } from '@barbershop-app/client/barber/application';
 import { TimeSlotDto } from '@barbershop-app/shared/domain';
 import { BookingFlowStore } from '@barbershop-app/client/appointment/application';
+import { TimeSlotStore } from '@barbershop-app/client/core/application';
+import { GetTimeSlotsByDate } from '@barbershop-app/client/barber/application';
 
 
 @Component({
@@ -30,8 +31,9 @@ import { BookingFlowStore } from '@barbershop-app/client/appointment/application
   ],
 })
 export class SelectTime {
-  private getBarberTimeslotsByDate = inject(GetBarberTimeSlotsByDate);
+  private timeSlotStore = inject(TimeSlotStore);
   private bookingFlowStore = inject(BookingFlowStore);
+  private getTimeSlotsByDate = inject(GetTimeSlotsByDate);
   isOpen = signal(true);
   selectedDate = signal<Date | null>(null);
   slotsForSelectedDate = signal<TimeSlotDto[]>([]);
@@ -56,20 +58,29 @@ export class SelectTime {
   );
 
   async onSelectDate(date: Date) {
+    const isDateLoaded = this.timeSlotStore.loadedDates().includes(date);
+    if(!isDateLoaded) {
+      this.slotsForSelectedDate.set(await this.getTimeSlotsByDate.execute(date));
+    } else {
+      this.slotsForSelectedDate.set(this.timeSlotStore.timeSlots().filter(slot => slot.startTime.getDate() === date.getDate()));
+    }
+    //this should be in the booking flow store
+
+
     this.selectedDateModel = date;
     this.selectedDate.set(date);
     this.selectedSlot.set(null);
 
-    const slots = await this.getBarberTimeslotsByDate.execute(4, date);
-    const mappedSlots = slots.map(slot => {
-      const slotDate = new Date(slot.startTime);
-      return { ...slot, startTime: slotDate }
-    }).sort((a, b) => a.startTime.getTime() - b.startTime.getTime()).filter(slot => slot.status === 'AVAILABLE')
-
-    this.slotsForSelectedDate.set(
-      mappedSlots.filter(slot => slot.startTime.getDate() === date.getDate())
-    );
-    console.log(this.slotsForSelectedDate())
+    // const slots = await this.getBarberTimeslotsByDate.execute(4, date);
+    // const mappedSlots = slots.map(slot => {
+    //   const slotDate = new Date(slot.startTime);
+    //   return { ...slot, startTime: slotDate }
+    // }).sort((a, b) => a.startTime.getTime() - b.startTime.getTime()).filter(slot => slot.status === 'AVAILABLE')
+    //
+    // this.slotsForSelectedDate.set(
+    //   mappedSlots.filter(slot => slot.startTime.getDate() === date.getDate())
+    // );
+    // console.log(this.slotsForSelectedDate())
   }
 
   onSelectSlot(slot: TimeSlotDto) {

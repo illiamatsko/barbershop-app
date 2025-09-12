@@ -77,7 +77,14 @@ export class UrlQueryManager {
       newState.serviceId = null;
     }
 
-    newState.timeSlotId = urlQueryParams.timeSlotId
+    // const timeSlot =
+    // if(timeSlot) {
+    //   if(barbershop) {}
+    //   if(barber) {}
+    //   if(service) {}
+    //   if(barbershop && service) {}
+    //   if(barber && service) {}
+    // }
 
     return newState;
   }

@@ -7,5 +7,5 @@ export abstract class BarberRepository {
 
   abstract getBarberStatuses(): Promise<BarberStatusEntity[]>
 
-  abstract getBarberTimeSlotsByDate(barberId: number, date: Date): Promise<TimeSlotEntity[]>
+  abstract getTimeSlotsByDate(date: Date): Promise<TimeSlotEntity[]>
 }
