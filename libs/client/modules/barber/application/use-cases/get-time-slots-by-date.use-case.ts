@@ -1,23 +1,20 @@
 import { inject, Injectable } from '@angular/core';
 import { BarberGateway } from '@barbershop-app/client/barber/domain';
 import { firstValueFrom } from 'rxjs';
-import { TimeSlotStore } from '@barbershop-app/client/core/application';
 
 @Injectable({ providedIn: 'root' })
 export class GetTimeSlotsByDate {
   private barberGateway = inject(BarberGateway);
-  timeSlotStore = inject(TimeSlotStore);
 
   async execute(date: Date) {
-    const slots = await firstValueFrom(this.barberGateway.getTimeSlotsByDate(date))
-    const mappedSlots = slots
-      .map(slot => ({
+    const slots = await firstValueFrom(
+      this.barberGateway.getTimeSlotsByDate(date)
+    );
+    return slots
+      .map((slot) => ({
         ...slot,
         startTime: new Date(slot.startTime),
       }))
       .sort((a, b) => a.startTime.getTime() - b.startTime.getTime());
-
-    this.timeSlotStore.addTimeSlots(mappedSlots, date);
-    return mappedSlots;
   }
 }
