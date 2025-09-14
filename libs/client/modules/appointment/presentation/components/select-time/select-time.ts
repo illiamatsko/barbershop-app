@@ -58,11 +58,10 @@ export class SelectTime {
   );
 
   async onSelectDate(date: Date) {
-    const isDateLoaded = this.timeSlotStore.loadedDates().includes(date);
-    if(!isDateLoaded) {
-      this.slotsForSelectedDate.set(await this.getTimeSlotsByDate.execute(date));
+    if(this.timeSlotStore.timeSlots().has(date.toISOString())) {
+      this.slotsForSelectedDate.set(this.timeSlotStore.timeSlots().get(date.toISOString()) ?? []);
     } else {
-      this.slotsForSelectedDate.set(this.timeSlotStore.timeSlots().filter(slot => slot.startTime.getDate() === date.getDate()));
+      this.slotsForSelectedDate.set(await this.getTimeSlotsByDate.execute(date));
     }
     //this should be in the booking flow store
 
@@ -70,17 +69,6 @@ export class SelectTime {
     this.selectedDateModel = date;
     this.selectedDate.set(date);
     this.selectedSlot.set(null);
-
-    // const slots = await this.getBarberTimeslotsByDate.execute(4, date);
-    // const mappedSlots = slots.map(slot => {
-    //   const slotDate = new Date(slot.startTime);
-    //   return { ...slot, startTime: slotDate }
-    // }).sort((a, b) => a.startTime.getTime() - b.startTime.getTime()).filter(slot => slot.status === 'AVAILABLE')
-    //
-    // this.slotsForSelectedDate.set(
-    //   mappedSlots.filter(slot => slot.startTime.getDate() === date.getDate())
-    // );
-    // console.log(this.slotsForSelectedDate())
   }
 
   onSelectSlot(slot: TimeSlotDto) {
