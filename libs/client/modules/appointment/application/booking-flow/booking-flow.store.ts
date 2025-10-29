@@ -19,7 +19,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { withEffects } from '@ngrx/signals/events';
 import { BarbershopStore, BarberStore, ServiceStore } from '@barbershop-app/client/core/application';
-import {UrlQueryManager} from "../managers/url-query.manager";
+import {UrlQueryValidator} from "../validators/url-query.validator";
 
 
 export const BookingFlowStore = signalStore(
@@ -144,7 +144,7 @@ export const BookingFlowStore = signalStore(
 
   withEffects((store) => {
     const router = inject(Router);
-    const urlQueryManager = inject(UrlQueryManager);
+    const urlQueryManager = inject(UrlQueryValidator);
 
     effect(() => {
       const params = urlQueryManager.params();

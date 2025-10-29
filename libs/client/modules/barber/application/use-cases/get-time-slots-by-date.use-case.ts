@@ -20,6 +20,7 @@ export class GetTimeSlotsByDate {
       .sort((a, b) => a.startTime.getTime() - b.startTime.getTime());
 
     this.timeSlotStore.addTimeSlots(date, mappedSlots);
+    console.log(mappedSlots)
     return mappedSlots;
   }
 }

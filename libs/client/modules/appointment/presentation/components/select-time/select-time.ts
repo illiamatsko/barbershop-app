@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -30,17 +30,20 @@ import { GetTimeSlotsByDate } from '@barbershop-app/client/barber/application';
     ]),
   ],
 })
-export class SelectTime {
+export class SelectTime implements OnInit {
   private timeSlotStore = inject(TimeSlotStore);
   private bookingFlowStore = inject(BookingFlowStore);
   private getTimeSlotsByDate = inject(GetTimeSlotsByDate);
   isOpen = signal(true);
   selectedDate = signal<Date | null>(null);
   slotsForSelectedDate = signal<TimeSlotDto[]>([]);
-  selectedSlot = signal<TimeSlotDto | null>(null);
+  selectedSlot = this.bookingFlowStore.timeSlotId;
 
   selectedDateModel: Date | null = new Date();
 
+  ngOnInit() {
+    this.onSelectDate(this.minDate).then();
+  }
 
   toggleOpen() {
     this.isOpen.update((v) => !v);
@@ -68,11 +71,9 @@ export class SelectTime {
 
     this.selectedDateModel = date;
     this.selectedDate.set(date);
-    this.selectedSlot.set(null);
   }
 
   onSelectSlot(slot: TimeSlotDto) {
-    this.selectedSlot.set(slot);
     this.bookingFlowStore.toggleSelectTimeSlot(slot.id);
   }
 }
