@@ -8,7 +8,7 @@ export class GetTimeSlotsByDate {
   private barberGateway = inject(BarberGateway);
   private timeSlotStore = inject(TimeSlotStore);
 
-  async execute(date: Date) {
+  async execute(date: string) {
     const slots = await firstValueFrom(
       this.barberGateway.getTimeSlotsByDate(date)
     );
@@ -20,7 +20,6 @@ export class GetTimeSlotsByDate {
       .sort((a, b) => a.startTime.getTime() - b.startTime.getTime());
 
     this.timeSlotStore.addTimeSlots(date, mappedSlots);
-    console.log(mappedSlots)
     return mappedSlots;
   }
 }

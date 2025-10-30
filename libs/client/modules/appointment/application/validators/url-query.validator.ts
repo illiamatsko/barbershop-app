@@ -1,12 +1,10 @@
 import { computed, inject, Injectable } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { BookingFlowState } from '../booking-flow/booking-flow.state';
 import { BarbershopStore, BarberStore, ServiceStore, TimeSlotStore } from '@barbershop-app/client/core/application';
-import {
-  TimeSlotDto,
-} from '@barbershop-app/shared/domain';
+import { hasEnoughConsecutiveSlots } from '../booking-flow/booking-flow.helpers';
 
 
 @Injectable({ providedIn: 'root' })
@@ -31,7 +29,7 @@ export class UrlQueryValidator {
         barbershopId: this.toNullableNumber(params['barbershopId']),
         barberId: this.toNullableNumber(params['barberId']),
         serviceId: this.toNullableNumber(params['serviceId']),
-        timeSlotId: this.toNullableNumber(params['timeSlotId'])
+        time: params['time']
       }))
     )
   );
@@ -41,7 +39,6 @@ export class UrlQueryValidator {
     const allBarbers = this.barberSignal();
     const allServices = this.serviceSignal();
     const allTimeSlots = this.timeSlotSignal();
-    const allTimeSlotsArray = Array.from(allTimeSlots.values()).flat();
 
     console.log('url:', urlQueryParams)
 
@@ -49,7 +46,8 @@ export class UrlQueryValidator {
       barbershopId: null,
       barberId: null,
       serviceId: null,
-      timeSlotId: null
+      date: urlQueryParams.date,
+      time: null
     };
 
 
@@ -66,7 +64,7 @@ export class UrlQueryValidator {
 
     const requestedService = allServices.find(s => s.id === urlQueryParams.serviceId);
     if (requestedService) {
-      let isServiceValid = false;
+      let isServiceValid: boolean;
 
       if (requestedBarber) {
         isServiceValid = requestedBarber.serviceIds.includes(requestedService.id);
@@ -81,50 +79,52 @@ export class UrlQueryValidator {
       newState.serviceId = isServiceValid ? requestedService.id : null;
     }
 
-    let timeSlotsForDate = null;
-    let requestedTimeSlot = null;
-    for (const [, slots] of allTimeSlots) {
-      const slot = slots.find(s => s.id === urlQueryParams.timeSlotId)
-      if (slot) {
-        timeSlotsForDate = slots;
-        requestedTimeSlot = slot;
-      }
-    }
-    if (requestedTimeSlot && timeSlotsForDate) {
-      let isTimeSlotValid = true;
+    const urlTime = urlQueryParams.time;
+    if (urlTime) {
+      const requestedTime = new Date(urlTime);
+      const timesForDate = allTimeSlots.get(newState.date);
+      if (timesForDate) {
+        let isTimeValid = true;
+        let barberIdsToCheck: number[] = []
 
-      if (requestedBarber) {
-        isTimeSlotValid = requestedTimeSlot.barberId === requestedBarber.id
-      } else if (newState.barbershopId) {
-        const barbershopBarberIds = allBarbers.filter(b => b.barbershopId === newState.barbershopId).map(b => b.id);
-        const availableTimeSlotIds = allTimeSlotsArray.filter(ts => barbershopBarberIds.includes(ts.barberId)).map(ts => ts.id)
-        isTimeSlotValid = availableTimeSlotIds.includes(requestedTimeSlot.id)
-      }
+        if (requestedBarber) {
+          isTimeValid = timesForDate.some(
+            (ts) =>
+              ts.barberId === requestedBarber.id &&
+              ts.startTime.getTime() === requestedTime.getTime() &&
+              ts.status === 'AVAILABLE'
+          );
+          barberIdsToCheck = [requestedBarber.id];
+        } else if (newState.barbershopId) {
+          const barbershopBarberIds = allBarbers.filter(b => b.barbershopId === newState.barbershopId).map(b => b.id);
+          isTimeValid = timesForDate.some(
+            (ts) =>
+              barbershopBarberIds.includes(ts.barberId) &&
+              ts.startTime.getTime() === requestedTime.getTime() &&
+              ts.status === 'AVAILABLE'
+          );
+          barberIdsToCheck = barbershopBarberIds;
+        }
 
-      if (isTimeSlotValid && newState.serviceId) {
-        const service = allServices.find(s => s.id === newState.serviceId);
-        isTimeSlotValid = this.hasEnoughConsecutiveSlots(requestedTimeSlot, timeSlotsForDate, service!.duration, requestedBarber ? requestedBarber.id : null)
-      }
+        if (barberIdsToCheck.length === 0) {
+          barberIdsToCheck = allBarbers.map(b => b.id);
+        }
+        if (isTimeValid && newState.serviceId) {
+          const service = allServices.find(s => s.id === newState.serviceId);
+          if (service) {
+            isTimeValid = hasEnoughConsecutiveSlots(
+              requestedTime,
+              timesForDate,
+              service.duration,
+              barberIdsToCheck
+            );
+          }
+        }
 
-      newState.timeSlotId = isTimeSlotValid ? requestedTimeSlot.id : null
+        newState.time = isTimeValid ? requestedTime.toISOString() : '';
+      }
     }
 
     return newState;
-  }
-
-  hasEnoughConsecutiveSlots(requestedTimeSlot: TimeSlotDto, timeSlotsForDate: TimeSlotDto[], requestedServiceDuration: number, requestedBarberId: number | null) {
-    const endTime = new Date(requestedTimeSlot.startTime.getTime() + requestedServiceDuration * 60_000);
-
-    const consecutiveSlots = timeSlotsForDate.filter(slot =>
-      slot.barberId === requestedTimeSlot.barberId &&
-      slot.startTime >= requestedTimeSlot.startTime &&
-      slot.startTime < endTime &&
-      slot.status === 'AVAILABLE' &&
-      (!requestedBarberId || slot.barberId === requestedBarberId)
-    );
-
-    const availableMinutes = consecutiveSlots.length * 30;
-    console.log('consecutive slots:', consecutiveSlots)
-    return availableMinutes >= requestedServiceDuration;
   }
 }

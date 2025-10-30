@@ -4,22 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 import { ClockIcon } from '@barbershop-app/client/shared/presentation';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { TimeSlotDto } from '@barbershop-app/shared/domain';
 import { BookingFlowStore } from '@barbershop-app/client/appointment/application';
-import { TimeSlotStore } from '@barbershop-app/client/core/application';
-import { GetTimeSlotsByDate } from '@barbershop-app/client/barber/application';
 
 
 @Component({
   selector: 'app-select-time',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    DatePickerModule,
-    NgClass,
-    ClockIcon,
-  ],
+  imports: [CommonModule, FormsModule, DatePickerModule, NgClass, ClockIcon],
   templateUrl: './select-time.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
@@ -31,18 +22,18 @@ import { GetTimeSlotsByDate } from '@barbershop-app/client/barber/application';
   ],
 })
 export class SelectTime implements OnInit {
-  private timeSlotStore = inject(TimeSlotStore);
   private bookingFlowStore = inject(BookingFlowStore);
-  private getTimeSlotsByDate = inject(GetTimeSlotsByDate);
   isOpen = signal(true);
-  selectedDate = signal<Date | null>(null);
-  slotsForSelectedDate = signal<TimeSlotDto[]>([]);
-  selectedSlot = this.bookingFlowStore.timeSlotId;
+  timesForSelectedDate = this.bookingFlowStore.availableTimes;
+  selectedTime = this.bookingFlowStore.time;
 
-  selectedDateModel: Date | null = new Date();
+  private tomorrow = new Date(
+    new Date().setDate(new Date().getDate() + 1)
+  )
+  selectedDateModel: Date = this.tomorrow;
 
   ngOnInit() {
-    this.onSelectDate(this.minDate).then();
+    this.bookingFlowStore.selectDate(this.tomorrow.toISOString().split('T')[0]);
   }
 
   toggleOpen() {
@@ -60,20 +51,20 @@ export class SelectTime implements OnInit {
     new Date().getDate() + 15
   );
 
-  async onSelectDate(date: Date) {
-    if(this.timeSlotStore.timeSlots().has(date.toISOString())) {
-      this.slotsForSelectedDate.set(this.timeSlotStore.timeSlots().get(date.toISOString()) ?? []);
-    } else {
-      this.slotsForSelectedDate.set(await this.getTimeSlotsByDate.execute(date));
-    }
-    //this should be in the booking flow store
-
-
-    this.selectedDateModel = date;
-    this.selectedDate.set(date);
+  onSelectDate(date: Date) {
+    const localDateString = this.toLocalDateString(date);
+    console.log('selected', localDateString);
+    this.bookingFlowStore.selectDate(localDateString);
   }
 
-  onSelectSlot(slot: TimeSlotDto) {
-    this.bookingFlowStore.toggleSelectTimeSlot(slot.id);
+  private toLocalDateString(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  onSelectTime(time: string) {
+    this.bookingFlowStore.toggleSelectTime(time);
   }
 }

@@ -1,7 +1,7 @@
 import { TimeSlotDto } from '@barbershop-app/shared/domain';
 
 export interface TimeSlotState {
-  timeSlots: Map<string, TimeSlotDto[]>;
+  timeSlots: Map<string, TimeSlotDto[]>  // ISO date string: "2025-10-31"
 }
 
 export const initialTimeSlotState: TimeSlotState = {

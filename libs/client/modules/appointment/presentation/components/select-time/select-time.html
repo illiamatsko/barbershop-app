@@ -1,14 +1,14 @@
 <section
   class="p-2 rounded-2xl mb-6 border transition-colors duration-300 overflow-hidden"
   [ngClass]="{
-    'border-primary': !!selectedSlot(),
-    'border-gray-600/60': !selectedSlot()
+    'border-primary': !!selectedTime(),
+    'border-gray-600/60': !selectedTime()
   }"
 >
   <header class="flex justify-between items-center px-3 py-3 cursor-pointer" (click)="toggleOpen()">
     <h2 class="text-lg font-semibold text-white flex items-center gap-4">
       <div class="w-14 h-14 text-yellow-500 bg-yellow-900/60 rounded-xl flex items-center justify-center shadow-inner">
-        <lib-clock-icon [width]="27" [height]="27"></lib-clock-icon>
+        <lib-clock-icon [width]="27" [height]="27" />
       </div>
       <span class="text-2xl">Select Time</span>
     </h2>
@@ -18,11 +18,9 @@
   </header>
 
   <div [@collapse]="isOpen() ? 'open' : 'closed'" class="bg-neutral-900 transition-[height] duration-300 overflow-hidden">
-    <!-- Рівні колонки: 1:1 -->
-    <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-
-      <!-- Ліва колонка: календар -->
-      <div class="min-w-0"> <!-- важливо дозволити стиск -->
+    <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- календар -->
+      <div class="min-w-0">
         <div class="theme-primeng-override">
           <p-datepicker
             class="w-full block"
@@ -41,24 +39,30 @@
         </div>
       </div>
 
-      <!-- Права колонка: слоти (росте вниз скільки треба) -->
-      <div>
-        <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 auto-rows-fr">
-          @for(slot of slotsForSelectedDate(); track $index) {
-            <button
-              (click)="onSelectSlot(slot)"
-              type="button"
-              class="p-3 rounded-xl border border-gray-600/20 bg-neutral-800
-                     text-white text-md cursor-pointer
-                     transition-all duration-300 hover:border-yellow-500 hover:bg-yellow-500/10"
-              [ngClass]="selectedSlot() === slot.id ? 'border-primary' : 'border-gray-600/20'"
-            >
-              {{ slot.startTime | date:'HH:mm' }}
-            </button>
-          }
-        </div>
+      <!-- Права колонка -->
+      <div class="flex items-center justify-center min-h-[200px] w-full">
+        @if(timesForSelectedDate()?.length) {
+          <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 auto-rows-fr w-full">
+            @for(time of timesForSelectedDate(); track $index) {
+              <button
+                (click)="onSelectTime(time)"
+                type="button"
+                class="p-3 rounded-xl border border-gray-600/20 bg-neutral-800
+                   text-white text-md cursor-pointer
+                   transition-all duration-300 hover:border-yellow-500 hover:bg-yellow-500/10"
+                [ngClass]="selectedTime() === time ? 'border-primary' : 'border-gray-600/20'"
+              >
+                {{ time | date:'HH:mm' }}
+              </button>
+            }
+          </div>
+        } @else {
+          <div class="flex flex-col items-center justify-center text-center text-gray-400 gap-2">
+            <lib-clock-icon [width]="36" [height]="36" class="text-yellow-500" />
+            <span>No time available for this date :(</span>
+          </div>
+        }
       </div>
-
     </div>
   </div>
 </section>

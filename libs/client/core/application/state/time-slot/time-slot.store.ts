@@ -6,9 +6,9 @@ export const TimeSlotStore = signalStore(
   { providedIn: 'root' },
   withState<TimeSlotState>(initialTimeSlotState),
   withMethods((store) => ({
-    addTimeSlots: (date: Date, slots: TimeSlotDto[]) => {
+    addTimeSlots: (date: string, slots: TimeSlotDto[]) => {
       const newMap = new Map(store.timeSlots());
-      newMap.set(date.toISOString(), slots);
+      newMap.set(date, slots);
       patchState(store, () => ({
         timeSlots: newMap
       }))
