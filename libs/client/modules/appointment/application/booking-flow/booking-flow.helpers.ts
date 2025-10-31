@@ -1,4 +1,4 @@
-import { TimeSlotDto } from '@barbershop-app/shared/domain';
+import { BarberSummaryDto, TimeSlotDto } from '@barbershop-app/shared/domain';
 
 
 export function hasEnoughConsecutiveSlots(
@@ -10,7 +10,6 @@ export function hasEnoughConsecutiveSlots(
   const endTime = new Date(requestedTime.getTime() + serviceDuration * 60_000);
   const requestedTimeMs = requestedTime.getTime();
 
-  // Check if any barber has enough consecutive slots
   for (const bId of barberIdsToCheck) {
     const consecutiveSlots = timesForDate.filter(slot =>
       slot.barberId === bId &&
@@ -21,9 +20,17 @@ export function hasEnoughConsecutiveSlots(
 
     const availableMinutes = consecutiveSlots.length * 30;
     if (availableMinutes >= serviceDuration) {
-      return true; // Found a barber with enough slots
+      return true;
     }
   }
 
-  return false; // No barber has enough consecutive slots
+  return false;
+}
+
+export function getIds<T extends { id: number }>(arr: T[]) {
+  return arr.map(a => a.id);
+}
+
+export function getBarbersFromBarbershop(barbershopId: number, barbers: BarberSummaryDto[]) {
+  return barbers.filter(b => b.barbershopId === barbershopId);
 }

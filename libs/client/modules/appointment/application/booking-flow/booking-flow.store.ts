@@ -37,7 +37,6 @@ export const BookingFlowStore = signalStore(
         };
       }
 
-      console.log('have slots fo date')
       return filterData(
         barbershops(),
         barbers(),
@@ -64,7 +63,10 @@ export const BookingFlowStore = signalStore(
 
     return {
       selectDate: (date: string) => {
-        patchState(store, { date });
+        patchState(store, {
+          time: null,
+          date
+        });
       },
 
       toggleSelectBarbershop: (barbershopId: number) => {
@@ -140,7 +142,7 @@ export const BookingFlowStore = signalStore(
 
       const fullParams = { ...params, date: currentState.date };
 
-      const { date, ...next } = urlQueryValidator.setParams(fullParams);
+      const { date: _, ...next } = urlQueryValidator.setParams(fullParams);
       console.log('current', currentState)
       console.log('next:', next)
       console.log('')
@@ -156,7 +158,7 @@ export const BookingFlowStore = signalStore(
       const hasTimeSlots = timeSlotStore.timeSlots().has(date);
 
       if (!hasTimeSlots) {
-        getTimeSlotsByDate.execute(date);
+        getTimeSlotsByDate.execute(date).then();
       }
     });
 

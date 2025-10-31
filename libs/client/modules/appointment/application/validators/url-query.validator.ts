@@ -4,7 +4,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { BookingFlowState } from '../booking-flow/booking-flow.state';
 import { BarbershopStore, BarberStore, ServiceStore, TimeSlotStore } from '@barbershop-app/client/core/application';
-import { hasEnoughConsecutiveSlots } from '../booking-flow/booking-flow.helpers';
+import { getBarbersFromBarbershop, hasEnoughConsecutiveSlots } from '../booking-flow/booking-flow.helpers';
 
 
 @Injectable({ providedIn: 'root' })
@@ -40,8 +40,6 @@ export class UrlQueryValidator {
     const allServices = this.serviceSignal();
     const allTimeSlots = this.timeSlotSignal();
 
-    console.log('url:', urlQueryParams)
-
     const newState: BookingFlowState = {
       barbershopId: null,
       barberId: null,
@@ -49,7 +47,6 @@ export class UrlQueryValidator {
       date: urlQueryParams.date,
       time: null
     };
-
 
     const requestedBarber = allBarbers.find(b => b.id === urlQueryParams.barberId);
     if (requestedBarber) {
@@ -69,7 +66,7 @@ export class UrlQueryValidator {
       if (requestedBarber) {
         isServiceValid = requestedBarber.serviceIds.includes(requestedService.id);
       } else if (newState.barbershopId) {
-        const barbershopBarbers = allBarbers.filter(b => b.barbershopId === newState.barbershopId);
+        const barbershopBarbers = getBarbersFromBarbershop(newState.barbershopId, allBarbers);
         const availableServiceIds = new Set(barbershopBarbers.flatMap(b => b.serviceIds));
         isServiceValid = availableServiceIds.has(requestedService.id);
       } else {
@@ -85,7 +82,7 @@ export class UrlQueryValidator {
       const timesForDate = allTimeSlots.get(newState.date);
       if (timesForDate) {
         let isTimeValid = true;
-        let barberIdsToCheck: number[] = []
+        let barberIdsToCheck: number[] = [];
 
         if (requestedBarber) {
           isTimeValid = timesForDate.some(
@@ -109,7 +106,7 @@ export class UrlQueryValidator {
         if (barberIdsToCheck.length === 0) {
           barberIdsToCheck = allBarbers.map(b => b.id);
         }
-        if (isTimeValid && newState.serviceId) {
+        if (isTimeValid) {
           const service = allServices.find(s => s.id === newState.serviceId);
           if (service) {
             isTimeValid = hasEnoughConsecutiveSlots(

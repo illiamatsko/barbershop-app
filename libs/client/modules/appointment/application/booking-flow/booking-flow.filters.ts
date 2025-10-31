@@ -3,7 +3,7 @@ import {
   BarberSummaryDto,
   ServiceDto, TimeSlotDto
 } from '@barbershop-app/shared/domain';
-import { hasEnoughConsecutiveSlots } from './booking-flow.helpers';
+import { getBarbersFromBarbershop, getIds, hasEnoughConsecutiveSlots } from './booking-flow.helpers';
 
 
 export function filterData(
@@ -21,68 +21,51 @@ export function filterData(
   let filteredServices = [...services];
   let filteredTimeSlots = [...timeSlotsByDate];
 
-  console.log('slots before filtering', filteredTimeSlots)
+  const barber = filteredBarbers.find(b => b.id === selectedBarberId);
+  const service = filteredServices.find(s => s.id === selectedServiceId);
 
   if (selectedBarbershopId) {
-    console.log('barbershop selected')
-    filteredBarbers = filteredBarbers.filter(
-      b => b.barbershopId === selectedBarbershopId
-    );
-    const availableBarberIds = filteredBarbers.map(b => b.id);
+    filteredBarbers = getBarbersFromBarbershop(selectedBarbershopId, filteredBarbers);
+    const availableBarberIds = getIds(filteredBarbers);
 
-    const availableServiceIds = [... new Set(filteredBarbers.flatMap(b => b.serviceIds))];
-    filteredServices = filteredServices.filter(s => availableServiceIds.includes(s.id));
+    const availableServiceIds = getServiceIdsFromBarbers(filteredBarbers);
+    filteredServices = filterByIds(filteredServices, availableServiceIds);
 
-    const minServiceDuration = Math.min(...filteredServices.map(s => s.duration));
-    filteredTimeSlots = filteredTimeSlots.filter(ts => availableBarberIds.includes(ts.barberId));
-    filteredTimeSlots = filteredTimeSlots.filter(ts => hasEnoughConsecutiveSlots(ts.startTime, filteredTimeSlots, minServiceDuration, availableBarberIds));
+    const minServiceDuration = getMinServiceDuration(filteredServices);
+    filteredTimeSlots = filterTimeSlotsByBarberAndDuration(filteredTimeSlots, availableBarberIds, minServiceDuration);
   }
 
-  if (selectedBarberId) {
-    console.log('barber selected')
-    const barber = filteredBarbers.find(b => b.id === selectedBarberId);
-    if (barber) {
-      const availableServiceIds = barber.serviceIds;
-      filteredServices = filteredServices.filter(s => availableServiceIds.includes(s.id));
+  if (barber) {
+    const availableServiceIds = getServiceIdsFromBarbers([barber]);
+    filteredServices = filterByIds(filteredServices, availableServiceIds);
 
-      const minServiceDuration = Math.min(...filteredServices.map(s => s.duration));
-      filteredTimeSlots = filteredTimeSlots.filter(ts => ts.barberId === barber.id);
-      filteredTimeSlots = filteredTimeSlots.filter(ts => hasEnoughConsecutiveSlots(ts.startTime, filteredTimeSlots, minServiceDuration, [selectedBarberId]));
-    }
+    const minServiceDuration = getMinServiceDuration(filteredServices);
+    filteredTimeSlots = filterTimeSlotsByBarberAndDuration(filteredTimeSlots, [barber.id], minServiceDuration);
   }
 
-  if (selectedServiceId) {
-    console.log('service selected')
-    filteredBarbers = filteredBarbers.filter(b => b.serviceIds.includes(selectedServiceId));
-    const availableBarberIds = filteredBarbers.map(b => b.id);
+  if (service) {
+    filteredBarbers = getBarbersByServices(filteredBarbers, [service.id]);
+    const availableBarberIds = getIds(filteredBarbers);
 
-    const availableBarbershopIds = new Set(filteredBarbers.map(b => b.barbershopId));
-    filteredBarbershops = filteredBarbershops.filter(bbshop => availableBarbershopIds.has(bbshop.id));
+    const availableBarbershopIds = [... new Set(filteredBarbers.map(b => b.barbershopId))];
+    filteredBarbershops = filterByIds(filteredBarbershops, availableBarbershopIds)
 
-    const serviceDuration = filteredServices.find(s => s.id === selectedServiceId)?.duration;
-    if (serviceDuration) {
-      filteredTimeSlots = filteredTimeSlots.filter(ts => availableBarberIds.includes(ts.barberId));
-      filteredTimeSlots = filteredTimeSlots.filter(ts => hasEnoughConsecutiveSlots(ts.startTime, filteredTimeSlots, serviceDuration, availableBarberIds));
-    }
+    filteredTimeSlots = filterTimeSlotsByBarberAndDuration(filteredTimeSlots, availableBarberIds, service.duration);
   }
 
   if (selectedTime) {
-    console.log('time selected')
     filteredServices = filteredServices.filter(s => {
-      const availableBarberIds = filteredBarbers.filter(b => b.serviceIds.includes(s.id)).map(b => b.id);
+      const availableBarberIds = getIds(getBarbersByServices(filteredBarbers, [s.id]));
       return hasEnoughConsecutiveSlots(new Date(selectedTime), filteredTimeSlots, s.duration, availableBarberIds);
     })
 
-    const availableServiceIds = filteredServices.map(s => s.id);
-    filteredBarbers = filteredBarbers.filter(b =>
-      b.serviceIds.some(id => availableServiceIds.includes(id))
-    );
+    const availableServiceIds = getIds(filteredServices);
+    filteredBarbers = getBarbersByServices(filteredBarbers, availableServiceIds);
 
     const availableBarbershopIds = filteredBarbers.map(b => b.barbershopId);
-    filteredBarbershops = filteredBarbershops.filter(bbshop => availableBarbershopIds.includes(bbshop.id));
+    filteredBarbershops = filterByIds(filteredBarbershops, availableBarbershopIds);
   }
 
-  console.log('slots after filtering', filteredTimeSlots)
 
   return {
     filteredBarbershops,
@@ -92,104 +75,24 @@ export function filterData(
   }
 }
 
-// export function filterBarbershops(
-//   barbershops: BarbershopDto[],
-//   barbers: BarberSummaryDto[],
-//   timeSlotsByDate: TimeSlotDto[],
-//   selectedServiceId: number | null,
-//   selectedTime: Date
-// ): BarbershopDto[] {
-//   let filtered = [...barbershops];
-//
-//   if (selectedServiceId) {
-//     const availableBarbers = barbers.filter(barber => barber.serviceIds.includes(selectedServiceId));
-//     const availableBarbershopIds = new Set(availableBarbers.map(b => b.barbershopId));
-//     filtered = filtered.filter(bbshop => availableBarbershopIds.has(bbshop.id));
-//   }
-//
-//   if (selectedTime) {
-//     const timeSlotsByTime = timeSlotsByDate.filter(ts => ts.startTime === selectedTime);
-//     if (timeSlotsByTime) {
-//       const selectedTime = timeSlot.startTime;
-//       const availableBarberIds = timeSlots.filter(ts => ts.startTime === selectedTime).map(ts => ts.barberId);
-//       const availableBarbers = barbers.filter(b => availableBarberIds.includes(b.id));
-//       const availableBarbershopIds = new Set(availableBarbers.map(b => b.barbershopId));
-//       filtered = filtered.filter(bbshop => availableBarbershopIds.has(bbshop.id));
-//     }
-//   }
-//
-//   return filtered
-// }
-//
-// export function filterBarbers(
-//   barbers: BarberSummaryDto[],
-//   timeSlots: TimeSlotDto[],
-//   selectedServiceId: number | null,
-//   selectedBarbershopId: number | null,
-//   selectedTimeSlotId: number | null
-// ): BarberSummaryDto[] {
-//   let filtered = [...barbers];
-//
-//   if (selectedServiceId) {
-//     filtered = filtered.filter((barber) =>
-//       barber.serviceIds.includes(selectedServiceId)
-//     );
-//   }
-//
-//   if (selectedBarbershopId) {
-//     filtered = filtered.filter(
-//       (barber) => barber.barbershopId === selectedBarbershopId
-//     );
-//   }
-//
-//   if (selectedTimeSlotId) {
-//     const timeSlot = timeSlots.find(ts => ts.id === selectedTimeSlotId);
-//     if (timeSlot) {
-//       const selectedTime = timeSlot.startTime;
-//       const availableBarberIds = timeSlots.filter(ts => ts.startTime === selectedTime).map(ts => ts.barberId)
-//       filtered = filtered.filter(b => availableBarberIds.includes(b.id))
-//     }
-//   }
-//
-//   return filtered;
-// }
-//
-// export function filterServices(
-//   services: ServiceDto[],
-//   barbers: BarberSummaryDto[],
-//   selectedBarberId: number | null,
-//   selectedBarbershopId: number | null
-// ): ServiceDto[] {
-//   if (!selectedBarberId && selectedBarbershopId) {
-//     const availableBarbers = barbers.filter(barber => barber.barbershopId === selectedBarbershopId);
-//     const availableServiceIds = [... new Set(availableBarbers.flatMap(barber => barber.serviceIds))];
-//     return services.filter((service) =>
-//       availableServiceIds.includes(service.id)
-//     );
-//   }
-//
-//   if(selectedBarberId) {
-//     const barber = barbers.find(barber => barber.id === selectedBarberId);
-//     if(!barber) {
-//       return services;
-//     }
-//
-//     const barberServiceIds = barber.serviceIds;
-//     return services.filter(service => barberServiceIds.includes(service.id));
-//   }
-//
-//   return services;
-// }
-//
-// export function filterTimeSlots(
-//   services: ServiceDto[],
-//   barbers: BarberSummaryDto[],
-//   selectedBarberId: number | null,
-//   selectedServiceId: number | null,
-// ): TimeSlotDto[] {
-//   if(!selectedBarberId && !selectedServiceId) {
-//     return [];
-//   }
-//
-//   return [];
-// }
+
+function filterByIds<T extends { id: number }>(arr: T[], ids: number[]) {
+  return arr.filter(a => ids.includes(a.id));
+}
+
+function filterTimeSlotsByBarberAndDuration(timeSlots: TimeSlotDto[], barberIds: number[], duration: number) {
+  timeSlots = timeSlots.filter(ts => barberIds.includes(ts.barberId));
+  return timeSlots.filter(ts => hasEnoughConsecutiveSlots(ts.startTime, timeSlots, duration, barberIds));
+}
+
+function getBarbersByServices(barbers: BarberSummaryDto[], serviceIds: number[]) {
+  return barbers.filter(b => serviceIds.some(id => b.serviceIds.includes(id)));
+}
+
+function getServiceIdsFromBarbers(barbers: BarberSummaryDto[]) {
+  return [... new Set(barbers.flatMap(b => b.serviceIds))];
+}
+
+function getMinServiceDuration(services: ServiceDto[]) {
+  return Math.min(...services.map(s => s.duration));
+}
