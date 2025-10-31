@@ -1,0 +1,66 @@
+<div class="bg-black min-h-screen text-white flex flex-col">
+  <app-header />
+
+  <main class="flex-grow flex items-center justify-center px-6 py-20">
+    <section
+      class="p-10 rounded-3xl border border-gray-700/30 bg-neutral-900
+                 w-full max-w-2xl text-center transition-all duration-500"
+    >
+      <div class="flex flex-col items-center mb-10">
+        <h1 class="text-4xl font-bold tracking-wide text-yellow-400 mb-3">Booking Confirmation</h1>
+        <p class="text-gray-400 text-lg max-w-md">
+          Please review the details below and confirm your appointment.
+        </p>
+      </div>
+
+      <div class="bg-neutral-950/60 rounded-2xl border border-gray-700 divide-y divide-gray-800/60 mb-10">
+        <div class="flex justify-between items-center py-4 px-6">
+          <span class="text-gray-400">Barbershop</span>
+          <span class="font-semibold text-white">{{ selectedBarbershop?.name }}</span>
+        </div>
+        <div class="flex justify-between items-center py-4 px-6">
+          <span class="text-gray-400">Barber</span>
+          <span class="font-semibold text-white">{{ selectedBarber?.firstName }} {{ selectedBarber?.lastName }}</span>
+        </div>
+        <div class="flex justify-between items-center py-4 px-6">
+          <span class="text-gray-400">Service</span>
+          <span class="font-semibold text-white">{{ selectedService?.name }}</span>
+        </div>
+        <div class="flex justify-between items-center py-4 px-6">
+          <span class="text-gray-400">Duration</span>
+          <span class="font-semibold text-white">{{ selectedService?.duration }} minutes</span>
+        </div>
+        <div class="flex justify-between items-center py-4 px-6">
+          <span class="text-gray-400">Date</span>
+          <span class="font-semibold text-white">{{ selectedTimeSlot?.startTime | date:'d MMMM y':'Europe/Kyiv':'en-US' }}</span>
+        </div>
+        <div class="flex justify-between items-center py-4 px-6">
+          <span class="text-gray-400">Time</span>
+          <span class="font-semibold text-white">{{ selectedTimeSlot?.startTime | date:'HH:mm':'Europe/Kyiv':'en-US' }}</span>
+        </div>
+
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-4">
+        <button
+          class="flex-1 py-3 rounded-xl border border-gray-600 text-gray-300
+           hover:bg-gray-800/60 transition-all duration-300 text-lg
+           flex items-center justify-center gap-2"
+          (click)="navigateToEdit()"
+        >
+          <lib-left-arrow-icon [width]="20" [height]="20" class="text-gray-300" />
+          <span>Back to Edit</span>
+        </button>
+
+        <button
+          class="flex-1 py-3 rounded-xl bg-yellow-500 text-black font-semibold text-lg
+           hover:bg-yellow-400 transition-all duration-300 flex items-center justify-center gap-2"
+          (click)="onConfirm()"
+        >
+          <span>Confirm Booking</span>
+        </button>
+      </div>
+
+    </section>
+  </main>
+</div>

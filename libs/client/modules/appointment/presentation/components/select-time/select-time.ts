@@ -27,13 +27,10 @@ export class SelectTime implements OnInit {
   timesForSelectedDate = this.bookingFlowStore.availableTimes;
   selectedTime = this.bookingFlowStore.time;
 
-  private tomorrow = new Date(
-    new Date().setDate(new Date().getDate() + 1)
-  )
-  selectedDateModel: Date = this.tomorrow;
+  selectedDateModel: Date = new Date(this.bookingFlowStore.date());
 
   ngOnInit() {
-    this.bookingFlowStore.selectDate(this.tomorrow.toISOString().split('T')[0]);
+    this.bookingFlowStore.loadDate(this.bookingFlowStore.date());
   }
 
   toggleOpen() {
@@ -53,8 +50,7 @@ export class SelectTime implements OnInit {
 
   onSelectDate(date: Date) {
     const localDateString = this.toLocalDateString(date);
-    console.log('selected', localDateString);
-    this.bookingFlowStore.selectDate(localDateString);
+    this.bookingFlowStore.loadDate(localDateString);
   }
 
   private toLocalDateString(date: Date): string {

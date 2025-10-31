@@ -118,7 +118,7 @@ export class UrlQueryValidator {
           }
         }
 
-        newState.time = isTimeValid ? requestedTime.toISOString() : '';
+        newState.time = isTimeValid ? requestedTime.toISOString() : null;
       }
     }
 
