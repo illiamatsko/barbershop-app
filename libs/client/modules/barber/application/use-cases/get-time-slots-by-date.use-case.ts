@@ -9,6 +9,7 @@ export class GetTimeSlotsByDate {
   private timeSlotStore = inject(TimeSlotStore);
 
   async execute(date: string) {
+    // await new Promise((resolve) => setTimeout(resolve, 800));
     const slots = await firstValueFrom(
       this.barberGateway.getTimeSlotsByDate(date)
     );

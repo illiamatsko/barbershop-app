@@ -1,9 +1,14 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { CommonModule, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 import { ClockIcon } from '@barbershop-app/client/shared/presentation';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { BookingFlowStore } from '@barbershop-app/client/appointment/application';
 
 
@@ -12,14 +17,8 @@ import { BookingFlowStore } from '@barbershop-app/client/appointment/application
   standalone: true,
   imports: [CommonModule, FormsModule, DatePickerModule, NgClass, ClockIcon],
   templateUrl: './select-time.html',
+  styleUrl: './select-time.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [
-    trigger('collapse', [
-      state('open', style({ height: '*', opacity: 1, padding: '*' })),
-      state('closed', style({ height: '0px', opacity: 1, padding: '0px' })),
-      transition('open <=> closed', animate('300ms ease-in-out')),
-    ]),
-  ],
 })
 export class SelectTime implements OnInit {
   private bookingFlowStore = inject(BookingFlowStore);

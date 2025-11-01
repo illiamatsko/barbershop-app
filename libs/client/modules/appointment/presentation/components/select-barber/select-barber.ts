@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { BarberCard } from './barber-card/barber-card';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ExpandArrowIcon } from '@barbershop-app/client/shared/presentation';
 import { BookingFlowStore } from '@barbershop-app/client/appointment/application';
 import { NgClass } from '@angular/common';
@@ -12,13 +11,6 @@ import { NgClass } from '@angular/common';
   templateUrl: './select-barber.html',
   styleUrl: './select-barber.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [
-    trigger('collapse', [
-      state('open', style({ height: '*', opacity: 1, padding: '*' })),
-      state('closed', style({ height: '0px', opacity: 1, padding: '0px' })),
-      transition('open <=> closed', animate('300ms ease-in-out')),
-    ]),
-  ],
 })
 export class SelectBarber {
   private bookingFlowStore = inject(BookingFlowStore);

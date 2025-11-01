@@ -3,12 +3,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&display=swap');
 
 
-
 @layer tailwind-base, primeng, tailwind-utilities;
 
 @layer tailwind-base { @tailwind base; }
 
-/* <-- наші override-и саме тут */
 @layer primeng {
   .theme-primeng-override {
     --p-datepicker-date-selected-background: #eab308;
@@ -16,9 +14,7 @@
   }
 }
 
-
 @layer tailwind-utilities { @tailwind components; @tailwind utilities; }
-
 
 .section-container {
   @apply relative py-20
@@ -50,4 +46,37 @@
 
 .section-subtitle {
   @apply text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed;
+}
+
+
+.expand {
+  overflow: hidden;
+  animation: expand-animation 300ms;
+}
+
+@keyframes expand-animation {
+  from {
+    max-height: 0;
+    visibility: hidden;
+  }
+  to {
+    max-height: 392px;
+    visibility: visible;
+  }
+}
+
+.collapse {
+  overflow: hidden;
+  animation: collapse-animation 300ms;
+}
+
+@keyframes collapse-animation {
+  from {
+    max-height: 392px;
+    visibility: visible;
+  }
+  to {
+    max-height: 0;
+    visibility: hidden;
+  }
 }

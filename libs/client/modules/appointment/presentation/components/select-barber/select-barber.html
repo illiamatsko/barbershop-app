@@ -1,5 +1,5 @@
 <section
-  class="p-2 rounded-2xl overflow-hidden mb-6 border transition-colors duration-300"
+  class="p-2 rounded-2xl mb-6 border border-gray-600/60 transition-colors duration-300"
   [ngClass]="{
     'border-yellow-500': selectedBarberId(),
     'border-gray-600/60': !selectedBarberId()
@@ -28,18 +28,17 @@
 
 </header>
 
-  <div
-    [@collapse]="isOpen() ? 'open' : 'closed'"
-    class="bg-neutral-900 overflow-hidden"
-  >
-    <div class="p-4 grid grid-cols-2 gap-4">
-      @for(barber of barbers(); track $index) {
-        <app-barber-card
-          (click)="onSelectBarber(barber.id)"
-          [barber]="barber"
-          [isSelected]="barber.id === selectedBarberId()"
-        />
-      }
+  @if (isOpen()) {
+    <div animate.enter="expand" animate.leave="collapse" class="bg-neutral-900">
+      <div class="p-4 grid grid-cols-2 gap-4">
+        @for(barber of barbers(); track $index) {
+          <app-barber-card
+            (click)="onSelectBarber(barber.id)"
+            [barber]="barber"
+            [isSelected]="barber.id === selectedBarberId()"
+          />
+        }
+      </div>
     </div>
-  </div>
+  }
 </section>

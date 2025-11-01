@@ -152,11 +152,11 @@ export const BookingFlowStore = signalStore(
     const urlQueryValidator = inject(UrlQueryValidator);
 
     effect(() => {
+      //TODO: fix reloading filters after changing date
       const params = urlQueryValidator.params();
       const currentState = untracked(() => getState(store));
       if (!params || !urlQueryValidator.isReady()) return;
 
-      console.log('effect triggered', params.time ? params.time.split('T')[0] : 'sdlnfg')
       const fullParams = { ...params, date: params.time ? params.time.split('T')[0] : currentState.date };
 
       const next = urlQueryValidator.setParams(fullParams);

@@ -1,5 +1,5 @@
 <section
-  class="p-2 rounded-2xl border transition-colors duration-300 overflow-hidden"
+  class="p-2 rounded-2xl border border-gray-600/60 transition-colors duration-300 overflow-hidden"
   [ngClass]="{
     'border-primary': !!selectedTime(),
     'border-gray-600/60': !selectedTime()
@@ -17,49 +17,51 @@
     </button>
   </header>
 
-  <div [@collapse]="isOpen() ? 'open' : 'closed'" class="bg-neutral-900 transition-[height] duration-300 overflow-hidden">
-    <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="min-w-0">
-        <div class="theme-primeng-override">
-          <p-datepicker
-            class="w-full block"
-            [(ngModel)]="selectedDateModel"
-            [inline]="true"
-            [showIcon]="false"
-            [touchUI]="false"
-            [minDate]="minDate"
-            [maxDate]="maxDate"
-            [dateFormat]="'dd.mm.yy'"
-            [showOtherMonths]="true"
-            [selectOtherMonths]="true"
-            (onSelect)="onSelectDate($event)"
-          ></p-datepicker>
+  @if(isOpen()) {
+    <div animate.enter="expand" animate.leave="collapse" class="bg-neutral-900">
+      <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-6 min-h-[392px]">
+        <div class="min-w-0">
+          <div class="theme-primeng-override">
+            <p-datepicker
+              class="w-full block"
+              [(ngModel)]="selectedDateModel"
+              [inline]="true"
+              [showIcon]="false"
+              [touchUI]="false"
+              [minDate]="minDate"
+              [maxDate]="maxDate"
+              [dateFormat]="'dd.mm.yy'"
+              [showOtherMonths]="true"
+              [selectOtherMonths]="true"
+              (onSelect)="onSelectDate($event)"
+            ></p-datepicker>
+          </div>
         </div>
-      </div>
 
-      <div class="flex items-center justify-center min-h-[200px] w-full">
-        @if(timesForSelectedDate().length) {
-          <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 auto-rows-fr w-full">
-            @for(time of timesForSelectedDate(); track $index) {
-              <button
-                (click)="onSelectTime(time)"
-                type="button"
-                class="p-3 rounded-xl border border-gray-600/20 bg-neutral-800
+        <div class="flex items-center justify-center w-full">
+          @if(timesForSelectedDate().length) {
+            <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 auto-rows-fr w-full">
+              @for(time of timesForSelectedDate(); track $index) {
+                <button
+                  (click)="onSelectTime(time)"
+                  type="button"
+                  class="p-3 rounded-xl border border-gray-600/20 bg-neutral-800
                    text-white text-md cursor-pointer
                    transition-all duration-300 hover:border-yellow-500 hover:bg-yellow-500/10"
-                [ngClass]="selectedTime() === time ? 'border-primary' : 'border-gray-600/20'"
-              >
-                {{ time | date:'HH:mm' }}
-              </button>
-            }
-          </div>
-        } @else {
-          <div class="flex flex-col items-center justify-center text-center text-gray-400 gap-2">
-            <lib-clock-icon [width]="36" [height]="36" class="text-yellow-500" />
-            <span>No time available for this date :(</span>
-          </div>
-        }
+                  [ngClass]="selectedTime() === time ? 'border-primary' : 'border-gray-600/20'"
+                >
+                  {{ time | date:'HH:mm' }}
+                </button>
+              }
+            </div>
+          } @else {
+            <div class="flex flex-col items-center justify-center text-center text-gray-400 gap-2">
+              <lib-clock-icon [width]="36" [height]="36" class="text-yellow-500" />
+              <span>No time available for this date :(</span>
+            </div>
+          }
+        </div>
       </div>
     </div>
-  </div>
+  }
 </section>
