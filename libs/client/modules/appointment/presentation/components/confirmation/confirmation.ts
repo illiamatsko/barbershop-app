@@ -44,7 +44,8 @@ export class Confirmation implements OnInit {
           barbershopId: this.selectedBarbershop?.id,
           barberId: this.selectedBarber?.id,
           serviceId: this.selectedService?.id,
-          time: this.selectedTimeSlot?.startTime ?? null,
+          date: this.selectedTimeSlot?.startTime.toISOString().split('T')[0] ?? null,
+          time: this.selectedTimeSlot?.startTime.toISOString().split('T')[1] ?? null,
         }
       })
       .then();

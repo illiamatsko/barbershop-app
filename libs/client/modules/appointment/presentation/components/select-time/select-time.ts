@@ -1,8 +1,9 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
+  effect,
   inject,
-  OnInit,
   signal,
 } from '@angular/core';
 import { CommonModule, NgClass } from '@angular/common';
@@ -20,16 +21,19 @@ import { BookingFlowStore } from '@barbershop-app/client/appointment/application
   styleUrl: './select-time.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SelectTime implements OnInit {
+export class SelectTime {
   private bookingFlowStore = inject(BookingFlowStore);
   isOpen = signal(true);
   timesForSelectedDate = this.bookingFlowStore.availableTimes;
-  selectedTime = this.bookingFlowStore.time;
+  selectedDateTime = this.bookingFlowStore.selectedDateTime;
+  isTimeSelected = computed(() => this.bookingFlowStore.time() !== null);
 
   selectedDateModel: Date = new Date(this.bookingFlowStore.date());
 
-  ngOnInit() {
-    this.bookingFlowStore.loadDate(this.bookingFlowStore.date());
+  constructor() {
+    effect(() => {
+      this.selectedDateModel = new Date(this.bookingFlowStore.date());
+    });
   }
 
   toggleOpen() {
@@ -49,7 +53,7 @@ export class SelectTime implements OnInit {
 
   onSelectDate(date: Date) {
     const localDateString = this.toLocalDateString(date);
-    this.bookingFlowStore.loadDate(localDateString);
+    this.bookingFlowStore.selectDate(localDateString, true);
   }
 
   private toLocalDateString(date: Date): string {
@@ -60,6 +64,6 @@ export class SelectTime implements OnInit {
   }
 
   onSelectTime(time: string) {
-    this.bookingFlowStore.toggleSelectTime(time);
+    this.bookingFlowStore.toggleSelectTime(time.split('T')[1]);
   }
 }

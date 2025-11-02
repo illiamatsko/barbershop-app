@@ -14,7 +14,7 @@ export function filterData(
   selectedBarbershopId: number | null,
   selectedBarberId: number | null,
   selectedServiceId: number | null,
-  selectedTime: string | null
+  selectedTime: Date
 ) {
   let filteredBarbershops = [...barbershops];
   let filteredBarbers = [...barbers];
@@ -53,10 +53,11 @@ export function filterData(
     filteredTimeSlots = filterTimeSlotsByBarberAndDuration(filteredTimeSlots, availableBarberIds, service.duration);
   }
 
-  if (selectedTime) {
+  if (selectedTime.toString() !== 'Invalid Date') {
     filteredServices = filteredServices.filter(s => {
       const availableBarberIds = getIds(getBarbersByServices(filteredBarbers, [s.id]));
-      return hasEnoughConsecutiveSlots(new Date(selectedTime), filteredTimeSlots, s.duration, availableBarberIds);
+      // console.log(selectedTime)
+      return hasEnoughConsecutiveSlots(selectedTime, filteredTimeSlots, s.duration, availableBarberIds);
     })
 
     const availableServiceIds = getIds(filteredServices);

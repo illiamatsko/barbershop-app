@@ -25,16 +25,17 @@ export class UrlQueryValidator {
 
   readonly params = toSignal(
     this.route.queryParams.pipe(
-      map((params) => ({
+      map((params): BookingFlowState => ({
         barbershopId: this.toNullableNumber(params['barbershopId']),
         barberId: this.toNullableNumber(params['barberId']),
         serviceId: this.toNullableNumber(params['serviceId']),
-        time: params['time']
+        date: params['date'] ?? null,
+        time: params['time'] ?? null
       }))
     )
   );
 
-  setParams(urlQueryParams: BookingFlowState): BookingFlowState {
+  validateUrlQueryParams(urlQueryParams: BookingFlowState): BookingFlowState {
     const allBarbershops = this.barbershopSignal();
     const allBarbers = this.barberSignal();
     const allServices = this.serviceSignal();
@@ -78,7 +79,7 @@ export class UrlQueryValidator {
 
     const urlTime = urlQueryParams.time;
     if (urlTime) {
-      const requestedTime = new Date(urlTime);
+      const requestedTime = new Date(newState.date + 'T' + urlTime);
       const timesForDate = allTimeSlots.get(newState.date);
       if (timesForDate) {
         let isTimeValid = true;
@@ -118,7 +119,7 @@ export class UrlQueryValidator {
           }
         }
 
-        newState.time = isTimeValid ? requestedTime.toISOString() : null;
+        newState.time = isTimeValid ? requestedTime.toISOString().split('T')[1] : null;
       }
     }
 

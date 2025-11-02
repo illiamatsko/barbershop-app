@@ -1,5 +1,5 @@
 import { BarberGateway } from '@barbershop-app/client/barber/domain';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { BarberStatusDto, BarberSummaryDto, TimeSlotDto } from '@barbershop-app/shared/domain';
 import { inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -19,6 +19,13 @@ export class ApiBarberGateway implements BarberGateway {
   }
 
   getTimeSlotsByDate(date: string): Observable<TimeSlotDto[]> {
-    return this.httpClient.get<TimeSlotDto[]>(`${this.API_URL}/barber/timeslots/${date}`);
+    return this.httpClient.get<TimeSlotDto[]>(`${this.API_URL}/barber/timeslots/${date}`).pipe(
+      map(slots => slots.map(slot => {
+        return {
+          ...slot,
+          startTime: new Date(new Date(slot.startTime).toISOString().replace('Z', ''))
+        }
+      }))
+    );
   }
 }

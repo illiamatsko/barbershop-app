@@ -1,6 +1,6 @@
 import { BookingFlowState, initialBookingFlowState } from './booking-flow.state';
 import { getState, patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
-import { computed, effect, inject, untracked } from '@angular/core';
+import { computed, effect, inject } from '@angular/core';
 import { filterData } from './booking-flow.filters';
 import { ActivatedRoute, Router } from '@angular/router';
 import { withEffects } from '@ngrx/signals/events';
@@ -25,7 +25,8 @@ export const BookingFlowStore = signalStore(
       const serviceId = store.serviceId();
       const time = store.time();
       const date = store.date();
-      console.log('filtering...', date)
+
+      console.log('filtering')
 
       const timeSlotsByDate = timeSlots().get(date);
 
@@ -46,11 +47,13 @@ export const BookingFlowStore = signalStore(
         barbershopId,
         barberId,
         serviceId,
-        time
+        new Date(date + 'T' + time)
       );
     });
 
     return {
+      selectedDateTime: computed(() => store.date() + 'T' + store.time()),
+
       availableBarbershops: computed(() => filteredData().filteredBarbershops),
       availableBarbers: computed(() => filteredData().filteredBarbers),
       availableServices: computed(() => filteredData().filteredServices),
@@ -61,10 +64,10 @@ export const BookingFlowStore = signalStore(
       selectedService: computed(() => services().find(s => s.id === store.serviceId())),
       selectedTimeSlot: computed(() => {
         const time = store.time();
-        const date = time ? time.split('T')[0] : '';
+        const date = store.date();
         const barberId = store.barberId();
 
-        return timeSlots().get(date)?.find(ts => ts.startTime.toISOString() === time && ts.barberId === barberId);
+        return timeSlots().get(date)?.find(ts => ts.startTime.toISOString().split('T')[1] === time && ts.barberId === barberId);
       }),
       isCompleted: computed(() => store.barbershopId() && store.barberId() && store.serviceId() && store.time())
     };
@@ -77,14 +80,21 @@ export const BookingFlowStore = signalStore(
     const getTimeSlotsByDate = inject(GetTimeSlotsByDate);
 
     return {
-      loadDate: (date: string) => {
-        const hasTimeSlots = timeSlotStore.timeSlots().has(date);
-
-        if (!hasTimeSlots) {
-          getTimeSlotsByDate.execute(date).then();
+      selectDate: async (date: string, resetTime: boolean) => {
+        if (!timeSlotStore.timeSlots().has(date)) {
+          await getTimeSlotsByDate.execute(date);
         }
 
-        patchState(store, { date, time: null });
+        const newParams: { date: string, time?: string | null } = { date };
+        if (resetTime) {
+          newParams.time = null;
+        }
+
+        router.navigate([], {
+          relativeTo: route,
+          queryParams: newParams,
+          queryParamsHandling: 'merge'
+        }).then();
       },
 
       toggleSelectBarbershop: (barbershopId: number) => {
@@ -132,15 +142,10 @@ export const BookingFlowStore = signalStore(
 
       toggleSelectTime: (time: string) => {
         const currentState = getState(store);
-        let newTime = time;
-
-
-        if(currentState.time === time) {
-          newTime = '';
-        }
+        const toggleOn = currentState.time !== time;
 
         router.navigate([], {
-          queryParams: { time: newTime },
+          queryParams: { time: toggleOn ? time : null },
           queryParamsHandling: 'merge'
         }).then();
       }
@@ -151,23 +156,30 @@ export const BookingFlowStore = signalStore(
     const router = inject(Router);
     const urlQueryValidator = inject(UrlQueryValidator);
 
-    effect(() => {
-      //TODO: fix reloading filters after changing date
+    effect(async () => {
+      if (!router.url.startsWith('/appointment/create')) {
+        return;
+      }
+
       const params = urlQueryValidator.params();
-      const currentState = untracked(() => getState(store));
+      const currentState = getState(store);
       if (!params || !urlQueryValidator.isReady()) return;
+      console.log('url effect triggered', params)
 
-      const fullParams = { ...params, date: params.time ? params.time.split('T')[0] : currentState.date };
+      if(!params.date) {
+        params.date = currentState.date
+      }
 
-      const next = urlQueryValidator.setParams(fullParams);
-      console.log('current', currentState)
-      console.log('next:', next)
+      await store.selectDate(params.date, false);
+      const validatedState = urlQueryValidator.validateUrlQueryParams(params);
+      // console.log('current', currentState)
+
+      console.log('url effect result', validatedState)
       console.log('')
 
-      patchState(store, next);
-      const { date: _, ...rest } = next;
+      patchState(store, validatedState);
       router.navigate([], {
-        queryParams: rest
+        queryParams: validatedState
       }).then();
     });
 

@@ -242,7 +242,7 @@ async function main() {
   for (const barber of allBarbers) {
     await Promise.all(
       slotTimes.map((time, idx) => {
-        const isBooked = idx % 2 === 0; // наприклад: кожен 10-й слот BOOKED для прикладу
+        const isBooked = idx % 2 === 0;
 
         return prisma.timeSlot.create({
           data: {
@@ -255,6 +255,40 @@ async function main() {
       })
     );
   }
+  // const allBarbers = [barber1, barber2];
+  // const slotTimes = getSlotsForDays(7); // 7 днів вперед
+  //
+  // for (const barber of allBarbers) {
+  //   await Promise.all(
+  //     slotTimes.map((time, idx) => {
+  //       // визначаємо, до якого дня належить слот
+  //       const slotDate = new Date(time);
+  //       const dayIndex = Math.floor(
+  //         (slotDate.getTime() - slotTimes[0].getTime()) / (1000 * 60 * 60 * 24)
+  //       );
+  //
+  //       const slotsPerDay = (9 * 60) / 30;
+  //       const indexWithinDay = idx % slotsPerDay;
+  //
+  //       const startAvailableIndex = dayIndex * 2;
+  //       const endAvailableIndex = startAvailableIndex + 2;
+  //
+  //       const isAvailable =
+  //         indexWithinDay >= startAvailableIndex &&
+  //         indexWithinDay < endAvailableIndex;
+  //
+  //       return prisma.timeSlot.create({
+  //         data: {
+  //           startTime: time,
+  //           barberId: barber.userId,
+  //           status: isAvailable ? 'AVAILABLE' : 'BOOKED',
+  //           appointmentId: isAvailable ? null : appointment.id,
+  //         },
+  //       });
+  //     })
+  //   );
+  // }
+
 }
 
 main()
