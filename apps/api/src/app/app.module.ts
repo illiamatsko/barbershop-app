@@ -7,6 +7,8 @@ import { ServiceModule } from '@barbershop-app/api/service/presentation';
 import { BarberModule } from '@barbershop-app/api/barber/presentation';
 import { AuthModule } from '@barbershop-app/api/auth/presentation';
 import { BarbershopModule } from '@barbershop-app/api/barbershop/presentation';
+import { AppointmentModule } from '@barbershop-app/api/appointment/presentation'
+
 
 @Module({
   imports: [
@@ -16,6 +18,7 @@ import { BarbershopModule } from '@barbershop-app/api/barbershop/presentation';
       envFilePath: '.env',
     }),
     AuthModule,
+    AppointmentModule,
     BarberModule,
     BarbershopModule,
     ServiceModule,

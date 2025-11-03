@@ -6,7 +6,10 @@ import {
 } from '@angular/core';
 import { Header } from '../create-appointment/header/header';
 import { Router } from '@angular/router';
-import { BookingFlowStore } from '@barbershop-app/client/appointment/application';
+import {
+  BookingFlowStore,
+  CreateAppointmentUseCase,
+} from '@barbershop-app/client/appointment/application';
 import { LeftArrowIcon } from '@barbershop-app/client/shared/presentation';
 import { DatePipe } from '@angular/common';
 
@@ -20,6 +23,7 @@ import { DatePipe } from '@angular/common';
 export class Confirmation implements OnInit {
   private router = inject(Router);
   private bookingFlowStore = inject(BookingFlowStore);
+  private createAppointmentUseCase = inject(CreateAppointmentUseCase);
 
   selectedBarbershop = this.bookingFlowStore.selectedBarbershop();
   selectedBarber = this.bookingFlowStore.selectedBarber();
@@ -27,12 +31,7 @@ export class Confirmation implements OnInit {
   selectedTimeSlot = this.bookingFlowStore.selectedTimeSlot();
 
   ngOnInit() {
-    if (
-      !this.selectedBarbershop ||
-      !this.selectedBarber ||
-      !this.selectedService ||
-      !this.selectedTimeSlot
-    ) {
+    if (!this.isParamsValid()) {
       this.navigateToEdit();
     }
   }
@@ -42,6 +41,24 @@ export class Confirmation implements OnInit {
   }
 
   onConfirm() {
-    console.log('Confirm');
+    const barbershopId = this.bookingFlowStore.selectedBarbershop()?.id;
+    const barberId = this.bookingFlowStore.selectedBarber()?.id;
+    const serviceId = this.bookingFlowStore.selectedService()?.id;
+
+    if (!barbershopId || !barberId || !serviceId) {
+      this.navigateToEdit();
+      return;
+    }
+
+    this.createAppointmentUseCase.execute({
+      barbershopId: barbershopId,
+      barberId: barberId,
+      serviceId: serviceId,
+      comment: ''
+    });
+  }
+
+  isParamsValid() {
+    return this.selectedBarbershop && this.selectedBarber && this.selectedService && this.selectedTimeSlot;
   }
 }
