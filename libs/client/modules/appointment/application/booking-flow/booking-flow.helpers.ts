@@ -14,7 +14,7 @@ export function hasEnoughConsecutiveSlots(
     const consecutiveSlots = timesForDate.filter(slot =>
       slot.barberId === bId &&
       slot.startTime.getTime() >= requestedTimeMs &&
-      slot.startTime.getTime() < endTime.getTime() &&
+      slot.startTime.getTime() <= endTime.getTime() &&
       slot.status === 'AVAILABLE'
     );
 
@@ -33,4 +33,9 @@ export function getIds<T extends { id: number }>(arr: T[]) {
 
 export function getBarbersFromBarbershop(barbershopId: number, barbers: BarberSummaryDto[]) {
   return barbers.filter(b => b.barbershopId === barbershopId);
+}
+export function getTomorrowDate() {
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  return tomorrow;
 }

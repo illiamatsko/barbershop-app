@@ -26,10 +26,7 @@ export const BookingFlowStore = signalStore(
       const time = store.time();
       const date = store.date();
 
-      console.log('filtering')
-
       const timeSlotsByDate = timeSlots().get(date);
-
       if (!timeSlotsByDate) {
         return {
           filteredBarbershops: barbershops(),
@@ -80,23 +77,6 @@ export const BookingFlowStore = signalStore(
     const getTimeSlotsByDate = inject(GetTimeSlotsByDate);
 
     return {
-      selectDate: async (date: string, resetTime: boolean) => {
-        if (!timeSlotStore.timeSlots().has(date)) {
-          await getTimeSlotsByDate.execute(date);
-        }
-
-        const newParams: { date: string, time?: string | null } = { date };
-        if (resetTime) {
-          newParams.time = null;
-        }
-
-        router.navigate([], {
-          relativeTo: route,
-          queryParams: newParams,
-          queryParamsHandling: 'merge'
-        }).then();
-      },
-
       toggleSelectBarbershop: (barbershopId: number) => {
         const currentState = getState(store);
         let newBarbershopId: number | null = barbershopId;
@@ -140,12 +120,38 @@ export const BookingFlowStore = signalStore(
         }).then();
       },
 
+      selectDate: async (date: string, resetTime: boolean) => {
+        if (!timeSlotStore.timeSlots().has(date)) {
+          await getTimeSlotsByDate.execute(date);
+        }
+
+        const newParams: { date: string, time?: string | null } = { date };
+        if (resetTime) {
+          newParams.time = null;
+        }
+
+        router.navigate([], {
+          relativeTo: route,
+          queryParams: newParams,
+          queryParamsHandling: 'merge'
+        }).then();
+      },
+
       toggleSelectTime: (time: string) => {
         const currentState = getState(store);
         const toggleOn = currentState.time !== time;
 
         router.navigate([], {
           queryParams: { time: toggleOn ? time : null },
+          queryParamsHandling: 'merge'
+        }).then();
+      },
+
+      syncUrlFromStore: () => {
+        const currentState = getState(store);
+
+        router.navigate([], {
+          queryParams: currentState,
           queryParamsHandling: 'merge'
         }).then();
       }
@@ -157,26 +163,15 @@ export const BookingFlowStore = signalStore(
     const urlQueryValidator = inject(UrlQueryValidator);
 
     effect(async () => {
-      if (!router.url.startsWith('/appointment/create')) {
+      const params = urlQueryValidator.params();
+
+      if (!params || !router.url.startsWith('/appointment/create')) {
         return;
       }
 
-      const params = urlQueryValidator.params();
-      const currentState = getState(store);
-      if (!params || !urlQueryValidator.isReady()) return;
-      console.log('url effect triggered', params)
-
-      if(!params.date) {
-        params.date = currentState.date
-      }
-
       await store.selectDate(params.date, false);
+
       const validatedState = urlQueryValidator.validateUrlQueryParams(params);
-      // console.log('current', currentState)
-
-      console.log('url effect result', validatedState)
-      console.log('')
-
       patchState(store, validatedState);
       router.navigate([], {
         queryParams: validatedState

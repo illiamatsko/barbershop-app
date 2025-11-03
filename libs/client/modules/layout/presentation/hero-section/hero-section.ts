@@ -1,6 +1,13 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnDestroy,
+} from '@angular/core';
 import { Header } from '../header/header';
 import { NgStyle } from '@angular/common';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -11,8 +18,13 @@ import { NgStyle } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroSection implements AfterViewInit, OnDestroy {
+  private router = inject(Router);
   backgroundImg =
     'https://res.cloudinary.com/dx7xjflm0/image/upload/v1753197217/hero-section_nhyjmf.avif';
+
+  navigateToAppointmentCreation() {
+    this.router.navigate(['/appointment/create']).then();
+  }
 
   get backgroundStyle() {
     return { 'background-image': `url(${this.backgroundImg})` };

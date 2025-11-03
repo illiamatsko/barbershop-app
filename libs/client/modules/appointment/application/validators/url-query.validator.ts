@@ -1,10 +1,14 @@
-import { computed, inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { BookingFlowState } from '../booking-flow/booking-flow.state';
 import { BarbershopStore, BarberStore, ServiceStore, TimeSlotStore } from '@barbershop-app/client/core/application';
-import { getBarbersFromBarbershop, hasEnoughConsecutiveSlots } from '../booking-flow/booking-flow.helpers';
+import {
+  getBarbersFromBarbershop,
+  getTomorrowDate,
+  hasEnoughConsecutiveSlots,
+} from '../booking-flow/booking-flow.helpers';
 
 
 @Injectable({ providedIn: 'root' })
@@ -15,7 +19,6 @@ export class UrlQueryValidator {
   private timeSlotSignal = inject(TimeSlotStore).timeSlots;
   private route = inject(ActivatedRoute);
 
-  public isReady = computed(() => this.barbershopSignal().length > 0 && this.barberSignal().length > 0 && this.serviceSignal().length > 0);
 
   private toNullableNumber(value: unknown) {
     if(!value) return null;
@@ -45,9 +48,12 @@ export class UrlQueryValidator {
       barbershopId: null,
       barberId: null,
       serviceId: null,
-      date: urlQueryParams.date,
+      date: '',
       time: null
     };
+
+    const tomorrowDate = getTomorrowDate();
+    newState.date = new Date(urlQueryParams.date).getDate() > tomorrowDate.getDate() + 14 ? tomorrowDate.toISOString().split('T')[0] : urlQueryParams.date;
 
     const requestedBarber = allBarbers.find(b => b.id === urlQueryParams.barberId);
     if (requestedBarber) {

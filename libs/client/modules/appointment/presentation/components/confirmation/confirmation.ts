@@ -38,17 +38,7 @@ export class Confirmation implements OnInit {
   }
 
   navigateToEdit() {
-    this.router
-      .navigate(['/appointment/create'], {
-        queryParams: {
-          barbershopId: this.selectedBarbershop?.id,
-          barberId: this.selectedBarber?.id,
-          serviceId: this.selectedService?.id,
-          date: this.selectedTimeSlot?.startTime.toISOString().split('T')[0] ?? null,
-          time: this.selectedTimeSlot?.startTime.toISOString().split('T')[1] ?? null,
-        }
-      })
-      .then();
+    this.router.navigate(['/appointment/create']).then();
   }
 
   onConfirm() {

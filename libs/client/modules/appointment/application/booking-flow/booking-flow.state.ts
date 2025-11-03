@@ -10,12 +10,6 @@ export const initialBookingFlowState: BookingFlowState = {
   barbershopId: null,
   barberId: null,
   serviceId: null,
-  date: getNextDay(),
+  date: '',
   time: null
 };
-
-function getNextDay(): string {
-  const tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  return tomorrow.toISOString().split('T')[0];
-}

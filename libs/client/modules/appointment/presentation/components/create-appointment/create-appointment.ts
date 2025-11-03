@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { SelectBarbershop } from '../select-barbershop/select-barbershop';
 import { SelectBarber } from '../select-barber/select-barber';
 import { SelectTime } from '../select-time/select-time';
@@ -25,11 +30,18 @@ import { NgClass } from '@angular/common';
   styleUrl: './create-appointment.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CreateAppointment {
+export class CreateAppointment implements OnInit {
   private bookingFlowStore = inject(BookingFlowStore);
   private router = inject(Router);
 
   isCompleted = this.bookingFlowStore.isCompleted;
+
+  ngOnInit() {
+    if(this.bookingFlowStore.barbershopId() || this.bookingFlowStore.barberId() || this.bookingFlowStore.serviceId() || this.bookingFlowStore.time()) {
+      this.bookingFlowStore.syncUrlFromStore();
+      console.log('Synced from store');
+    }
+  }
 
   navigateToConfirmation() {
     this.router.navigate(['/appointment/confirmation']).then();

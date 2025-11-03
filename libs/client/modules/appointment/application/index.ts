@@ -3,3 +3,5 @@ export * from './use-cases/get-all-barbershops.use-case'
 
 export * from './booking-flow/booking-flow.store'
 export * from './booking-flow/booking-flow.state'
+
+export * from './booking-flow/booking-flow.guard'
