@@ -1,13 +1,13 @@
 import { UserDto } from '@barbershop-app/shared/domain';
 
 export interface AuthState {
-  user: UserDto;
+  user: Omit<UserDto, 'id'> & { id: number | null };
   token: string;
 }
 
 export const initialAuthState: AuthState = {
   user: {
-    id: -1,
+    id: null,
     email: '',
     firstName: '',
     lastName: '',

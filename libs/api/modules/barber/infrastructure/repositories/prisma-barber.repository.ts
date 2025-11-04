@@ -27,7 +27,8 @@ export class PrismaBarberRepository implements BarberRepository {
             services: true,
             reviews: true
           }
-        }, }
+        }
+      }
     });
 
     const barberEntities = [];

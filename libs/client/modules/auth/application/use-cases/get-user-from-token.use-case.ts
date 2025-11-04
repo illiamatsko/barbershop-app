@@ -13,10 +13,12 @@ export class GetUserFromTokenUseCase {
     if(!token) return;
 
     const headers = { Authorization: `Bearer ${token}` };
-
     this.authGateway.GetUserFromToken(token, headers).subscribe({
       next: (user) => {
         this.authStore.setUser({ user, token });
+      },
+      error: () => {
+        localStorage.removeItem('token');
       }
     })
   }

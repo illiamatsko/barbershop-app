@@ -1,4 +1,5 @@
 export * from './dtos/appointment/create-appointment.payload'
+export * from './dtos/appointment/appointment.dto'
 
 export * from './dtos/auth/user.dto';
 

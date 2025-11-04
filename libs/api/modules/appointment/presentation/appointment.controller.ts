@@ -1,15 +1,18 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { CreateAppointmentPayload, } from '@barbershop-app/shared/domain';
-import { OptionalJwtGuard } from '@barbershop-app/api/shared/auth';
-import { AuthRequest } from '@barbershop-app/api/auth/domain';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { CreateAppointmentCommand } from '@barbershop-app/api/appointment/application';
 
 @Controller('appointment')
 export class AppointmentController {
 
-  @UseGuards(OptionalJwtGuard)
+  constructor(
+    private queryBus: QueryBus,
+    private commandBus: CommandBus
+  ) {}
+
   @Post('create')
-  createAppointment(@Req() req: AuthRequest, @Body() appointment: CreateAppointmentPayload) {
-    console.log(appointment);
-    console.log(req.user);
+  createAppointment(@Body() createAppointmentPayload: CreateAppointmentPayload) {
+    return this.commandBus.execute(new CreateAppointmentCommand(createAppointmentPayload));
   }
 }

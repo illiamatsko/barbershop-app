@@ -1,7 +1,8 @@
 export interface CreateAppointmentPayload {
-  barbershopId: number
+  customerId: number | null
+  email: string
   barberId: number
   serviceId: number
-  email: string
+  date: string
   comment: string
 }

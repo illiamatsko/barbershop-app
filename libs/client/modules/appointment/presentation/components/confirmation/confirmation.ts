@@ -65,11 +65,11 @@ export class Confirmation implements OnInit {
   }
 
   onConfirm() {
-    const barbershopId = this.bookingFlowStore.selectedBarbershop()?.id;
     const barberId = this.bookingFlowStore.selectedBarber()?.id;
     const serviceId = this.bookingFlowStore.selectedService()?.id;
+    const timeSlot = this.bookingFlowStore.selectedTimeSlot();
 
-    if (!barbershopId || !barberId || !serviceId) {
+    if (!barberId || !serviceId || !timeSlot) {
       this.navigateToEdit();
       return;
     }
@@ -78,11 +78,21 @@ export class Confirmation implements OnInit {
 
     const { email, comment } = this.additionalInfoForm.getRawValue();
 
-    this.createAppointmentUseCase.execute({
-      barbershopId: barbershopId,
+    console.log({
+      email,
+      customerId: this.authStore.user.id(),
       barberId: barberId,
       serviceId: serviceId,
+      date: timeSlot.startTime.toISOString(),
+      comment,
+    });
+
+    this.createAppointmentUseCase.execute({
       email,
+      customerId: this.authStore.user.id(),
+      barberId: barberId,
+      serviceId: serviceId,
+      date: timeSlot.startTime.toISOString(),
       comment,
     });
   }

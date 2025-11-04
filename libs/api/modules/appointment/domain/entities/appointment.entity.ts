@@ -1,8 +1,8 @@
-export interface AppointmentDto {
+export interface AppointmentEntity {
   id: number
   date: Date
-  customerEmail: string
   customerId: number | null
+  customerEmail: string
   barbershopId: number
   barberId: number
   serviceId: number
