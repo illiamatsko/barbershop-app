@@ -29,9 +29,9 @@
       "@barbershop-app/api/customer/infrastructure": ["libs/api/modules/customer/infrastructure/index.ts"],
 
       "@barbershop-app/api/appointment/presentation": ["libs/api/modules/appointment/presentation/index.ts"],
-//      "@barbershop-app/api/appointment/application": ["libs/api/modules/appointment/application/index.ts"],
-//      "@barbershop-app/api/appointment/domain": ["libs/api/modules/appointment/domain/index.ts"],
-//      "@barbershop-app/api/appointment/infrastructure": ["libs/api/modules/appointment/infrastructure/index.ts"],
+      "@barbershop-app/api/appointment/application": ["libs/api/modules/appointment/application/index.ts"],
+      "@barbershop-app/api/appointment/domain": ["libs/api/modules/appointment/domain/index.ts"],
+      "@barbershop-app/api/appointment/infrastructure": ["libs/api/modules/appointment/infrastructure/index.ts"],
 
       "@barbershop-app/api/barber/presentation": ["libs/api/modules/barber/presentation/index.ts"],
       "@barbershop-app/api/barber/application": ["libs/api/modules/barber/application/index.ts"],

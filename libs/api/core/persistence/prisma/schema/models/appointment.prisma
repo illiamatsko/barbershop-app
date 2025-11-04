@@ -5,6 +5,7 @@ model Appointment {
   customer   Customer?         @relation(fields: [customerId], references: [userId])
   customerId Int?
   email      String
+  date       DateTime
   barber     Barber            @relation(fields: [barberId], references: [userId])
   barberId   Int
   service    Service           @relation(fields: [serviceId], references: [id])

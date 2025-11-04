@@ -225,6 +225,8 @@ async function main() {
 
   // 6. Create Appointment for the first service
   const selectedService = services[0];
+  const appointmentSlots: any[] = [];
+
   const appointment = await prisma.appointment.create({
     data: {
       status: 'CONFIRMED',
@@ -233,64 +235,57 @@ async function main() {
       email: customerUser.email,
       barberId: barberUser1.id,
       serviceId: selectedService.id,
+      date: new Date(),
     },
   });
 
-  // 7. Create TimeSlots for all barbers on 7 days ahead
-  const allBarbers = [barber1, barber2]; // або await prisma.barber.findMany()
-
-  const slotTimes = getSlotsForDays(7); // 7 днів вперед
+// 7. Create TimeSlots for all barbers on 7 days ahead
+  const allBarbers = [barber1, barber2];
+  const slotTimes = getSlotsForDays(7);
+  const slotsNeededForService = selectedService.duration / 30;
 
   for (const barber of allBarbers) {
     await Promise.all(
-      slotTimes.map((time, idx) => {
-        const isBooked = idx % 2 === 0;
+      slotTimes.map(async (time, idx) => {
+        const shouldBeBooked =
+          barber.userId === barberUser1.id &&
+          idx >= 4 &&
+          idx < 4 + slotsNeededForService;
 
-        return prisma.timeSlot.create({
+        const shouldBeBlocked = !shouldBeBooked && Math.random() < 0.5;
+
+        let status: 'AVAILABLE' | 'BOOKED' | 'BLOCKED' = 'AVAILABLE';
+        let appointmentId: number | null = null;
+
+        if (shouldBeBooked) {
+          status = 'BOOKED';
+          appointmentId = appointment.id;
+        } else if (shouldBeBlocked) {
+          status = 'BLOCKED';
+        }
+
+        const slot = await prisma.timeSlot.create({
           data: {
             startTime: time,
             barberId: barber.userId,
-            status: isBooked ? 'BOOKED' : 'AVAILABLE',
-            appointmentId: isBooked ? appointment.id : null,
+            status,
+            appointmentId,
           },
         });
+
+        if (shouldBeBooked) appointmentSlots.push(slot);
       })
     );
   }
-  // const allBarbers = [barber1, barber2];
-  // const slotTimes = getSlotsForDays(7); // 7 днів вперед
-  //
-  // for (const barber of allBarbers) {
-  //   await Promise.all(
-  //     slotTimes.map((time, idx) => {
-  //       // визначаємо, до якого дня належить слот
-  //       const slotDate = new Date(time);
-  //       const dayIndex = Math.floor(
-  //         (slotDate.getTime() - slotTimes[0].getTime()) / (1000 * 60 * 60 * 24)
-  //       );
-  //
-  //       const slotsPerDay = (9 * 60) / 30;
-  //       const indexWithinDay = idx % slotsPerDay;
-  //
-  //       const startAvailableIndex = dayIndex * 2;
-  //       const endAvailableIndex = startAvailableIndex + 2;
-  //
-  //       const isAvailable =
-  //         indexWithinDay >= startAvailableIndex &&
-  //         indexWithinDay < endAvailableIndex;
-  //
-  //       return prisma.timeSlot.create({
-  //         data: {
-  //           startTime: time,
-  //           barberId: barber.userId,
-  //           status: isAvailable ? 'AVAILABLE' : 'BOOKED',
-  //           appointmentId: isAvailable ? null : appointment.id,
-  //         },
-  //       });
-  //     })
-  //   );
-  // }
 
+  // 🆕 8. Update appointment.date
+  if (appointmentSlots.length > 0) {
+    const firstSlot = appointmentSlots[0];
+    await prisma.appointment.update({
+      where: { id: appointment.id },
+      data: { date: firstSlot.startTime },
+    });
+  }
 }
 
 main()
