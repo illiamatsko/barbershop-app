@@ -11,6 +11,7 @@ export * from './components/service-card-compact/service-card-compact'
 
 export * from './components/phone-input/phone-input'
 export * from './components/form-field/form-field'
+export * from './components/form-text-area/form-text-area'
 export * from './components/stepper/stepper'
 
 

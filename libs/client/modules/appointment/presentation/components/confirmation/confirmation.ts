@@ -10,7 +10,7 @@ import {
   BookingFlowStore,
   CreateAppointmentUseCase,
 } from '@barbershop-app/client/appointment/application';
-import { FormField, LeftArrowIcon } from '@barbershop-app/client/shared/presentation';
+import { FormField, FormTextArea, LeftArrowIcon } from '@barbershop-app/client/shared/presentation';
 import { DatePipe } from '@angular/common';
 import {
   AbstractControl,
@@ -29,6 +29,7 @@ import { AuthStore } from '@barbershop-app/client/core/application';
     FormsModule,
     FormField,
     ReactiveFormsModule,
+    FormTextArea,
   ],
   templateUrl: './confirmation.html',
   styleUrl: './confirmation.css',
@@ -41,7 +42,10 @@ export class Confirmation implements OnInit {
   private createAppointmentUseCase = inject(CreateAppointmentUseCase);
 
   additionalInfoForm = new FormBuilder().nonNullable.group({
-    email: [this.authStore.user.email(), [Validators.required, Validators.email]],
+    email: [
+      this.authStore.user.email(),
+      [Validators.required, Validators.email],
+    ],
     comment: [''],
   });
 
