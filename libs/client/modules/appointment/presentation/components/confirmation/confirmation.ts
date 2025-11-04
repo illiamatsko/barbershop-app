@@ -10,12 +10,26 @@ import {
   BookingFlowStore,
   CreateAppointmentUseCase,
 } from '@barbershop-app/client/appointment/application';
-import { LeftArrowIcon } from '@barbershop-app/client/shared/presentation';
+import { FormField, LeftArrowIcon } from '@barbershop-app/client/shared/presentation';
 import { DatePipe } from '@angular/common';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormsModule, ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { AuthStore } from '@barbershop-app/client/core/application';
 
 @Component({
   selector: 'app-confirmation',
-  imports: [Header, LeftArrowIcon, DatePipe],
+  imports: [
+    Header,
+    LeftArrowIcon,
+    DatePipe,
+    FormsModule,
+    FormField,
+    ReactiveFormsModule,
+  ],
   templateUrl: './confirmation.html',
   styleUrl: './confirmation.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,7 +37,13 @@ import { DatePipe } from '@angular/common';
 export class Confirmation implements OnInit {
   private router = inject(Router);
   private bookingFlowStore = inject(BookingFlowStore);
+  private authStore = inject(AuthStore);
   private createAppointmentUseCase = inject(CreateAppointmentUseCase);
+
+  additionalInfoForm = new FormBuilder().nonNullable.group({
+    email: [this.authStore.user.email(), [Validators.required, Validators.email]],
+    comment: [''],
+  });
 
   selectedBarbershop = this.bookingFlowStore.selectedBarbershop();
   selectedBarber = this.bookingFlowStore.selectedBarber();
@@ -50,16 +70,30 @@ export class Confirmation implements OnInit {
       return;
     }
 
+    if (this.additionalInfoForm.invalid) return;
+
+    const { email, comment } = this.additionalInfoForm.getRawValue();
+
     this.createAppointmentUseCase.execute({
       barbershopId: barbershopId,
       barberId: barberId,
       serviceId: serviceId,
-      email: '',
-      comment: ''
+      email,
+      comment,
     });
   }
 
+  getError(errorCode: string, control: AbstractControl) {
+    if (!control) return false;
+    return control.touched && control.hasError(errorCode);
+  }
+
   isParamsValid() {
-    return this.selectedBarbershop && this.selectedBarber && this.selectedService && this.selectedTimeSlot;
+    return (
+      this.selectedBarbershop &&
+      this.selectedBarber &&
+      this.selectedService &&
+      this.selectedTimeSlot
+    );
   }
 }

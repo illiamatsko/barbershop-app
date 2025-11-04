@@ -1,8 +1,8 @@
 <div class="bg-black min-h-screen text-white flex flex-col">
   <app-header />
 
-  <main class="flex-grow flex items-center justify-center px-6 py-20">
-    <section
+  <div class="flex-grow flex items-center justify-center px-6 py-20">
+    <form (submit)="onConfirm()" [formGroup]="additionalInfoForm"
       class="p-10 rounded-3xl border border-gray-700/30 bg-neutral-900
                  w-full max-w-2xl text-center transition-all duration-500"
     >
@@ -13,36 +13,69 @@
         </p>
       </div>
 
-      <div class="bg-neutral-950/60 rounded-2xl border border-gray-700 divide-y divide-gray-800/60 mb-10">
+      <div class="bg-neutral-950/60 rounded-2xl border border-gray-700 divide-y divide-gray-800/60 mb-8">
         <div class="flex justify-between items-center py-4 px-6">
           <span class="text-gray-400">Barbershop</span>
-          <span class="font-semibold text-white">{{ selectedBarbershop?.name }}</span>
+          <span class="font-semibold text-gray-300">{{ selectedBarbershop?.name }}</span>
         </div>
         <div class="flex justify-between items-center py-4 px-6">
           <span class="text-gray-400">Barber</span>
-          <span class="font-semibold text-white">{{ selectedBarber?.firstName }} {{ selectedBarber?.lastName }}</span>
+          <span class="font-semibold text-gray-300">{{ selectedBarber?.firstName }} {{ selectedBarber?.lastName }}</span>
         </div>
         <div class="flex justify-between items-center py-4 px-6">
           <span class="text-gray-400">Service</span>
-          <span class="font-semibold text-white">{{ selectedService?.name }}</span>
+          <span class="font-semibold text-gray-300">{{ selectedService?.name }}</span>
         </div>
         <div class="flex justify-between items-center py-4 px-6">
           <span class="text-gray-400">Duration</span>
-          <span class="font-semibold text-white">{{ selectedService?.duration }} minutes</span>
+          <span class="font-semibold text-gray-300">{{ selectedService?.duration }} minutes</span>
         </div>
         <div class="flex justify-between items-center py-4 px-6">
           <span class="text-gray-400">Date</span>
-          <span class="font-semibold text-white">{{ selectedTimeSlot?.startTime | date:'d MMMM y':'Europe/Kyiv':'en-US' }}</span>
+          <span class="font-semibold text-gray-300">{{ selectedTimeSlot?.startTime | date:'d MMMM y':'Europe/Kyiv':'en-US' }}</span>
         </div>
         <div class="flex justify-between items-center py-4 px-6">
           <span class="text-gray-400">Time</span>
-          <span class="font-semibold text-white">{{ selectedTimeSlot?.startTime | date:'HH:mm':'Europe/Kyiv':'en-US' }}</span>
+          <span class="font-semibold text-gray-300">{{ selectedTimeSlot?.startTime | date:'HH:mm':'Europe/Kyiv':'en-US' }}</span>
         </div>
+      </div>
 
+      <div class="bg-neutral-950/60 rounded-2xl border border-gray-700 p-6 mb-8 text-left">
+        <h2 class="text-xl font-semibold text-yellow-400 mb-6 text-center">Additional Information</h2>
+
+        <div class="space-y-5">
+          <div>
+            <lib-form-field
+              id="email"
+              type="email"
+              label="Email Address*"
+              placeholder="example@email.com"
+              [control]="additionalInfoForm.controls.email"
+            ></lib-form-field>
+
+            @if (getError('email', additionalInfoForm.controls.email)) {
+              <p class="text-sm text-red-500 mt-1">Please enter a valid email</p>
+            }
+            @if (getError('required', additionalInfoForm.controls.email)) {
+              <p class="text-sm text-red-500 mt-1">Email is required</p>
+            }
+          </div>
+
+          <div>
+            <lib-form-field
+              id="comment"
+              type="text"
+              label="Additional Notes"
+              placeholder="Let us know if you have any specific requirements or preferences"
+              [control]="additionalInfoForm.controls.comment"
+            ></lib-form-field>
+          </div>
+        </div>
       </div>
 
       <div class="flex flex-col sm:flex-row gap-4">
         <button
+          type="button"
           class="flex-1 py-3 rounded-xl border border-gray-600 text-gray-300
            hover:bg-gray-800/60 transition-all duration-300 text-lg
            flex items-center justify-center gap-2"
@@ -53,14 +86,15 @@
         </button>
 
         <button
-          class="flex-1 py-3 rounded-xl bg-yellow-500 text-black font-semibold text-lg
-           hover:bg-yellow-400 transition-all duration-300 flex items-center justify-center gap-2"
-          (click)="onConfirm()"
+          type="submit"
+          class="flex-1 py-3 rounded-xl bg-yellow-500 text-black font-medium
+           hover:bg-yellow-600 transition-all duration-300 text-lg
+           flex items-center justify-center gap-2"
         >
           <span>Confirm Booking</span>
         </button>
       </div>
 
-    </section>
-  </main>
+    </form>
+  </div>
 </div>

@@ -5,7 +5,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class OptionalJwtGuard extends AuthGuard('jwt') {
   override canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest();
-    const authHeader = request.headers['authorization']; // lowercase 'a'
+    const authHeader = request.headers['authorization'];
 
     if (!authHeader) {
       return true;
