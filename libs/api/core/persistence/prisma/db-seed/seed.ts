@@ -4,6 +4,7 @@ import { promisify } from 'util';
 import * as fs from 'fs/promises';
 import * as path from 'path';
 
+
 const prisma = new PrismaClient();
 const scrypt = promisify(_scrypt);
 
@@ -229,6 +230,7 @@ async function main() {
       status: 'CONFIRMED',
       comment: '',
       customerId: customerUser.id,
+      email: customerUser.email,
       barberId: barberUser1.id,
       serviceId: selectedService.id,
     },

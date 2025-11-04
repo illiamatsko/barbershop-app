@@ -54,6 +54,7 @@ export class Confirmation implements OnInit {
       barbershopId: barbershopId,
       barberId: barberId,
       serviceId: serviceId,
+      email: '',
       comment: ''
     });
   }

@@ -10,6 +10,9 @@ export class ApiAppointmentGateway implements AppointmentGateway {
   private API_URL = environment.apiUrl;
 
   createAppointment(createAppointmentPayload: CreateAppointmentPayload) {
-    this.httpClient.post(`${this.API_URL}/appointment/create`, createAppointmentPayload).subscribe();
+    const token = localStorage.getItem('token')
+    const headers = { Authorization: `Bearer ${token}` };
+
+    this.httpClient.post(`${this.API_URL}/appointment/create`, createAppointmentPayload, { headers }).subscribe();
   }
 }

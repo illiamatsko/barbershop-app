@@ -1,5 +1,6 @@
 export * from './auth/guards/local.guard';
 export * from './auth/guards/jwt.guard';
+export * from './auth/guards/optional-jwt.guard'
 export * from './auth/guards/role.guard';
 
 export * from './auth/decorators/roles.decorator';

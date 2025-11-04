@@ -2,8 +2,9 @@ model Appointment {
   id         Int               @id @default(autoincrement())
   comment    String
   status     AppointmentStatus @default(CONFIRMED)
-  customer   Customer          @relation(fields: [customerId], references: [userId])
-  customerId Int
+  customer   Customer?         @relation(fields: [customerId], references: [userId])
+  customerId Int?
+  email      String
   barber     Barber            @relation(fields: [barberId], references: [userId])
   barberId   Int
   service    Service           @relation(fields: [serviceId], references: [id])
