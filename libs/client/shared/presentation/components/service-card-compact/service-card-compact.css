@@ -28,5 +28,5 @@
 }
 
 .price-note {
-  @apply text-xs text-gray-500 block mt-1;
+  @apply text-gray-500 block mt-1;
 }

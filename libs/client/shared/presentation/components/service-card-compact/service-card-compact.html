@@ -17,8 +17,13 @@
     </div>
 
     <div class="card-price">
-      from {{ minPrice() | currency:'UAH':'symbol':'1.0-0' }}
-      <span class="price-note">Varies by barber level</span>
+      @if(isPriceMin()) {
+        from {{ price() | currency:'UAH':'symbol':'1.0-0' }}
+        <span class="price-note">Varies by barber level</span>
+      } @else {
+        {{ price() | currency:'UAH':'symbol':'1.0-0' }}
+        <span class="price-note">Price for selected barber</span>
+      }
     </div>
   </div>
 
@@ -26,7 +31,8 @@
     [name]="name()"
     [duration]="duration()"
     [description]="description()"
-    [minPrice]="minPrice()"
+    [price]="price()"
+    [isPriceMin]="isPriceMin()"
     [allowBooking]="allowBooking()"
   />
 </div>

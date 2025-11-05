@@ -15,7 +15,8 @@ export class ServiceCardCompact {
   name = input.required<string>();
   duration = input.required<number>();
   description = input.required<string>();
-  minPrice = input.required<number>();
+  price = input.required<number>();
+  isPriceMin = input<boolean>(false);
   allowBooking = input<boolean>(true);
   isSelected = input<boolean>(false);
 }

@@ -13,7 +13,12 @@
       <span>{{ duration() }} min</span>
     </div>
     <div class="tooltip-price">
-      from {{ minPrice() | currency:'UAH':'symbol':'1.0-0' }}
+
+      @if(isPriceMin()) {
+        from {{ price() | currency:'UAH':'symbol':'1.0-0' }}
+      } @else {
+        {{ price() | currency:'UAH':'symbol':'1.0-0' }}
+      }
     </div>
   </div>
 

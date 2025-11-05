@@ -35,7 +35,8 @@
             [name]="service.name"
             [duration]="service.duration"
             [description]="service.description"
-            [minPrice]="service.minPrice"
+            [price]=getPrice(service).price
+            [isPriceMin]="getPrice(service).isPriceMin"
             [isSelected]="service.id === selectedServiceId()"
             [allowBooking]="false"
           />
