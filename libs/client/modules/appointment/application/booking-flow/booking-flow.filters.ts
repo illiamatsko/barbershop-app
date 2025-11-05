@@ -56,7 +56,6 @@ export function filterData(
   if (selectedTime.toString() !== 'Invalid Date') {
     filteredServices = filteredServices.filter(s => {
       const availableBarberIds = getIds(getBarbersByServices(filteredBarbers, [s.id]));
-      // console.log(selectedTime)
       return hasEnoughConsecutiveSlots(selectedTime, filteredTimeSlots, s.duration, availableBarberIds);
     })
 

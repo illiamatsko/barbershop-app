@@ -10,9 +10,9 @@ export function hasEnoughConsecutiveSlots(
   const endTime = new Date(requestedTime.getTime() + serviceDuration * 60_000);
   const requestedTimeMs = requestedTime.getTime();
 
-  for (const bId of barberIdsToCheck) {
+  for (const barberId of barberIdsToCheck) {
     const consecutiveSlots = timesForDate.filter(slot =>
-      slot.barberId === bId &&
+      slot.barberId === barberId &&
       slot.startTime.getTime() >= requestedTimeMs &&
       slot.startTime.getTime() <= endTime.getTime() &&
       slot.status === 'AVAILABLE'

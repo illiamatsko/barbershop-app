@@ -10,8 +10,6 @@ export class GetAllServicesUseCase {
   private serviceStore = inject(ServiceStore);
 
   async execute() {
-    this.serviceStore.setServices({
-      services: await firstValueFrom(this.serviceGateway.getAllServices())
-    });
+    this.serviceStore.setServices(await firstValueFrom(this.serviceGateway.getAllServices()));
   }
 }
