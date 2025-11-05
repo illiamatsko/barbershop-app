@@ -13,4 +13,8 @@ export class ApiServiceGateway implements ServiceGateway {
   getAllServices(): Observable<ServiceDto[]> {
     return this.httpClient.get<ServiceDto[]>(`${this.API_URL}/service/all`);
   }
+
+  getPricesByBarberStatus(barberStatus: string): Observable<{ serviceId: number; price: number }[]> {
+    return this.httpClient.get<{ serviceId: number; price: number }[]>(`${this.API_URL}/service/prices/${barberStatus}`)
+  }
 }

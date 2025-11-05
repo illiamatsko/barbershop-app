@@ -15,4 +15,9 @@ export class ServiceController {
   GetServicesByBarberId(@Param('id') id: string) {
     return this.queryBus.execute(new GetBarberServicesIdsQuery(+id));
   }
+
+  @Get('prices/:barberStatus')
+  GetPricesByBarberStatus(@Param('barberStatus') barberStatus: string) {
+    console.log(barberStatus)
+  }
 }

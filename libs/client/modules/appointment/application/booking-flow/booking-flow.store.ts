@@ -7,6 +7,7 @@ import { withEffects } from '@ngrx/signals/events';
 import { BarbershopStore, BarberStore, ServiceStore, TimeSlotStore } from '@barbershop-app/client/core/application';
 import { UrlQueryValidator } from '../validators/url-query.validator';
 import { GetTimeSlotsByDate } from '@barbershop-app/client/barber/application';
+import { GetPricesByBarberStatusUseCase } from '@barbershop-app/client/service/application';
 
 
 export const BookingFlowStore = signalStore(
@@ -159,6 +160,9 @@ export const BookingFlowStore = signalStore(
   }),
 
   withEffects((store) => {
+    const barberStore = inject(BarberStore);
+    const serviceStore = inject(ServiceStore);
+    const getPricesByBarberStatusUseCase = inject(GetPricesByBarberStatusUseCase);
     const router = inject(Router);
     const urlQueryValidator = inject(UrlQueryValidator);
 
@@ -176,6 +180,15 @@ export const BookingFlowStore = signalStore(
       router.navigate([], {
         queryParams: validatedState
       }).then();
+    });
+
+    effect(() => {
+      const barber = barberStore.barbers().find(b => b.id === store.barberId());
+      if (!barber) return;
+
+      if (!serviceStore.pricesByBarberStatus().has(barber.status)) {
+        getPricesByBarberStatusUseCase.execute(barber.status).then();
+      }
     });
 
     return {};

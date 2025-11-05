@@ -9,12 +9,12 @@ export const ServiceStore = signalStore(
     setServices: (services: ServiceDto[]) => patchState(store, { services }),
 
     addPricesByBarberId: (
-      barberId: number,
+      barberStatus: string,
       prices: { serviceId: number; price: number }[]
     ) => {
-      const newMap = new Map(store.pricesByBarberStatusId());
-      newMap.set(barberId, prices);
-      patchState(store, { pricesByBarberStatusId: newMap });
+      const newMap = new Map(store.pricesByBarberStatus());
+      newMap.set(barberStatus, prices);
+      patchState(store, { pricesByBarberStatus: newMap });
     },
   }))
 );
