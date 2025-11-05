@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { ServiceMapper } from '../mappers/service.mapper';
 import { PrismaService } from '@barbershop-app/api/core/persistence';
 import { ServiceEntity, ServiceRepository } from '@barbershop-app/api/service/domain';
@@ -40,6 +40,26 @@ export class PrismaServiceRepository implements ServiceRepository {
       ...service,
       minPrice,
       maxPrice,
+    });
+  }
+
+  async getPricesByBarberStatus(status: string): Promise<{serviceId: number, price: number}[]> {
+    const barberStatus = await this.prisma.barberStatus.findFirst({
+      where: {
+        name: status,
+      },
+    });
+
+    if (!barberStatus) throw new NotFoundException('Barber status not found');
+
+    return this.prisma.servicePrice.findMany({
+      where: {
+        barberStatusId: barberStatus.id,
+      },
+      select: {
+        serviceId: true,
+        price: true,
+      },
     });
   }
 }
