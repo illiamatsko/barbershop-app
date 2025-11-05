@@ -34,8 +34,6 @@ export class SelectService {
     };
   }
 
-
-
   toggleOpen() {
     this.isOpen.update((v) => !v);
   }

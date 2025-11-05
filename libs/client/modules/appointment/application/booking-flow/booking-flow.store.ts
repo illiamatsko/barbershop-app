@@ -15,10 +15,10 @@ export const BookingFlowStore = signalStore(
   withState<BookingFlowState>(initialBookingFlowState),
 
   withComputed((store) => {
-    const barbers = inject(BarberStore).barbers;
-    const barbershops = inject(BarbershopStore).barbershops;
-    const services = inject(ServiceStore).services;
-    const timeSlots = inject(TimeSlotStore).timeSlots;
+    const barbershopStore = inject(BarbershopStore);
+    const barberStore = inject(BarberStore);
+    const serviceStore = inject(ServiceStore);
+    const timeSlotStore = inject(TimeSlotStore);
 
     const filteredData = computed(() => {
       const barbershopId = store.barbershopId();
@@ -27,20 +27,20 @@ export const BookingFlowStore = signalStore(
       const time = store.time();
       const date = store.date();
 
-      const timeSlotsByDate = timeSlots().get(date);
+      const timeSlotsByDate = timeSlotStore.timeSlots().get(date);
       if (!timeSlotsByDate) {
         return {
-          filteredBarbershops: barbershops(),
-          filteredBarbers: barbers(),
-          filteredServices: services(),
+          filteredBarbershops: barbershopStore.barbershops(),
+          filteredBarbers: barberStore.barbers(),
+          filteredServices: serviceStore.services(),
           filteredTimeSlots: []
         };
       }
 
       return filterData(
-        barbershops(),
-        barbers(),
-        services(),
+        barbershopStore.barbershops(),
+        barberStore.barbers(),
+        serviceStore.services(),
         timeSlotsByDate,
         barbershopId,
         barberId,
@@ -57,17 +57,24 @@ export const BookingFlowStore = signalStore(
       availableServices: computed(() => filteredData().filteredServices),
       availableTimes: computed(() => [... new Set(filteredData().filteredTimeSlots.map(ts => ts.startTime.toISOString()))]),
 
-      selectedBarbershop: computed(() => barbershops().find(b => b.id === store.barbershopId())),
-      selectedBarber: computed(() => barbers().find(b => b.id === store.barberId())),
-      selectedService: computed(() => services().find(s => s.id === store.serviceId())),
+      selectedBarbershop: computed(() => barbershopStore.barbershops().find(b => b.id === store.barbershopId())),
+      selectedBarber: computed(() => barberStore.barbers().find(b => b.id === store.barberId())),
+      selectedService: computed(() => serviceStore.services().find(s => s.id === store.serviceId())),
       selectedTimeSlot: computed(() => {
         const time = store.time();
         const date = store.date();
         const barberId = store.barberId();
 
-        return timeSlots().get(date)?.find(ts => ts.startTime.toISOString().split('T')[1] === time && ts.barberId === barberId);
+        return timeSlotStore.timeSlots().get(date)?.find(ts => ts.startTime.toISOString().split('T')[1] === time && ts.barberId === barberId);
       }),
-      isCompleted: computed(() => store.barbershopId() && store.barberId() && store.serviceId() && store.time())
+      isCompleted: computed(() => store.barbershopId() && store.barberId() && store.serviceId() && store.time()),
+      price: computed(() => {
+        const barber = barberStore.barbers().find(b => b.id === store.barberId());
+        const service = serviceStore.services().find(s => s.id === store.serviceId());
+
+        if (!barber || !service) return null;
+        return serviceStore.pricesByBarberStatus().get(barber.status)?.find(p => p.serviceId === service.id)?.price ?? null;
+      })
     };
   }),
 

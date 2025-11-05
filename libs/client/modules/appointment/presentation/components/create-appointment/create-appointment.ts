@@ -39,7 +39,6 @@ export class CreateAppointment implements OnInit {
   ngOnInit() {
     if(this.bookingFlowStore.barbershopId() || this.bookingFlowStore.barberId() || this.bookingFlowStore.serviceId() || this.bookingFlowStore.time()) {
       this.bookingFlowStore.syncUrlFromStore();
-      console.log('Synced from store');
     }
   }
 

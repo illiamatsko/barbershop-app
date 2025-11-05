@@ -11,7 +11,7 @@ import {
   CreateAppointmentUseCase,
 } from '@barbershop-app/client/appointment/application';
 import { FormField, FormTextArea, LeftArrowIcon } from '@barbershop-app/client/shared/presentation';
-import { DatePipe } from '@angular/common';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 import {
   AbstractControl,
   FormBuilder,
@@ -30,6 +30,7 @@ import { AuthStore } from '@barbershop-app/client/core/application';
     FormField,
     ReactiveFormsModule,
     FormTextArea,
+    CurrencyPipe,
   ],
   templateUrl: './confirmation.html',
   styleUrl: './confirmation.css',
@@ -53,6 +54,7 @@ export class Confirmation implements OnInit {
   selectedBarber = this.bookingFlowStore.selectedBarber();
   selectedService = this.bookingFlowStore.selectedService();
   selectedTimeSlot = this.bookingFlowStore.selectedTimeSlot();
+  price = this.bookingFlowStore.price();
 
   ngOnInit() {
     if (!this.isParamsValid()) {
@@ -77,15 +79,6 @@ export class Confirmation implements OnInit {
     if (this.additionalInfoForm.invalid) return;
 
     const { email, comment } = this.additionalInfoForm.getRawValue();
-
-    console.log({
-      email,
-      customerId: this.authStore.user.id(),
-      barberId: barberId,
-      serviceId: serviceId,
-      date: timeSlot.startTime.toISOString(),
-      comment,
-    });
 
     this.createAppointmentUseCase.execute({
       email,

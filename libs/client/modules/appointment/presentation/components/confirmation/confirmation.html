@@ -38,6 +38,11 @@
           <span class="text-gray-400">Time</span>
           <span class="font-semibold text-gray-300">{{ selectedTimeSlot?.startTime | date:'HH:mm':'Europe/Kyiv':'en-US' }}</span>
         </div>
+
+        <div class="flex justify-between items-center py-4 px-6 bg-neutral-900/40">
+          <span class="text-gray-300 font-medium">Total Price</span>
+          <span class="font-bold text-yellow-400">{{ price | currency:'UAH':'symbol':'1.0-0' }} UAH</span>
+        </div>
       </div>
 
       <div class="bg-neutral-950/60 rounded-2xl border border-gray-700 p-6 mb-8 text-left">
