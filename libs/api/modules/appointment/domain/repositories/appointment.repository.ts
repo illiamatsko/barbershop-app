@@ -6,4 +6,6 @@ export abstract class AppointmentRepository {
   abstract create(createAppointmentPayload: CreateAppointmentPayload): Promise<AppointmentEntity>
 
   abstract getCustomerAppointmentsInfo(customerId: number): Promise<AppointmentInfoEntity[]>
+
+  abstract cancelAppointment(appointmentId: number): Promise<boolean>
 }

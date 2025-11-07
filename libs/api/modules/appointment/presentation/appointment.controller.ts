@@ -5,6 +5,7 @@ import {
   CreateAppointmentCommand,
   GetCustomerAppointmentsInfoQuery,
 } from '@barbershop-app/api/appointment/application';
+import { CancelAppointmentCommand } from '../application/commands/cancel-appointment.command';
 
 
 @Controller('appointment')
@@ -27,6 +28,6 @@ export class AppointmentController {
 
   @Post('cancel/:appointmentId')
   cancelAppointment(@Param('appointmentId') appointmentId: number) {
-    console.log(appointmentId);
+    return this.commandBus.execute(new CancelAppointmentCommand(appointmentId));
   }
 }
