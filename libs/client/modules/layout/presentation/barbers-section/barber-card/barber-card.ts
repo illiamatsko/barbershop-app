@@ -27,8 +27,8 @@ export class BarberCard {
     this.router.navigate(['/appointment/create'], {
       queryParams: {
         barberId: this.barber().id
-      }
+      },
+      queryParamsHandling: 'merge'
     }).then();
   }
-
 }

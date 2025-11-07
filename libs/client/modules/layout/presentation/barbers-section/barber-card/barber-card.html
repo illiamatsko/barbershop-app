@@ -1,4 +1,4 @@
-<div class="barber-card group">
+<div class="barber-card">
   <div class="barber-card-image-container">
     <img
       [ngSrc]="getRelativeCloudinaryPath(barber().photoUrl)"
@@ -16,8 +16,8 @@
     </div>
 
     <div class="barber-card-button-container">
-      <button (click)="navigateToBooking()" class="barber-card-button">
-        <lib-calendar-icon class="barber-card-button-icon" [width]="30" [height]="30"/>
+      <button (click)="navigateToBooking()" class="barber-card-button group">
+        <lib-calendar-icon class="barber-card-button-icon group-hover:text-black" [width]="30" [height]="30"/>
         Book with {{ barber().firstName }}
       </button>
     </div>

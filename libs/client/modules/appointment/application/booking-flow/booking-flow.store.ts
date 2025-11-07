@@ -158,6 +158,7 @@ export const BookingFlowStore = signalStore(
       syncUrlFromStore: () => {
         const currentState = getState(store);
 
+        console.log('syncing from store', currentState.date)
         router.navigate([], {
           queryParams: currentState,
           queryParamsHandling: 'merge'

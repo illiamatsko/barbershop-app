@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  output,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClockIcon } from '../icons/clock-icon/clock-icon';
 import { ServiceTooltip } from '../service-tooltip/service-tooltip';
@@ -19,4 +24,5 @@ export class ServiceCardCompact {
   isPriceMin = input<boolean>(false);
   allowBooking = input<boolean>(true);
   isSelected = input<boolean>(false);
+  bookingRequest = output<boolean>();
 }

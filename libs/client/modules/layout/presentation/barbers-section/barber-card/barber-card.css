@@ -60,5 +60,5 @@
 }
 
 .barber-card-button-icon {
-  @apply text-yellow-500;
+  @apply text-yellow-500 transition-all duration-300;
 }

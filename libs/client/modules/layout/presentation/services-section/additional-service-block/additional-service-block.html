@@ -11,6 +11,7 @@
         [duration]="service.duration"
         [description]="service.description"
         [price]="service.minPrice"
+        (bookingRequest)="navigateToBooking(service.id)"
       />
     }
   </div>

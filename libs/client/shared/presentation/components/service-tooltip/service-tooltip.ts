@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  output,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClockIcon } from '../icons/clock-icon/clock-icon';
 
@@ -17,4 +22,5 @@ export class ServiceTooltip {
   price = input.required<number>();
   isPriceMin = input<boolean>(false);
   allowBooking = input.required<boolean>();
+  bookingRequest = output<boolean>();
 }

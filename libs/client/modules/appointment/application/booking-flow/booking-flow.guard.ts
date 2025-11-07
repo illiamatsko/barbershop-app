@@ -42,11 +42,11 @@ export class BookingStateGuard implements CanActivate {
 
     const queryParams = route.queryParams;
 
-    if (!queryParams['date'] && !this.bookingFlowStore.date()) {
+    if(!queryParams['date']) {
       return this.router.createUrlTree(['/appointment/create'], {
         queryParams: {
           ...queryParams,
-          date: getTomorrowDate().toISOString().split('T')[0],
+          date: this.bookingFlowStore.date() ?? getTomorrowDate().toISOString().split('T')[0],
         }
       });
     }

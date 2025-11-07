@@ -34,5 +34,6 @@
     [price]="price()"
     [isPriceMin]="isPriceMin()"
     [allowBooking]="allowBooking()"
+    (bookingRequest)="bookingRequest.emit($event)"
   />
 </div>
