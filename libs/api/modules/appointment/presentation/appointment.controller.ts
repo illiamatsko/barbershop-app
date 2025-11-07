@@ -1,7 +1,11 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateAppointmentPayload, } from '@barbershop-app/shared/domain';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { CreateAppointmentCommand } from '@barbershop-app/api/appointment/application';
+import {
+  CreateAppointmentCommand,
+  GetCustomerAppointmentsInfoQuery,
+} from '@barbershop-app/api/appointment/application';
+
 
 @Controller('appointment')
 export class AppointmentController {
@@ -14,5 +18,15 @@ export class AppointmentController {
   @Post('create')
   createAppointment(@Body() createAppointmentPayload: CreateAppointmentPayload) {
     return this.commandBus.execute(new CreateAppointmentCommand(createAppointmentPayload));
+  }
+
+  @Get('info/:customerId')
+  getCustomerAppointmentsInfo(@Param('customerId') customerId: number) {
+    return this.queryBus.execute(new GetCustomerAppointmentsInfoQuery(customerId));
+  }
+
+  @Post('cancel/:appointmentId')
+  cancelAppointment(@Param('appointmentId') appointmentId: number) {
+    console.log(appointmentId);
   }
 }

@@ -1,5 +1,9 @@
 import { Appointment } from '@prisma/client';
-import { AppointmentEntity } from '@barbershop-app/api/appointment/domain';
+import {
+  AppointmentEntity,
+  AppointmentInfoEntity,
+} from '@barbershop-app/api/appointment/domain';
+import { RawAppointmentType } from '../types/raw-appointment.type';
 
 export class AppointmentMapper {
   static toEntity(appointment: Appointment, date: Date, customerEmail: string, customerId: number | null, barbershopId: number): AppointmentEntity {
@@ -13,6 +17,17 @@ export class AppointmentMapper {
       serviceId: appointment.serviceId,
       status: appointment.status,
       comment: appointment.comment
+    }
+  }
+
+  static toInfoEntity(appointment: RawAppointmentType): AppointmentInfoEntity {
+    return {
+      id: appointment.id,
+      barberName: appointment.barber.user.firstName + ' ' + appointment.barber.user.lastName,
+      serviceName: appointment.service.name,
+      status: appointment.status,
+      date: appointment.date,
+      price: appointment.price,
     }
   }
 }
