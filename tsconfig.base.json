@@ -58,6 +58,11 @@
       "@barbershop-app/client/auth/domain": ["libs/client/modules/auth/domain/index.ts"],
       "@barbershop-app/client/auth/infrastructure": ["libs/client/modules/auth/infrastructure/index.ts"],
 
+      "@barbershop-app/client/customer-profile/presentation": ["libs/client/modules/customer-profile/presentation/index.ts"],
+      "@barbershop-app/client/customer-profile/application": ["libs/client/modules/customer-profile/application/index.ts"],
+      "@barbershop-app/client/customer-profile/domain": ["libs/client/modules/customer-profile/domain/index.ts"],
+      "@barbershop-app/client/customer-profile/infrastructure": ["libs/client/modules/customer-profile/infrastructure/index.ts"],
+
       "@barbershop-app/client/appointment/presentation": ["libs/client/modules/appointment/presentation/index.ts"],
       "@barbershop-app/client/appointment/application": ["libs/client/modules/appointment/application/index.ts"],
       "@barbershop-app/client/appointment/domain": ["libs/client/modules/appointment/domain/index.ts"],
