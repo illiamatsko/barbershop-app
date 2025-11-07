@@ -43,6 +43,12 @@
       }
     </div>
 
+    @if (error()) {
+      <div class="text-red-500 text-sm mt-3 text-center">
+        {{ error() }}
+      </div>
+    }
+
     <button type="submit" class="auth-button">
       Sign In
     </button>

@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { SignUpDto } from '@barbershop-app/client/auth/domain';
 import { AuthGateway } from '@barbershop-app/client/auth/domain';
 import { AuthStore, ErrorStore } from '@barbershop-app/client/core/application';
+import { catchError, of, tap } from 'rxjs';
 
 
 @Injectable({ providedIn: 'root' })
@@ -10,14 +11,30 @@ export class SignUpUseCase {
   private authStore = inject(AuthStore);
   private errorStore = inject(ErrorStore);
 
+  // execute(signUpDto: SignUpDto) {
+  //   this.authGateway.SignUp(signUpDto).subscribe({
+  //     next: res => {
+  //       localStorage.setItem('token', res.token);
+  //       this.authStore.setUser(res);
+  //       this.errorStore.setFormError('');
+  //     },
+  //     error: (e) => this.errorStore.setFormError(e.error?.message || 'Unknown error. Please, try again later.')
+  //   })
+  // }
+
   execute(signUpDto: SignUpDto) {
-    this.authGateway.SignUp(signUpDto).subscribe({
-      next: res => {
+    return this.authGateway.SignUp(signUpDto).pipe(
+      tap((res) => {
         localStorage.setItem('token', res.token);
         this.authStore.setUser(res);
         this.errorStore.setFormError('');
-      },
-      error: (e) => this.errorStore.setFormError(e.error?.message || 'Unknown error. Please, try again later.')
-    })
+      }),
+      catchError((e) => {
+        this.errorStore.setFormError(
+          e.error?.message || 'Unknown error. Please, try again later.'
+        );
+        return of(null)
+      })
+    );
   }
 }
