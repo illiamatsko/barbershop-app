@@ -4,13 +4,12 @@ import {
   inject,
   OnInit,
 } from '@angular/core';
-import { Header } from '../create-appointment/header/header';
 import { Router } from '@angular/router';
 import {
   BookingFlowStore,
   CreateAppointmentUseCase,
 } from '@barbershop-app/client/appointment/application';
-import { FormField, FormTextArea, LeftArrowIcon } from '@barbershop-app/client/shared/presentation';
+import { FormField, FormTextArea, Header, LeftArrowIcon } from '@barbershop-app/client/shared/presentation';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import {
   AbstractControl,
@@ -31,6 +30,7 @@ import { AuthStore } from '@barbershop-app/client/core/application';
     ReactiveFormsModule,
     FormTextArea,
     CurrencyPipe,
+    Header,
   ],
   templateUrl: './confirmation.html',
   styleUrl: './confirmation.css',

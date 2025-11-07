@@ -5,14 +5,14 @@ import {
   inject,
   OnDestroy,
 } from '@angular/core';
-import { Header } from '../header/header';
+import { LandingHeader } from '../landing-header/landing-header';
 import { NgStyle } from '@angular/common';
 import { Router } from '@angular/router';
 
 
 @Component({
   selector: 'app-hero-section',
-  imports: [Header, NgStyle],
+  imports: [LandingHeader, NgStyle],
   templateUrl: './hero-section.html',
   styleUrl: './hero-section.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

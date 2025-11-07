@@ -6,13 +6,13 @@ import { AuthStore } from '@barbershop-app/client/core/application';
 
 
 @Component({
-  selector: 'app-header',
+  selector: 'app-landing-header',
   imports: [CommonModule, RouterLink, ProfileIcon, LogoIcon],
-  templateUrl: './header.html',
-  styleUrl: './header.css',
+  templateUrl: './landing-header.html',
+  styleUrl: './landing-header.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Header {
+export class LandingHeader {
   private router = inject(Router);
   private userStore = inject(AuthStore);
 

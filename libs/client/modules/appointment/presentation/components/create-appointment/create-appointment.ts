@@ -6,9 +6,8 @@ import {
 import { SelectBarbershop } from '../select-barbershop/select-barbershop';
 import { SelectBarber } from '../select-barber/select-barber';
 import { SelectTime } from '../select-time/select-time';
-import { Header } from './header/header';
 import { SelectService } from '../select-service/select-service';
-import { RightArrowIcon } from '@barbershop-app/client/shared/presentation';
+import { RightArrowIcon, Header } from '@barbershop-app/client/shared/presentation';
 import { Router } from '@angular/router';
 import { BookingFlowStore } from '@barbershop-app/client/appointment/application';
 import { NgClass } from '@angular/common';

@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { LeftArrowIcon, LogoIcon } from '@barbershop-app/client/shared/presentation';
+import { LeftArrowIcon } from '../icons/left-arrow-icon/left-arrow-icon';
+import { LogoIcon } from '../icons/logo-icon/logo-icon';
 import { Router } from '@angular/router';
 
 
 @Component({
-  selector: 'app-header',
+  selector: 'lib-header',
   imports: [LeftArrowIcon, LogoIcon],
   templateUrl: './header.html',
   styleUrl: './header.css',

@@ -8,6 +8,7 @@ export * from './components/icons/left-arrow-icon/left-arrow-icon'
 export * from './components/icons/expand-arrow-icon/expand-arrow-icon'
 export * from './components/service-tooltip/service-tooltip'
 export * from './components/service-card-compact/service-card-compact'
+export * from './components/header/header'
 
 export * from './components/phone-input/phone-input'
 export * from './components/form-field/form-field'
