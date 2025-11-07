@@ -25,4 +25,8 @@ export class LandingHeader {
   navigateToSignUp() {
     this.router.navigateByUrl('auth/sign-up').then();
   }
+
+  navigateToProfile() {
+    this.router.navigate(['/profile']).then()
+  }
 }

@@ -21,7 +21,7 @@
         <button (click)="navigateToSignUp()" routerLink="auth/sign-up" class="sign-up">Sign Up</button>
       </div>
     } @else {
-      <lib-profile-icon class="profile-icon" [width]="37" [height]="37"/>
+      <lib-profile-icon (click)="navigateToProfile()" class="profile-icon" [width]="37" [height]="37"/>
     }
   </div>
 </header>

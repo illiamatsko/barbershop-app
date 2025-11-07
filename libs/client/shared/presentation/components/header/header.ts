@@ -15,7 +15,7 @@ export class Header {
   private router = inject(Router);
 
 
-  redirectToHome() {
+  navigateToHome() {
     this.router.navigate(['/']).then()
   }
 }

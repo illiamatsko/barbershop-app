@@ -1,1 +1,1 @@
-export * from './components/stats/stats'
+export * from './components/profile/profile'

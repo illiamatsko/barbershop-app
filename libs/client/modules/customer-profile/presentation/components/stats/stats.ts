@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 
 @Component({
-  selector: 'app-stats',
+  selector: 'app-profile-stats',
   imports: [],
   templateUrl: './stats.html',
   styleUrl: './stats.css',
