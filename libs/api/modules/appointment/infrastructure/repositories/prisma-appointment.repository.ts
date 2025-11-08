@@ -61,10 +61,7 @@ export class PrismaAppointmentRepository implements AppointmentRepository {
                 lastName: true,
               },
             },
-          },
-          select: {
-            statusId: true,
-          },
+          }
         },
         service: {
           select: {

@@ -22,12 +22,12 @@ export class AppointmentController {
   }
 
   @Get('info/:customerId')
-  getCustomerAppointmentsInfo(@Param('customerId') customerId: number) {
-    return this.queryBus.execute(new GetCustomerAppointmentsInfoQuery(customerId));
+  getCustomerAppointmentsInfo(@Param('customerId') customerId: string) {
+    return this.queryBus.execute(new GetCustomerAppointmentsInfoQuery(Number(customerId)));
   }
 
   @Post('cancel/:appointmentId')
-  cancelAppointment(@Param('appointmentId') appointmentId: number) {
-    return this.commandBus.execute(new CancelAppointmentCommand(appointmentId));
+  cancelAppointment(@Param('appointmentId') appointmentId: string) {
+    return this.commandBus.execute(new CancelAppointmentCommand(Number(appointmentId)));
   }
 }
