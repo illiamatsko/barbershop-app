@@ -2,10 +2,10 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateAppointmentPayload, } from '@barbershop-app/shared/domain';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import {
+  CancelAppointmentCommand,
   CreateAppointmentCommand,
   GetCustomerAppointmentsInfoQuery,
 } from '@barbershop-app/api/appointment/application';
-import { CancelAppointmentCommand } from '../application/commands/cancel-appointment.command';
 
 
 @Controller('appointment')

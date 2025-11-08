@@ -15,3 +15,5 @@ export * from './state/service/service.state'
 
 export * from './state/time-slot/time-slot.store'
 export * from './state/time-slot/time-slot.state'
+
+export * from './guards/auth.guard'

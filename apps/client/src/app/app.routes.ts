@@ -3,6 +3,7 @@ import { authRoutes } from '@barbershop-app/client/auth/presentation';
 import { appointmentRoutes } from '@barbershop-app/client/appointment/presentation';
 import { Landing } from '@barbershop-app/client/layout/presentation';
 import { Profile } from  '@barbershop-app/client/customer-profile/presentation'
+import { AuthGuard } from '@barbershop-app/client/core/application';
 
 
 export const appRoutes: Route[] = [
@@ -20,6 +21,7 @@ export const appRoutes: Route[] = [
   },
   {
     path: 'profile',
-    component: Profile
+    component: Profile,
+    canActivate: [AuthGuard]
   }
 ];

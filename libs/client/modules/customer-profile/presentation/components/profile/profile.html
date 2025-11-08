@@ -1,4 +1,6 @@
 <lib-header/>
-<app-profile-overview/>
+@if(isSignedIn()) {
+  <app-profile-overview [user]="user()"/>
+}
 <app-profile-stats/>
 <app-profile-appointments/>

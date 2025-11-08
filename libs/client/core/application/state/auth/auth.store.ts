@@ -1,6 +1,6 @@
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { initialAuthState, AuthState } from './auth.state';
-import {setUser} from './auth.updaters';
+import { setUser } from './auth.updaters';
 import { computed } from '@angular/core';
 
 export const AuthStore = signalStore(
@@ -11,6 +11,6 @@ export const AuthStore = signalStore(
     unsetUser: () => patchState(store, initialAuthState)
   })),
   withComputed((store) => ({
-    isSignedIn: computed(() => !!store.token()),
+    isSignedIn: computed(() => !!store.token() && !!store.user()),
   }))
 );

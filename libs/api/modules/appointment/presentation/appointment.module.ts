@@ -2,7 +2,11 @@ import { Module } from '@nestjs/common';
 import { PrismaModule } from '@barbershop-app/api/core/persistence';
 import { AppointmentController } from './appointment.controller';
 import { AppointmentRepository } from '@barbershop-app/api/appointment/domain';
-import { CreateAppointmentUseCase } from '@barbershop-app/api/appointment/application';
+import {
+  CancelAppointmentUseCase,
+  CreateAppointmentUseCase,
+  GetCustomerAppointmentsInfoUseCase,
+} from '@barbershop-app/api/appointment/application';
 import { PrismaAppointmentRepository } from '@barbershop-app/api/appointment/infrastructure';
 
 
@@ -11,6 +15,8 @@ import { PrismaAppointmentRepository } from '@barbershop-app/api/appointment/inf
   controllers: [AppointmentController],
   providers: [
     CreateAppointmentUseCase,
+    GetCustomerAppointmentsInfoUseCase,
+    CancelAppointmentUseCase,
     {
       provide: AppointmentRepository,
       useClass: PrismaAppointmentRepository

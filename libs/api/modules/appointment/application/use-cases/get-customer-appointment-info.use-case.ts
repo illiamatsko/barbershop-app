@@ -1,14 +1,16 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { GetCustomerAppointmentsInfoQuery } from '../queries/get-customer-appointments-info.query';
-import { PrismaAppointmentRepository } from '@barbershop-app/api/appointment/infrastructure';
-import { AppointmentMapper } from '@barbershop-app/api/appointment/domain';
+import {
+  AppointmentMapper,
+  AppointmentRepository,
+} from '@barbershop-app/api/appointment/domain';
 
 
 @QueryHandler(GetCustomerAppointmentsInfoQuery)
 export class GetCustomerAppointmentsInfoUseCase
   implements IQueryHandler<GetCustomerAppointmentsInfoQuery>
 {
-  constructor(private appointmentRepository: PrismaAppointmentRepository) {}
+  constructor(private appointmentRepository: AppointmentRepository) {}
 
   async execute(query: GetCustomerAppointmentsInfoQuery) {
     const appointmentsInfo =
