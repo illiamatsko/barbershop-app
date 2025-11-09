@@ -22,6 +22,8 @@ import { ApiBarbershopGateway } from '@barbershop-app/client/appointment/infrast
 import { provideCloudinaryLoader } from '@angular/common';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
+import { ApiCustomerProfileGateway } from '@barbershop-app/client/customer-profile/infrastructure';
+import { CustomerProfileGateway } from '@barbershop-app/client/customer-profile/domain';
 
 
 export const appConfig: ApplicationConfig = {
@@ -51,6 +53,10 @@ export const appConfig: ApplicationConfig = {
     {
       provide: AuthGateway,
       useClass: ApiAuthGateway
+    },
+    {
+      provide: CustomerProfileGateway,
+      useClass: ApiCustomerProfileGateway
     },
     {
       provide: AppointmentGateway,

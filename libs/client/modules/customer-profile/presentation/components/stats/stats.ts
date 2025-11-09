@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 
 @Component({
@@ -8,4 +8,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './stats.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Stats {}
+export class Stats {
+  stats = input.required<{ count: number, futureCount: number, moneySpent: number }>();
+}

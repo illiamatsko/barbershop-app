@@ -1,6 +1,5 @@
-<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 max-w-4xl mx-auto">
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-7 max-w-4xl mx-auto">
 
-  <!-- Total Visits Card -->
   <div class="bg-neutral-900 rounded-2xl border border-gray-700 p-6 hover:border-yellow-400/50 transition-all duration-300">
     <div class="flex items-center gap-4 mb-2">
       <div class="w-10 h-10 bg-gray-800 rounded-xl flex items-center justify-center">
@@ -8,12 +7,11 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
         </svg>
       </div>
-      <div class="text-3xl font-bold text-white">12</div>
+      <div class="text-3xl font-bold text-white">{{ stats().count }}</div>
     </div>
-    <div class="text-sm text-gray-400">Всього візитів</div>
+    <div class="text-sm text-gray-400">Total visits</div>
   </div>
 
-  <!-- Scheduled Card -->
   <div class="bg-neutral-900 rounded-2xl border border-gray-700 p-6 hover:border-yellow-400/50 transition-all duration-300">
     <div class="flex items-center gap-4 mb-2">
       <div class="w-10 h-10 bg-yellow-400/20 rounded-xl flex items-center justify-center">
@@ -21,12 +19,11 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
       </div>
-      <div class="text-3xl font-bold text-yellow-400">2</div>
+      <div class="text-3xl font-bold text-yellow-400">{{ stats().futureCount }}</div>
     </div>
-    <div class="text-sm text-gray-400">Заплановано</div>
+    <div class="text-sm text-gray-400">Scheduled</div>
   </div>
 
-  <!-- Total Spent Card -->
   <div class="bg-neutral-900 rounded-2xl border border-gray-700 p-6 hover:border-yellow-400/50 transition-all duration-300">
     <div class="flex items-center gap-4 mb-2">
       <div class="w-10 h-10 bg-gray-800 rounded-xl flex items-center justify-center">
@@ -34,9 +31,9 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
       </div>
-      <div class="text-3xl font-bold text-white">2 450 ₴</div>
+      <div class="text-3xl font-bold text-white">{{ stats().moneySpent }} ₴</div>
     </div>
-    <div class="text-sm text-gray-400">Витрачено</div>
+    <div class="text-sm text-gray-400">Total spent</div>
   </div>
 
 </div>

@@ -2,5 +2,5 @@
 @if(isSignedIn()) {
   <app-profile-overview [user]="user()"/>
 }
-<app-profile-stats/>
-<app-profile-appointments/>
+<app-profile-stats [stats]="stats()"/>
+<app-profile-appointments [allAppointmentsInfo]="appointmentsInfo()"/>
