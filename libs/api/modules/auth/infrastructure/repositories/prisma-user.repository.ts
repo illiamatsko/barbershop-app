@@ -10,6 +10,7 @@ export class PrismaUserRepository implements UserRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createUserPayload: CreateUserDto): Promise<UserEntity> {
+
     const user = await this.prisma.user.create({
       data: createUserPayload
     });

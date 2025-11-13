@@ -24,7 +24,7 @@ export class CreateCustomerUseCase
     const createUserPayload = CustomerMapper.toCreateUserPayload(payload);
     const user = await this.userRepo.create(createUserPayload);
 
-    const createCustomerRecordPayload = CustomerMapper.toCreateCustomerRecordPayload(payload, user.id);
+    const createCustomerRecordPayload = CustomerMapper.toCreateCustomerRecordPayload(user.id);
     const customer = await this.customerRepo.create(createCustomerRecordPayload);
 
     const jwtPayload = UserMapper.toJwtPayload(user);
