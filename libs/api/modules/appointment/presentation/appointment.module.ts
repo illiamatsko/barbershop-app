@@ -5,7 +5,7 @@ import { AppointmentRepository } from '@barbershop-app/api/appointment/domain';
 import {
   CancelAppointmentUseCase,
   CreateAppointmentUseCase,
-  GetCustomerAppointmentsInfoUseCase,
+  GetCustomerAppointmentsInfoUseCase, GetFullAppointmentUseCase,
 } from '@barbershop-app/api/appointment/application';
 import { PrismaAppointmentRepository } from '@barbershop-app/api/appointment/infrastructure';
 
@@ -15,6 +15,7 @@ import { PrismaAppointmentRepository } from '@barbershop-app/api/appointment/inf
   controllers: [AppointmentController],
   providers: [
     CreateAppointmentUseCase,
+    GetFullAppointmentUseCase,
     GetCustomerAppointmentsInfoUseCase,
     CancelAppointmentUseCase,
     {

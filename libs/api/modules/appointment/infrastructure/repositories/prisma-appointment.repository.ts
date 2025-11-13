@@ -40,11 +40,26 @@ export class PrismaAppointmentRepository implements AppointmentRepository {
 
     return AppointmentMapper.toEntity(
       appointment,
-      appointmentSlots[0].startTime,
-      createAppointmentPayload.email,
-      createAppointmentPayload.customerId,
       barbershopId
     );
+  }
+
+  async getFullAppointment(appointmentId: number) {
+    const appointment = await this.prisma.appointment.findFirst({
+      where: { id: appointmentId },
+      include: {
+        timeSlot: {
+          select: {
+            startTime: true,
+          }
+        },
+        barber: true
+      }
+    });
+
+    if (!appointment) throw new BadRequestException('Appointment not found');
+
+    return AppointmentMapper.toEntity(appointment, appointment.barber.barbershopId)
   }
 
   async getCustomerAppointmentsInfo(customerId: number) {

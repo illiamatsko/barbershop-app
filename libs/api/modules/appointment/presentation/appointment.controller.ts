@@ -5,6 +5,7 @@ import {
   CancelAppointmentCommand,
   CreateAppointmentCommand,
   GetCustomerAppointmentsInfoQuery,
+  GetFullAppointmentQuery,
 } from '@barbershop-app/api/appointment/application';
 
 
@@ -19,6 +20,11 @@ export class AppointmentController {
   @Post('create')
   createAppointment(@Body() createAppointmentPayload: CreateAppointmentPayload) {
     return this.commandBus.execute(new CreateAppointmentCommand(createAppointmentPayload));
+  }
+
+  @Get('full/:appointmentId')
+  getFullAppointment(@Param('appointmentId') appointmentId: string) {
+    return this.queryBus.execute(new GetFullAppointmentQuery(Number(appointmentId)));
   }
 
   @Get('info/:customerId')

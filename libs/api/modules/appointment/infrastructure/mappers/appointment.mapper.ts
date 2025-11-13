@@ -6,12 +6,12 @@ import {
 import { RawAppointmentType } from '../types/raw-appointment.type';
 
 export class AppointmentMapper {
-  static toEntity(appointment: Appointment, date: Date, customerEmail: string, customerId: number | null, barbershopId: number): AppointmentEntity {
+  static toEntity(appointment: Appointment, barbershopId: number): AppointmentEntity {
     return {
       id: appointment.id,
-      date,
-      customerEmail,
-      customerId,
+      date: appointment.date,
+      customerEmail: appointment.email,
+      customerId: appointment.customerId,
       barbershopId,
       barberId: appointment.barberId,
       serviceId: appointment.serviceId,
