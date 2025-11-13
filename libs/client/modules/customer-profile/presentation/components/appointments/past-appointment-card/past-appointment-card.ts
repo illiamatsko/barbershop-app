@@ -1,34 +1,48 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { AppointmentInfoDto } from '@barbershop-app/shared/domain';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import {
+  AppointmentDto,
+  AppointmentInfoDto,
+} from '@barbershop-app/shared/domain';
+import { Router } from '@angular/router';
+import { GetFullAppointmentUseCase } from '@barbershop-app/client/customer-profile/application';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
   selector: 'app-past-appointment-card',
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './past-appointment-card.html',
   styleUrl: './past-appointment-card.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PastAppointmentCard {
+  private router = inject(Router);
+  private getFullAppointmentUseCase = inject(GetFullAppointmentUseCase);
   appointment = input.required<AppointmentInfoDto>();
 
-  rebookAppointment(appointment: any): void {
-    console.log("[v0] Rebooking appointment:", appointment)
-    // Add rebooking logic here
-    alert("Перехід до сторінки запису...")
+  async rebookAppointment() {
+    const fullAppointment: AppointmentDto =
+      await this.getFullAppointmentUseCase.execute(this.appointment().id);
+    this.router
+      .navigate(['/appointment/create'], {
+        queryParams: {
+          barbershopId: fullAppointment.barbershopId,
+          barberId: fullAppointment.barberId,
+          serviceId: fullAppointment.serviceId,
+        },
+      })
+      .then();
   }
 
-  leaveReview(appointmentId: number): void {
-    console.log("[v0] Opening review form for:", appointmentId)
-    // Add review logic here
-    alert("Відкриття форми відгуку...")
+  leaveReview() {
+    console.log('Opening review form');
   }
 
-  getStatusClass(status: string): string {
+  getStatusClass(status: string) {
     const classes: Record<string, string> = {
-      COMPLETED: "bg-green-100 text-green-700",
-      CANCELED: "bg-red-300 text-red-700",
-    }
-    return classes[status] || "bg-neutral-200 text-neutral-700"
+      COMPLETED: 'bg-green-100 text-green-700',
+      CANCELED: 'bg-red-300 text-red-700',
+    };
+    return classes[status] || 'bg-neutral-200 text-neutral-700';
   }
 }

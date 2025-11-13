@@ -25,11 +25,11 @@ export class CustomerMapper {
       firstName: createCustomerDto.firstName,
       lastName: createCustomerDto.lastName,
       phoneNumber: createCustomerDto.phoneNumber,
-      role: RolesEnum.BARBER
+      role: RolesEnum.CUSTOMER
     };
   }
 
-  static toCreateCustomerRecordPayload(createCustomerDto: CreateCustomerDto, userId: number): CreateCustomerRecordDto {
+  static toCreateCustomerRecordPayload(userId: number): CreateCustomerRecordDto {
     return {
       userId
     };

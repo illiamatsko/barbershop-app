@@ -123,7 +123,7 @@ export class PrismaAppointmentRepository implements AppointmentRepository {
       }
     });
 
-    if (!appointment) return true;
+    if (!appointment || appointment.status === 'CANCELED') throw new BadRequestException('Appointment not found');
 
     try {
       await this.prisma.$transaction(async (tx) => {

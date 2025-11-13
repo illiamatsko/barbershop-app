@@ -4,9 +4,9 @@
                 <span [class]="'px-3 py-1 text-xs font-medium rounded-full ' + getStatusClass(appointment().status)">
                   {{ appointment().status }}
                 </span>
-      <span class="text-xs text-gray-500">ID: {{ appointment().id }}</span>
+      <span class="text-xs text-gray-500">ID: #{{ appointment().id }}</span>
     </div>
-    <div class="text-sm text-gray-400">{{ appointment().date }}</div>
+    <div class="text-sm text-gray-400">{{ appointment().date | date:'mediumDate':'Europe/Kyiv':'en-US' }}</div>
   </div>
 
   <div class="grid sm:grid-cols-2 gap-4 mb-4">
@@ -16,7 +16,7 @@
           <i class="fas fa-cut"></i>
         </div>
         <div>
-          <div class="text-sm text-gray-400">Послуга</div>
+          <div class="text-sm text-gray-400">Service</div>
           <div class="font-semibold text-white">{{ appointment().serviceName }}</div>
         </div>
       </div>
@@ -26,30 +26,34 @@
           <i class="fas fa-user"></i>
         </div>
         <div>
-          <div class="text-sm text-gray-400">Майстер</div>
+          <div class="text-sm text-gray-400">Barber</div>
           <div class="font-semibold text-white">{{ appointment().barberName }}</div>
         </div>
       </div>
     </div>
 
-    <div class="flex items-center justify-end">
-      <div class="text-right">
-        <div class="text-sm text-gray-400 mb-1">Оплачено</div>
-        <div class="text-2xl font-bold text-white">{{ appointment().price }} ₴</div>
+    @if (appointment().status !== 'CANCELED') {
+      <div class="flex items-center justify-end">
+        <div class="text-right">
+          <div class="text-sm text-gray-400 mb-1">Payed</div>
+          <div class="text-2xl font-bold text-white">{{ appointment().price }} ₴</div>
+        </div>
       </div>
-    </div>
+    }
   </div>
 
-  <div class="flex gap-3 pt-4 border-t border-gray-700">
-    <button
-      (click)="rebookAppointment(appointment)"
-      class="flex-1 px-4 py-3 border-2 border-yellow-400 text-yellow-400 rounded-lg hover:bg-yellow-400 hover:text-black transition-all duration-300 font-medium">
-      Повторити запис
-    </button>
-    <button
-      (click)="leaveReview(appointment().id)"
-      class="flex-1 px-4 py-3 bg-yellow-400 text-black rounded-lg hover:bg-yellow-500 transition-all duration-300 font-medium">
-      Залишити відгук
-    </button>
-  </div>
+  @if (appointment().status !== 'CANCELED') {
+    <div class="flex gap-3 pt-4 border-t border-gray-700">
+      <button
+        (click)="rebookAppointment()"
+        class="flex-1 px-4 py-3 border-2 border-yellow-400 text-yellow-400 rounded-lg hover:bg-yellow-400 hover:text-black transition-all duration-300 font-medium">
+        Repeat Appointment
+      </button>
+      <button
+        (click)="leaveReview()"
+        class="flex-1 px-4 py-3 bg-yellow-400 text-black rounded-lg hover:bg-yellow-500 transition-all duration-300 font-medium">
+        Leave a Review
+      </button>
+    </div>
+  }
 </div>

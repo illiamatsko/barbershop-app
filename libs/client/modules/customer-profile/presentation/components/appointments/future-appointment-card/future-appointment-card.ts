@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { AppointmentInfoDto } from '@barbershop-app/shared/domain';
 import { DatePipe } from '@angular/common';
+import { CancelAppointmentUseCase } from '@barbershop-app/client/customer-profile/application';
 
 
 @Component({
@@ -11,10 +12,11 @@ import { DatePipe } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FutureAppointmentCard {
+  private cancelAppointmentUseCase = inject(CancelAppointmentUseCase);
   appointment = input.required<AppointmentInfoDto>();
 
   cancelAppointment(id: number) {
-    console.log('[v0] Cancelling appointment:', id);
+    this.cancelAppointmentUseCase.execute(id);
   }
 
   getCardBorderClass(status: string): string {

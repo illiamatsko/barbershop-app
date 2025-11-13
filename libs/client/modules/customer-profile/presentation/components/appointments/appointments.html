@@ -18,17 +18,9 @@
     <div class="space-y-4">
       @for (appointment of selectedAppointmentsInfo(); track appointment.id) {
         @if(activeTab === 'future') {
-          @if (appointment.status === 'CANCELED') {
-            <app-canceled-appointment-card [appointment]="appointment" />
-          } @else {
-            <app-future-appointment-card [appointment]="appointment" />
-          }
+          <app-future-appointment-card [appointment]="appointment" />
         } @else {
-          @if (appointment.status === 'CANCELED') {
-            <app-canceled-appointment-card [appointment]="appointment" />
-          } @else {
-            <app-past-appointment-card [appointment]="appointment" />
-          }
+          <app-past-appointment-card [appointment]="appointment" />
         }
       } @empty {
         <div class="text-center py-12 text-gray-400">

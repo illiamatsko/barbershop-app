@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 import { AppointmentInfoDto } from '@barbershop-app/shared/domain';
 import { FutureAppointmentCard } from './future-appointment-card/future-appointment-card';
 import { PastAppointmentCard } from './past-appointment-card/past-appointment-card';
-import { CanceledAppointmentCard } from './canceled-appointment-card/canceled-appointment-card';
+
 
 interface Appointment {
   id: string
@@ -19,7 +19,6 @@ interface Appointment {
   imports: [
     FutureAppointmentCard,
     PastAppointmentCard,
-    CanceledAppointmentCard,
   ],
   templateUrl: './appointments.html',
   styleUrl: './appointments.css',
